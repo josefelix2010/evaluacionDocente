@@ -1,0 +1,56 @@
+body{
+	background-image: url(../img/formulario.jpg);
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.form{
+	height: 100%;
+	max-height: 100%;
+	background: rgb(0, 0, 0, .4);
+	margin-top: 2% !important;
+	margin-bottom: 2% !important;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px 0px 50px 2px #000;
+	-moz-box-shadow: 0px 0px 50px 2px #000;
+	-ms-box-shadow: 0px 0px 50px 2px #000;
+	-o-box-shadow: 0px 0px 50px 2px #000;
+	box-shadow: 0px 0px 50px 2px #000;
+}
+
+.form .card{
+	background: rgb(0, 0, 0, .4) !important;
+	margin: 0px 0px;
+}
+
+.form .card-action{
+	background-color: #3582ff !important;
+}
+
+.form p{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 20px;
+	color: #FFF;
+}
+
+.form label{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 14px;
+	color: #FFF;
+}
+
+.form input[type=text]{
+	font-family: 'Nunito', sans-serif;
+	font-size: 12px !important;
+	color: #FFF !important;
+}
+
+.form select{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 12px !important;
+}
+
+.form .btn{
+	margin: 0px 20px;
+	background-color: #3582ff !important;
+}

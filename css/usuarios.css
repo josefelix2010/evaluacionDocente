@@ -1,0 +1,43 @@
+body{
+	background-image: url(../img/auditorio2.jpg);
+	background-size: cover;
+}
+
+.form .card{
+	background: rgb(0, 0, 0, .4) !important;
+	margin: 0px 0px;
+	max-height: 490px;
+	overflow-y: scroll;
+}
+
+.form .card-action{
+	background-color: #3582ff !important;
+}
+
+.form p{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 20px;
+	color: #FFF;
+}
+
+.form table{
+	background-color: #FFF;
+}
+
+.form table th{
+	background-color: #F93939;
+	border-radius: 0px;
+	color: #FFF;
+	font-family: 'Quicksand', sans-serif;
+	font-size: 14px;
+}
+
+.form table td{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 12px;
+}
+
+.form .btn{
+	margin: 0px 20px;
+	background-color: #3582ff !important;
+}

@@ -77,15 +77,13 @@
 
             </div>
 
-            <hr>
-
             <div class="row">
             	<div class="col s12 m12 l12">
-	            	<canvas id="myCanvas" width="880" height="200" style="border:1px solid #000000;"></canvas>
+	            	<canvas id="myCanvas" style="border:1px solid #000000;"></canvas>
 	            </div>
             </div>
 
-            <div class="row" id="noMargin">
+            <div class="row center-align" id="noMargin">
             	<div class="col s12 m12 l12">
             		<ul class="pagination">
 							    <li class="active"><a href="#!">1</a></li>

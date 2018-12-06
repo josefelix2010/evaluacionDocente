@@ -16,16 +16,59 @@ body{
 	-ms-box-shadow: 0px 0px 50px 2px #000;
 	-o-box-shadow: 0px 0px 50px 2px #000;
 	box-shadow: 0px 0px 50px 2px #000;
+	overflow-y: scroll;
+	max-height: 540px;
 }
 
 .form .card{
 	margin: 0px 0px !important;
+	background: rgb(0, 0, 0, .4);
+}
+
+.form .card-action{
+	background-color: #3582ff !important;
+}
+
+.form .card-action p{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 20px;
+	color: #FFF !important;
 }
 
 .form .card .card-content{
-	padding: 0px 24px !important;
+	padding: 10px 24px !important;
+}
+
+.form label{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 14px;
+	color: #FFF;
+}
+
+.form input[type=text]{
+	font-family: 'Nunito', sans-serif;
+	font-size: 12px !important;
+	color: #FFF !important;
+}
+
+.form .btn{
+	margin: 20px 20px;
+	background-color: #3582ff !important;
 }
 
 #noMargin{
 	margin-bottom: 0px !important;
+}
+
+canvas{
+	width: 95%;
+	height: 50%;
+	margin: 10px 10px;
+	background-color: #CCC;
+	border-radius: 25px;
+}
+
+.pagination li a{
+	background-color: #3582FF;
+	color: #000;
 }

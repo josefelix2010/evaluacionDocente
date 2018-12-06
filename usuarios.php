@@ -38,7 +38,7 @@
 				<div class="card">
 
           <div class="card-action center-align">
-            <p>Editar formulario</p>
+            <p>Lista de usuarios</p>
           </div>
 
           <div class="card-content">
@@ -81,7 +81,7 @@
 
                   <div class="form-field center-align">
                     <input class="btn" type="submit" name="login" value="Agregar">
-                    <input class="btn" type="submit" name="olvido" value="Modificar">
+                    <input class="btn" type="submit" name="modificar" value="Modificar">
                   </div>
 
                 </form>

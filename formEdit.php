@@ -70,7 +70,7 @@
 
                   <div class="form-field center-align">
                     <input class="btn" type="submit" name="login" value="Agregar">
-                    <input class="btn" type="submit" name="olvido" value="Eliminar">
+                    <input class="btn" type="submit" name="eliminar" value="Eliminar">
                   </div>
 
                 </form>

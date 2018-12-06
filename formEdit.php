@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Inicio</title>
+	<title>Modificar formulario</title>
 
 	<link rel="stylesheet" href="css/base.css">
 
@@ -51,7 +51,7 @@
                 <form>
 
                   <div class="form-field">
-                    <label for="usuario">Usuario</label>
+                    <label for="titulo">Elija un tópico</label>
                       <div class="input-field">
                         <select class="browser-default" name="titulos" id="titulos">
                           <option value="" disabled selected hidden>Elija un tópico</option>
@@ -69,7 +69,7 @@
                   <br>
 
                   <div class="form-field center-align">
-                    <input class="btn" type="submit" name="login" value="Agregar">
+                    <input class="btn" type="submit" name="agregar" value="Agregar">
                     <input class="btn" type="submit" name="eliminar" value="Eliminar">
                   </div>
 

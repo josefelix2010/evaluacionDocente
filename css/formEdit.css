@@ -48,6 +48,7 @@ body{
 .form select{
 	font-family: 'Quicksand', sans-serif;
 	font-size: 12px !important;
+	height: 40px;
 }
 
 .form .btn{

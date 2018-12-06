@@ -1,0 +1,54 @@
+body{
+	background-image: url(../img/libreria.jpg);
+	background-size: cover;
+}
+
+.form .card{
+	background: rgb(0, 0, 0, .4) !important;
+	margin: 0px 0px;
+}
+
+.form .card-action{
+	background-color: #3582ff !important;
+}
+
+.form p{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 20px;
+	color: #FFF;
+}
+
+.form label{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 14px;
+	color: #FFF;
+}
+
+.form input[type=text]{
+	font-family: 'Nunito', sans-serif;
+	font-size: 12px !important;
+	color: #FFF !important;
+}
+
+.form input[type=password]{
+	font-family: 'Nunito', sans-serif;
+	font-size: 12px !important;
+	color: #FFF !important;
+}
+
+.form input[type=email]{
+	font-family: 'Nunito', sans-serif;
+	font-size: 12px !important;
+	color: #FFF !important;
+}
+
+.form select{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 12px !important;
+	height: 40px;
+}
+
+.form .btn{
+	margin: 0px 20px;
+	background-color: #3582ff !important;
+}

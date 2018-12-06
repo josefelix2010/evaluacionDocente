@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Inicio</title>
+	<title>Resultados</title>
 
 	<link rel="stylesheet" href="css/base.css">
 	<link rel="stylesheet" href="css/resultados.css">

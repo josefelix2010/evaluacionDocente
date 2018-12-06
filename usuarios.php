@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Inicio</title>
+	<title>Usuarios</title>
 
 	<link rel="stylesheet" href="css/base.css">
 
@@ -80,7 +80,7 @@
                   <div class="form-field">
 
                   <div class="form-field center-align">
-                    <input class="btn" type="submit" name="login" value="Agregar">
+                    <input class="btn" type="submit" name="agregar" value="Agregar">
                     <input class="btn" type="submit" name="modificar" value="Modificar">
                   </div>
 

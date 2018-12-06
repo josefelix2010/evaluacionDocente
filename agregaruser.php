@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Inicio</title>
+	<title>Agregar usuario</title>
 
 	<link rel="stylesheet" href="css/base.css">
 
@@ -37,7 +37,7 @@
 				<div class="card">
 
           <div class="card-action center-align">
-            <p>Editar formulario</p>
+            <p>Agregar usuario</p>
           </div>
 
           <div class="card-content">
@@ -110,7 +110,7 @@
               	</div>
 
 	              <div class="form-field center-align">
-	                <input class="btn" type="submit" name="login" value="Agregar">
+	                <input class="btn" type="submit" name="agregar" value="Agregar">
 	                <input class="btn" type="submit" name="volver" value="Volver">
 	              </div>
             	</form>

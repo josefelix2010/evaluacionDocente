@@ -45,7 +45,7 @@
 
           	<div class="row">
           		<div class="col s12 m12 l12">
-          			<p>Este instrumento anónimo recaba información sobre el docente. Se agradece una opinión objetiva de acuerdo con su percepción
+          			<p class="cabecera">Este instrumento anónimo recaba información sobre el docente. Se agradece una opinión objetiva de acuerdo con su percepción
           				sobre las actividades realizadas. Sus respuestas son importantes ya que contribuirán a mejorar la calidad docente y su desempeño
           				en el aula.
           			</p>
@@ -58,9 +58,9 @@
           			<table class="striped centered responsive-table">
 					        <tbody>
 					          <tr>
-					            <td class="red celdasTitulo">Cédula</td>
-					            <td>
-					            	<fomr>
+					            <td class="celdasTitulo">Cédula</td>
+					            <td class="celdasInfo">
+					            	<form>
 					            		<div class="form-field">
 
 					            			<div class="col s8 m8 l8">
@@ -72,15 +72,15 @@
 				                    </div>
 
 				                  </div>
-					            	</fomr>
+					            	</form>
 					            </td>
 					          </tr>
 					          <tr>
-					            <td class="red celdasTitulo">Acta</td>
-					            <td class="red celdasTitulo">Sección</td>
+					            <td class="celdasTitulo">Acta</td>
+					            <td class="celdasTitulo">Sección</td>
 					          </tr>
 					          <tr>
-					            <td>
+					            <td class="celdasInfo">
 					            	<form>
 					            		<div class="form-field">
 				                    <select class="browser-default" name="titulos" id="titulos">
@@ -89,7 +89,7 @@
 				                  </div>
 					            	</form>
 					            </td>
-					            <td>Prueba</td>
+					            <td class="celdasInfo">Prueba</td>
 					          </tr>
 					        </tbody>
 					      </table>
@@ -98,25 +98,38 @@
           		<div class="col s1 m1 l1"></div>
 
           		<div class="col s4 m4 l4">
-          			<table>
-          				<thead>
-          					<tr>
-          						Instrucciones para responder
-          					</tr>
-          				</thead>
-          				<tbody>
-          					<tr>
-          						Lea cuidadosamente cada uno de los tópicos. Las opciones está ordenadas de la siguiente manera:<br>
-          						5->MUY BUENO<br>
-          						4->BUENO<br>
-          						3->ACEPTABLE<br>
-          						2->DEFICIENTE<br>
-          						1-> MUY DEFICIENTE
-          					</tr>
-          				</tbody>
-          			</table>
+          			<p class="celdasTitulo" style="padding: 5px;">Instrucciones para responder</p>
+          			<p class="celdasInst">Lea cuidadosamente cada uno de los tópicos. Las opciones está ordenadas de la siguiente manera:<br>
+          			5->MUY BUENO<br>
+          			4->BUENO<br>
+          			3->ACEPTABLE<br>
+          			2->DEFICIENTE<br>
+          			1-> MUY DEFICIENTE</p>
           		</div>
 
+          	</div>
+
+          	<hr>
+
+          	<div class="row">
+          		<div class="col s12 m12 l12">
+          			<div class="container form1">
+
+          				<p class="center-align">Evaluación Docente</p>
+
+          				<br>
+
+          				<div class="row">
+          					<div class="col s12 m12 l12">
+
+											<ul>
+												<li>Título del tópico</li>
+											</ul>
+          					</div>
+          				</div>
+
+          			</div>
+          		</div>
           	</div>
 
           </div>

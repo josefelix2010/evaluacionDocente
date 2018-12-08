@@ -1,3 +1,31 @@
+<?php
+
+	session_start();
+
+	include('includes/conectar.php');
+
+	$sql = $conexion->query("SELECT * FROM usuarios");
+
+	if(isset($_POST['agregar'])){
+
+		header('location:agregarUser.php');
+
+	}
+
+	if(isset($_POST['modificar'])){
+
+		header('location:editarUser.php');
+
+	}
+
+	if(isset($_POST['volver'])){
+
+		header('location:inicio.php');
+
+	}
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,30 +86,33 @@
 					        </thead>
 
 					        <tbody>
-					          <tr>
-					            <td>admin</td>
-					            <td>admin</td>
-					            <td>admin</td>
-					            <td>admin@admin.com</td>
-					          </tr>
-					          <tr>
-					            <td>usuario1</td>
-					            <td>usuario1</td>
-					            <td>usuario1</td>
-					            <td>usuario@numero1.com</td>
-					          </tr>
+					          <?php
+
+					          	while($valores = mysqli_fetch_array($sql)){
+
+					          		echo '<tr>';
+					          		echo '<td>'.$valores['usuario'].'</td>';
+					          		echo '<td>'.$valores['nombre'].'</td>';
+					          		echo '<td>'.$valores['apellido'].'</td>';
+					          		echo '<td>'.$valores['correo'].'</td>';
+					          		echo '<tr>';
+
+					          	}
+
+					          ?>
 					        </tbody>
 					      </table>
 
 					      <br>
 
-                <form>
+                <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
                   <div class="form-field">
 
                   <div class="form-field center-align">
                     <input class="btn" type="submit" name="agregar" value="Agregar">
                     <input class="btn" type="submit" name="modificar" value="Modificar">
+                    <input class="btn" type="submit" name="volver" value="Volver">
                   </div>
 
                 </form>

@@ -1,3 +1,14 @@
+<?php
+
+  session_start();
+
+
+
+
+?>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +38,7 @@
           <li><a href="formEdit.php">Formulario</a></li>
           <li><a href="resultados.php">Resultados</a></li>
           <li><a href="usuarios.php">Usuarios</a></li>
-          <li><a href="index.php">Salir</a></li>
+          <li><a href="includes/logout.php">Salir</a></li>
         </ul>
       </div>
     </nav>
@@ -46,7 +57,7 @@
            al momento de evaluar a los docentes.</p>
         </div>
         <div class="card-action">
-          <a href="#">Editar formulario</a>
+          <a href="formEdit.php">Editar formulario</a>
         </div>
       </div>
     </div>
@@ -61,7 +72,7 @@
           <p>Revise los resultados arrojados por la evaluación de los alumnos hacia sus docentes.</p>
         </div>
         <div class="card-action">
-          <a href="#">Ver resultados</a>
+          <a href="resultados.php">Ver resultados</a>
         </div>
       </div>
     </div>

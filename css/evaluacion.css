@@ -25,6 +25,8 @@ body{
 .form .card{
 	background: rgb(0, 0, 0, .4) !important;
 	margin: 0px 0px;
+	overflow-y: scroll;
+	max-height: 570px;
 }
 
 .form .card-action{
@@ -37,17 +39,68 @@ body{
 	color: #FFF;
 }
 
+.form .card-content .cabecera{
+	border-style: solid;
+	border-radius: 25px;
+	background: rgb(255, 255, 255, .7) !important;
+	font-family: 'Quicksand', sans-serif;
+	font-size: 12px;
+	padding: 10px;
+}
+
 .celdasTitulo{
 	color: #FFF !important;
+	background-color: #F93939;
 	font-family: 'Quicksand', sans-serif
+}
+
+.celdasInfo{
+	color: #000;
+	background-color: #FFF;
+	font-family: 'Quicksand', sans-serif
+}
+
+.celdasInst{
+	color: #000;
+	background-color: #FFF;
+	font-family: 'Quicksand', sans-serif;
+	font-size: 12px;
+	padding: 5px;
 }
 
 .form input[type=text]{
 	font-family: 'Nunito', sans-serif;
 	font-size: 12px !important;
-	color: #FFF !important;
+}
+
+.form input[type=text]::placeholder{
+	font-family: 'Nunito', sans-serif;
+	font-size: 12px !important;
+}
+
+.form select{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 12px !important;
+	height: 40px;
 }
 
 .form .btn{
 	background-color: #3582ff !important;
+}
+
+.form1{
+	height: 100%;
+	max-height: 100%;
+	background: rgb(255, 255, 255, .4);
+	margin-top: 2% !important;
+	margin-bottom: 2% !important;
+	border-radius: 5px;
+
+}
+
+.form1 p{
+	font-family: 'Quicksand', sans-serif !important;
+	font-size: 18px !important;
+	color: #FFF;
+	padding: 20px;
 }

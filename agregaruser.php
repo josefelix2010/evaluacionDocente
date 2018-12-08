@@ -1,3 +1,76 @@
+<?php
+
+	session_start();
+
+	include('includes/conectar.php');
+
+	if(isset($_POST['agregar'])){
+
+		$usuario = $_POST['usuario'];
+		$nombre = $_POST['nombre'];
+		$apellido = $_POST['apellido'];
+		$correo = $_POST['correo'];
+		$pass1 = $_POST['password1'];
+		$pass2 = $_POST['password2'];
+
+		if($usuario == "" || $nombre == "" || $apellido == "" || $correo == "" || $pass1 == "" || $pass2 == ""){
+
+
+			echo '<script type="text/javascript">';
+			echo 'alert("Alguno de los campos está vacío.");';
+			echo '</script>';
+
+		}else{
+
+			if($pass1 === $pass2){
+
+				$sql = $conexion->query("SELECT * FROM usuarios WHERE usuario = '$usuario'");
+
+				if($valores = mysqli_fetch_array($sql)){
+
+					echo '<script type="text/javascript">';
+					echo 'alert("Este usuario ya existe.");';
+					echo '</script>';
+
+				}else{
+
+					$insert = "INSERT INTO usuarios(usuario, nombre, apellido, correo, password) VALUES ('$usuario', '$nombre', '$apellido', '$correo', '$pass1')";
+
+					if($conexion->query($insert)){
+
+						echo '<script type="text/javascript">';
+						echo 'alert("Usuario agregado con éxito.");';
+						echo '</script>';
+
+						header('location: agregaruser.php');;
+
+					}else{
+						echo '<script type="text/javascript">';
+						echo 'alert("No se pudo agregar a la base de datos, intente nuevamente.");';
+						echo '</script>';
+					}
+
+				}
+
+			}else{
+				echo '<script type="text/javascript">';
+				echo 'alert("Las contraseñas no coinciden.");';
+				echo '</script>';
+			}
+
+		}
+
+	}
+
+	if(isset($_POST['volver'])){
+
+		header('location:usuarios.php');
+
+	}
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,7 +117,7 @@
 
             <div class="row">
 
-              <form>
+              <form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
 
               	<div class="row">
 
@@ -83,8 +156,8 @@
 
 	                  <div class="form-field">
 					            <label for="correo">Correo electrónico</label>
-					            <input id="correo" type="email" class="validate" placeholder="correo@electronico.com">
-					            <span class="helper-text" data-error="Formato incorrecto de correo" data-success="Formato correcto"></span>
+					            <input id="correo" type="email" class="validate" placeholder="correo@electronico.com" name="correo">
+					            <span class="helper-text" data-error="Error" data-success="Correcto"></span>
 	                  </div>
 
 	    	          </div>

@@ -1,3 +1,49 @@
+<?php
+
+	session_start();
+
+	include('includes/conectar.php');
+
+	if(isset($_POST['login'])){
+
+	$user = $_POST['usuario'];
+	$pass = $_POST['password'];
+
+		if($user == "" || $pass == ""){
+
+			echo '<script type="text/javascript">';
+			echo 'alert("Uno de los campos está vacío.");';
+			echo '</script>';
+
+		}else{
+
+			$login = $conexion->query("SELECT * FROM usuarios WHERE usuario = '$user' AND password = '$pass'");
+
+			if($resultado = mysqli_fetch_array($login)){
+
+				$_SESSION['usuarioLogin'] = $user;
+
+				header('Location: inicio.php');
+
+			}else{
+
+				echo '<script type="text/javascript">';
+				echo 'alert("Usuario o contraseña incorrecta.");';
+				echo '</script>';
+
+			}
+
+		}
+	}
+
+	if(isset($_POST['olvido'])){
+
+		header('Location: recuperar.php');
+
+	}
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,24 +74,28 @@
 
 				<div class="card-content">
 
-					<div class="form-field">
-						<label for="usuario">Usuario</label>
-						<input type="text" name="usuario" id="usuario" placeholder="Usuario">
-					</div>
+					<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-					<br>
+						<div class="form-field">
+							<label for="usuario">Usuario</label>
+							<input type="text" name="usuario" id="usuario" placeholder="Usuario">
+						</div>
 
-					<div class="form-field">
-						<label for="password">Contraseña</label>
-						<input type="password" name="password" id="password" placeholder="Contraseña">
-					</div>
+						<br>
 
-					<br>
+						<div class="form-field">
+							<label for="password">Contraseña</label>
+							<input type="password" name="password" id="password" placeholder="Contraseña">
+						</div>
 
-					<div class="form-field center-align">
-						<input class="btn red" type="submit" name="login" value="Ingresar">
-						<input class="btn red" type="submit" name="olvido" value="Olvidé mi contraseña">
-					</div>
+						<br>
+
+						<div class="form-field center-align">
+							<input class="btn red" type="submit" name="login" value="Ingresar">
+							<input class="btn red" type="submit" name="olvido" value="Olvidé mi contraseña">
+						</div>
+
+					</form>
 
 				</div>
 

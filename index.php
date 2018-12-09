@@ -9,14 +9,6 @@
 	$user = $_POST['usuario'];
 	$pass = $_POST['password'];
 
-		if($user == "" || $pass == ""){
-
-			echo '<script type="text/javascript">';
-			echo 'alert("Uno de los campos está vacío.");';
-			echo '</script>';
-
-		}else{
-
 			$login = $conexion->query("SELECT * FROM usuarios WHERE usuario = '$user' AND password = '$pass'");
 
 			if($resultado = mysqli_fetch_array($login)){
@@ -33,7 +25,7 @@
 
 			}
 
-		}
+
 	}
 
 	if(isset($_POST['olvido'])){
@@ -78,14 +70,14 @@
 
 						<div class="form-field">
 							<label for="usuario">Usuario</label>
-							<input type="text" name="usuario" id="usuario" placeholder="Usuario">
+							<input type="text" name="usuario" id="usuario" placeholder="Usuario" required>
 						</div>
 
 						<br>
 
 						<div class="form-field">
 							<label for="password">Contraseña</label>
-							<input type="password" name="password" id="password" placeholder="Contraseña">
+							<input type="password" name="password" id="password" placeholder="Contraseña" required>
 						</div>
 
 						<br>

@@ -13,15 +13,6 @@
 		$pass1 = $_POST['password1'];
 		$pass2 = $_POST['password2'];
 
-		if($usuario == "" || $nombre == "" || $apellido == "" || $correo == "" || $pass1 == "" || $pass2 == ""){
-
-
-			echo '<script type="text/javascript">';
-			echo 'alert("Alguno de los campos está vacío.");';
-			echo '</script>';
-
-		}else{
-
 			if($pass1 === $pass2){
 
 				$sql = $conexion->query("SELECT * FROM usuarios WHERE usuario = '$usuario'");
@@ -58,7 +49,7 @@
 				echo '</script>';
 			}
 
-		}
+
 
 	}
 

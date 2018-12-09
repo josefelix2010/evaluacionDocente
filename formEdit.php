@@ -8,16 +8,6 @@
 
     $titulo = utf8_decode($_POST['topico']);
 
-    if($titulo == ""){
-
-      /*echo '<script type="text/javascript">';
-      echo 'alert("Debe insertar el título del tópico que quiere agregar.");';
-      echo '</script>';*/
-
-      $error = "ERRRRROROROORORORORORO";
-
-    }else{
-
       $select = $conexion->query("SELECT * FROM topicos WHERE titulo = '$titulo'");
 
       if($existe = mysqli_fetch_array($select)){
@@ -40,7 +30,7 @@
 
       }
 
-    }
+
 
   }
 
@@ -158,7 +148,7 @@
 
                   <div class="form-field">
                     <label for="topico">Tópico</label>
-                    <input type="text" name="topico" id="topico" placeholder="Tópico">
+                    <input type="text" name="topico" id="topico" placeholder="Tópico" required>
                   </div>
 
                   <br>

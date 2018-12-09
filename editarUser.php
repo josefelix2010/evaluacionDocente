@@ -14,14 +14,6 @@
 			$correo = utf8_decode($_POST['correo']);
 			$password = utf8_decode($_POST['password']);
 
-			if($usuario=="" || $nombre=="" || $apellido=="" || $correo=="" || $password==""){
-
-				echo '<script type="text/javascript">';
-				echo 'alert("Uno o más campos están vacíos.");';
-				echo '</script>';
-
-			}else{
-
 				$update = "UPDATE usuarios SET nombre='$nombre', apellido='$apellido', correo='$correo', password='$password' WHERE usuario = '$usuario'";
 
 				if($conexion->query($update)){
@@ -34,7 +26,7 @@
 					echo "error";
 				}
 
-			}
+
 
 	}
 
@@ -153,7 +145,7 @@
 
 	                  <div class="form-field">
 	                    <label for="password">Contraseña</label>
-	                    <input type="password" name="password" id="password" value="<?php echo utf8_encode($valores['password']); ?>">
+	                    <input type="password" name="password" id="password" value="<?php echo utf8_encode($valores['password']); ?>" required>
 	                  </div>
 
 		              </div>
@@ -166,7 +158,7 @@
 
 	                  <div class="form-field">
 	                    <label for="nombre">Nombre</label>
-	                    <input type="text" name="nombre" id="nombre" value="<?php echo utf8_encode($valores['nombre']); ?>">
+	                    <input type="text" name="nombre" id="nombre" value="<?php echo utf8_encode($valores['nombre']); ?>" required>
 	                  </div>
 
 		              </div>
@@ -175,7 +167,7 @@
 
 	                  <div class="form-field">
 	                    <label for="apellido">Apellido</label>
-	                    <input type="text" name="apellido" id="apellido" value="<?php echo utf8_encode($valores['apellido']); ?>">
+	                    <input type="text" name="apellido" id="apellido" value="<?php echo utf8_encode($valores['apellido']); ?>" required>
 	                  </div>
 
 	    	          </div>
@@ -184,7 +176,7 @@
 
 	                  <div class="form-field">
 					            <label for="correo">Correo electrónico</label>
-					            <input id="correo" name="correo" type="email" class="validate" value="<?php echo utf8_encode($valores['correo']); ?>">
+					            <input id="correo" name="correo" type="email" class="validate" value="<?php echo utf8_encode($valores['correo']); ?>" required>
 					            <span class="helper-text" data-error="Formato incorrecto de correo" data-success="Formato correcto"></span>
 	                  </div>
 

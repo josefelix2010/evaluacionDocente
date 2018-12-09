@@ -30,7 +30,7 @@
 
 					<div class="form-field">
 						<label for="usuario">Usuario</label>
-						<input type="text" name="usuario" id="usuario" placeholder="Usuario">
+						<input type="text" name="usuario" id="usuario" placeholder="Usuario" required>
 					</div>
 
 					<br>
@@ -38,11 +38,12 @@
 					<div class="form-field">
 					    <label for="correo">Correo electrónico</label>
 					    <input id="correo" type="email" class="validate" placeholder="correo@electronico.com">
-					    <span class="helper-text" data-error="Formato incorrecto de correo" data-success="Formato correcto"></span>
+					    <span class="helper-text" data-error="Formato incorrecto de correo" data-success="Formato correcto" required></span>
 	                </div>
 
 					<br>
 
+					<!--Agregar por php echo-->
 					<div class="form-field">
 						<label for="password">Contraseña</label>
 						<input type="password" name="password" id="password" placeholder="Contraseña" disabled>

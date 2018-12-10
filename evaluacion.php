@@ -54,11 +54,9 @@
 
 
   //--------OBTENER OPCION DE JS-------------
-  if(isset($_GET['opciones'])){
+  if(isset($_GET['actas'])){
 
-    $opciones = $_GET['opciones'];
-
-    $actas = $conexion->query("SELECT * FROM actas WHERE acta = '$opciones'");
+    $acta = $_GET['actas'];
 
   }
 
@@ -85,6 +83,11 @@
       var cedula = document.getElementById('cedula').value;
       window.location.href="evaluacion.php?cedula="+cedula+"&actas="+opciones+"";
     }
+
+    function setValue(id, texto){
+      document.getElementById(id).text = texto;
+    }
+    setValue('actas', opciones);
   </script>
 
 </head>
@@ -185,8 +188,28 @@
 					            	</form>
 					            </td>
 					            <td class="celdasInfo">
-                        <input type="text" name="docente" id="docente" value="<?php if(isset($_GET['opciones'])){echo $_GET['opciones'];} ?>" readonly>
-                        </td>
+
+                        <?php
+
+                          if(isset($_GET['actas'])){
+
+                            $acta = $_GET['actas'];
+
+                            $actas = $conexion->query("SELECT * FROM actas WHERE acta = '$acta'");
+
+                            while($valores = mysqli_fetch_array($actas)){
+
+                              $docente = $valores['docente'];
+
+                        ?>
+
+                        <input type="text" name="docente" id="docente" value="<?php echo $docente; ?>" readonly>
+
+                        <?php
+                            }
+                            }
+                        ?>
+                      </td>
 					          </tr>
 					        </tbody>
 					      </table>
@@ -207,7 +230,7 @@
           				<div class="row">
           					<div class="col s12 m12 l12">
 
-											<form method="POST" action="insertVotos.php">
+                      <form method="POST" action="<?php echo $_SERVER['PHO_SELF']; ?>">
                         <table class="striped centered responsive-table">
                           <?php
 
@@ -221,7 +244,6 @@
                             <td colspan="2" class="celdasTitulo"><?php echo utf8_encode($titulo); ?></td>
                             <input type="hidden" name="id" value="<?php echo $id; ?>">
                           </tr>
-                          <form method="POST" action="<?php echo $_SERVER['PHO_SELF']; ?>">
                             <tr>
                               <td width="60" class="celdasInfo">
                                 <p>
@@ -261,9 +283,21 @@
                               </td>
                             </tr>
                             <tr>
+                              <?php
+
+                                if($num_pag!=$cantidad){
+
+                              ?>
                               <td><input class="btn" type="submit" name="votar" value="Votar"></td>
+                              <?php
+
+                                }else{
+
+                                  echo '<td><input class="btn" type="submit" name="finalizar" value="Finalizar"></td>';
+
+                                }
+                              ?>
                             </tr>
-                          </form>
                           <?php } ?>
                         </table>
                       </form>
@@ -271,17 +305,24 @@
                       <center>
                         <div id="pagination">
                           <?php
-                            if($num_pag>1){
-                              echo '<a class="waves-effect" href="evaluacion.php?pag=1">Primero</a>';
-                              echo '<a class="waves-effect" href="evaluacion.php?pag=1'.($num_pag-1).'">Anterior</a>';
+                            if(isset($_GET['cedula']) && isset($_GET['actas'])){
+
+                              $cedula=$_GET['cedula'];
+                              $opciones=$_GET['actas'];
+
+                              if($num_pag>1){
+                                echo '<a class="btn-small" href="evaluacion.php?cedula='.$cedula.'&actas='.$opciones.'&pag=1">Primero</a>';
+                                echo '<a class="btn-small" href="evaluacion.php?cedula='.$cedula.'&actas='.$opciones.'&pag=1'.($num_pag-1).'">Anterior</a>';
+                              }
+
+                              echo '<strong>'.$num_pag.' de '.$cantidad.'</strong>';
+
+                              if($num_pag<$cantidad){
+                                echo '<a class="btn-small" href="evaluacion.php?cedula='.$cedula.'&actas='.$opciones.'&pag='.($num_pag+1).'">Siguiente</a>';
+                                echo '<a class="btn-small" href="evaluacion.php?cedula='.$cedula.'&actas='.$opciones.'&pag='.$cantidad.'">Ultimo</a>';
+                              }
                             }
 
-                            echo '<strong id="paginas2">'.$num_pag.' de '.$cantidad.'</strong>';
-
-                            if($num_pag<$cantidad){
-                              echo '<a class="waves-effect" href="evaluacion.php?pag='.($num_pag+1).'">Siguiente</a>';
-                              echo '<a class="waves-effect" href="evaluacion.php?pag='.$cantidad.'">Ultimo</a>';
-                            }
                           ?>
                         </div>
                       </center>

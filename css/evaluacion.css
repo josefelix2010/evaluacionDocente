@@ -55,13 +55,13 @@ body{
 .celdasTitulo{
 	color: #FFF !important;
 	background-color: #F93939;
-	font-family: 'Quicksand', sans-serif
+	font-family: 'Quicksand' !important, sans-serif;
 }
 
 .celdasInfo{
 	color: #000;
 	background-color: #FFF;
-	font-family: 'Quicksand', sans-serif
+	font-family: 'Quicksand', sans-serif;
 }
 
 .celdasInst{

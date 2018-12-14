@@ -2,62 +2,17 @@
 
   include('includes/conectar.php');
 
-  //--------------------VOTAR-----------------------------
-  if(isset($_POST['votar'])){
-
-    if(isset($_POST['votos'])){}
-
-  }
-
-  //----------------------PAGINACION------------------------
-  $consulta = $conexion->query("SELECT * FROM topicos");
-
-  $numRegistros = mysqli_num_rows($consulta);
-
-  $regXPagina = 1;
-
-  if(isset($_GET['pag'])){
-
-    $num_pag = $_GET['pag'];
-
-  }else{
-
-    $num_pag = 1;
-
-  }
-
-  if(is_numeric($num_pag)){
-
-    $inicio = ($num_pag - 1) * $regXPagina;
-
-  }else{
-
-    $inicio = 0;
-
-  }
-
-  $consulta2 = $conexion->query("SELECT * FROM topicos LIMIT $inicio, $regXPagina");
-
-  $cantidad = ceil($numRegistros/$regXPagina);
-
-  //------------------FIN PAGINACIÓN--------------------------------------------
-
-
   //--------OBTENER CEDULA DE JS-------------
-  if(isset($_GET['cedula'])){
 
-    $cedula = $_GET['cedula'];
-
+  if(isset($_POST['cedula'])){
+    $cedula = $_POST['cedula'];
     $buscar = $conexion->query("SELECT * FROM alumnos WHERE alumno = '$cedula'");
-
   }
-
 
   //--------OBTENER OPCION DE JS-------------
+
   if(isset($_GET['actas'])){
-
     $acta = $_GET['actas'];
-
   }
 
 ?>
@@ -82,12 +37,8 @@
       var opciones = id.options[id.selectedIndex].text;
       var cedula = document.getElementById('cedula').value;
       window.location.href="evaluacion.php?cedula="+cedula+"&actas="+opciones+"";
+      document.getElementById('cedula').value = cedula;
     }
-
-    function setValue(id, texto){
-      document.getElementById(id).text = texto;
-    }
-    setValue('actas', opciones);
   </script>
 
 </head>
@@ -142,203 +93,82 @@
                       <td class="celdasTitulo">Docente</td>
                     </tr>
                     <tr>
-					            <td class="celdasInfo">
-					            	<form>
+                      <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                        <td class="celdasInfo" style="max-width: 120px; padding: 10px 50px;">
 					            		<div class="form-field">
 
-					            			<div class="col s8 m8 l8">
-
-                              <?php
-
-                                if(isset($_GET['cedula'])){
-                                  $cedula = $_GET['cedula'];
-
+					            			<?php
+                                if(isset($_POST['cedula'])){
+                                  $cedula = $_POST['cedula'];
                               ?>
-					                    <input type="text" name="cedula" id="cedula" value="<?php echo $cedula; ?>">
+                              <input type="text" name="cedula" id="cedula" value="<?php echo $cedula; ?>" required>
 
                             <?php }else{
                               echo '<input type="text" name="cedula" id="cedula" placeholder="Cedula">';
                             } ?>
-					                  </div>
 
-					                  <div class="col s4 m4 l4">
-				                    	<button class="btn" onclick="cedula()">Buscar</button>
-				                    </div>
+				                    	<input class="btn" type="submit" name="buscar" value="Buscar">
 
 				                  </div>
-					            	</form>
-					            </td>
-					            <td class="celdasInfo">
-					            	<form>
-					            		<div class="form-field">
-				                    <select class="browser-default" name="actas" id="actas" onchange="cambiar()">
-				                    	<option value="" disabled selected hidden>Actas</option>
-
-                              <?php
-
-                                while($valores = mysqli_fetch_array($buscar)){
-
-                                  echo '<option value="'.$valores['id'].'">'.utf8_encode($valores['acta']).'</option>';
-
-                                }
-
-                              ?>
-				                    </select>
-				                  </div>
-					            	</form>
-					            </td>
-					            <td class="celdasInfo">
-
-                        <?php
-
-                          if(isset($_GET['actas'])){
-
-                            $acta = $_GET['actas'];
-
-                            $actas = $conexion->query("SELECT * FROM actas WHERE acta = '$acta'");
-
-                            while($valores = mysqli_fetch_array($actas)){
-
-                              $docente = $valores['docente'];
-
-                        ?>
-
-                        <input type="text" name="docente" id="docente" value="<?php echo $docente; ?>" readonly>
-
-                        <?php
-                            }
-                            }
-                        ?>
-                      </td>
-					          </tr>
-					        </tbody>
-					      </table>
-          		</div>
-
-          	</div>
-
-          	<hr>
-
-          	<div class="row">
-          		<div class="col s12 m12 l12">
-          			<div class="container form1">
-
-          				<p class="center-align">Evaluación Docente</p>
-
-          				<br>
-
-          				<div class="row">
-          					<div class="col s12 m12 l12">
-
-                      <form method="POST" action="<?php echo $_SERVER['PHO_SELF']; ?>">
-                        <table class="striped centered responsive-table">
-                          <?php
-
-                            while($valores = mysqli_fetch_array($consulta2)){
-
-                              $titulo = $valores['titulo'];
-                              $id = $valores['id'];
-
-                          ?>
-                          <tr>
-                            <td colspan="2" class="celdasTitulo"><?php echo utf8_encode($titulo); ?></td>
-                            <input type="hidden" name="id" value="<?php echo $id; ?>">
-                          </tr>
-                            <tr>
-                              <td width="60" class="celdasInfo">
-                                <p>
-                                  <label>
-                                    <input class="with-gap"  name="votos" type="radio" value="5" required="true" />
-                                    <span>Muy Bueno</span>
-                                  </label>
-                                </p>
-
-                                <p>
-                                  <label>
-                                    <input class="with-gap" name="votos"  type="radio" value="4" required="true"/>
-                                    <span>Bueno</span>
-                                  </label>
-                                </p>
-
-                                <p>
-                                  <label>
-                                    <input class="with-gap"  name="votos" type="radio" value="3" required="true"/>
-                                    <span>Aceptable</span>
-                                  </label>
-                                </p>
-
-                                <p>
-                                  <label>
-                                    <input class="with-gap"  name="votos" type="radio" value="2" required="true"/>
-                                    <span>Deficiente</span>
-                                  </label>
-                                </p>
-
-                                <p>
-                                  <label>
-                                    <input class="with-gap"  name="votos" type="radio" value="1" required="true"/>
-                                    <span>Muy Deficiente</span>
-                                  </label>
-                                </p>
-                              </td>
-                            </tr>
-                            <tr>
-                              <?php
-
-                                if($num_pag!=$cantidad){
-
-                              ?>
-                              <td><input class="btn" type="submit" name="votar" value="Votar"></td>
-                              <?php
-
-                                }else{
-
-                                  echo '<td><input class="btn" type="submit" name="finalizar" value="Finalizar"></td>';
-
-                                }
-                              ?>
-                            </tr>
-                          <?php } ?>
-                        </table>
+                        </td>
                       </form>
+                      <form method="POST" action="votar.php" id="evaluacion">
+                        <td class="celdasInfo" style="max-width: 120px; padding: 10px 50px;">
+                            <div class="form-field">
+                              <select class="browser-default" name="actas" id="actas" onchange="cambiar()">
+                                <option value="" disabled selected hidden>Actas</option>
 
-                      <center>
-                        <div id="pagination">
+                                <?php
+                                  while($valores = mysqli_fetch_array($buscar)){
+                                    echo '<option value="'.$valores['id'].'">'.utf8_encode($valores['acta']).'</option>';
+                                  }
+                                ?>
+                              </select>
+
+                              <?php
+                              if(isset($_GET['actas'])){
+                                $acta = $_GET['actas'];
+                              ?>
+                              <input type="text" name="acta" id="acta" value="<?php echo $acta; ?>" hidden>
+                            <?php } ?>
+                            </div>
+
+                        </td>
+                        <td class="celdasInfo" style="max-width: 120px; padding: 10px 50px;">
+
                           <?php
-                            if(isset($_GET['cedula']) && isset($_GET['actas'])){
-
-                              $cedula=$_GET['cedula'];
-                              $opciones=$_GET['actas'];
-
-                              if($num_pag>1){
-                                echo '<a class="btn-small" href="evaluacion.php?cedula='.$cedula.'&actas='.$opciones.'&pag=1">Primero</a>';
-                                echo '<a class="btn-small" href="evaluacion.php?cedula='.$cedula.'&actas='.$opciones.'&pag=1'.($num_pag-1).'">Anterior</a>';
-                              }
-
-                              echo '<strong>'.$num_pag.' de '.$cantidad.'</strong>';
-
-                              if($num_pag<$cantidad){
-                                echo '<a class="btn-small" href="evaluacion.php?cedula='.$cedula.'&actas='.$opciones.'&pag='.($num_pag+1).'">Siguiente</a>';
-                                echo '<a class="btn-small" href="evaluacion.php?cedula='.$cedula.'&actas='.$opciones.'&pag='.$cantidad.'">Ultimo</a>';
-                              }
-                            }
-
+                            if(isset($_GET['actas'])){
+                              $acta = $_GET['actas'];
+                              $actas = $conexion->query("SELECT * FROM actas WHERE acta = '$acta'");
+                              while($valores = mysqli_fetch_array($actas)){
+                                $docente = $valores['docente'];
                           ?>
-                        </div>
-                      </center>
-          					</div>
-          				</div>
 
-          			</div>
-          		</div>
-          	</div>
+                          <input type="text" name="docente" id="docente" value="<?php echo $docente; ?>" readonly>
+                            <?php
+                              }
+                              }
+                            ?>
+
+                        </td>
+      					      </form>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="form-field center-align">
+                  <input class="btn" type="submit" name="evaluar" value="Evaluar" form="evaluacion">
+                </div>
+                </div>
+              </div>
+
+            </div>
 
           </div>
 
         </div>
 
-			</div>
-		</div>
+      </div>
+    </div>
 	</div>
 
 </body>

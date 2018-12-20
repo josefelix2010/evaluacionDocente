@@ -78,8 +78,6 @@ session_start();
 
 	<link rel="stylesheet" href="libs/materialize/css/materialize.min.css">
 
-	<link rel="stylesheet" href="libs/Quicksand">
-
   <script type="text/javascript">
 
   </script>

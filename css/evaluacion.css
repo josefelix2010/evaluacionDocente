@@ -54,7 +54,7 @@ body{
 
 .celdasTitulo{
 	color: #FFF !important;
-	background-color: #F93939;
+	background-color: #3582ff;
 	font-family: 'Quicksand' !important, sans-serif;
 }
 
@@ -92,13 +92,6 @@ body{
 	background-color: #3582ff !important;
 }
 
-#pagination .btn-small{
-	font-size: 8px !important;
-	padding: 1px 1px;
-	margin: 2px;
-	background-color: #F93939 !important;
-}
-
 .form1{
 	height: 100%;
 	max-height: 100%;
@@ -110,7 +103,7 @@ body{
 
 .form1 p{
 	font-family: 'Quicksand', sans-serif !important;
-	font-size: 18px !important;
+	font-size: 12px !important;
 	color: #000;
 	padding: 10px
 }

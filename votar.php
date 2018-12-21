@@ -61,10 +61,10 @@ $consulta2 = $conexion->query("SELECT * FROM topicos ORDER BY RAND() LIMIT 12");
 
                                             <br>
 
-                                            <div class="row">
-                                                <div class="col s12 m12 l12">
+                                            <form method="POST" action="pruebaForm.php">
+                                                <div class="row">
+                                                    <div class="col s12 m12 l12">
 
-                                                    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                                         <table class="striped responsive-table">
                                                             <thead>
                                                                 <tr class="hightlight">
@@ -77,28 +77,30 @@ $consulta2 = $conexion->query("SELECT * FROM topicos ORDER BY RAND() LIMIT 12");
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <?php 
+                                                                <?php
+                                                                    $count = 1;
                                                                     while($valores = mysqli_fetch_array($consulta2)){
+                                                                        
                                                                         echo '<tr>';
-                                                                        echo '<td>'.utf8_encode($valores['titulo']).'</td>';
-                                                                        echo '<td width="35"><label><input type="radio" name="'.$valores['id'].'" value="mb" required="required"><span></span></label></td>';
-                                                                        echo '<td width="35"><label><input type="radio" name="'.$valores['id'].'" value="b" required><span></span></label></td>';
-                                                                        echo '<td width="35"><label><input type="radio" name="'.$valores['id'].'" value="a" required><span></span></label></td>';
-                                                                        echo '<td width="35"><label><input type="radio" name="'.$valores['id'].'" value="d" required><span></span></label></td>';
-                                                                        echo '<td width="35"><label><input type="radio" name="'.$valores['id'].'" value="md" required><span></span></label></td>';
+                                                                        echo '<td><input type="text" name="tabla['.$count.'][titulo]" value="'.utf8_encode($valores['titulo']).'" readonly></td>';
+                                                                        echo '<td width="35"><label><input type="radio" name="tabla['.$count.'][opcion]" value="mb" required><span></span></label></td>';
+                                                                        echo '<td width="35"><label><input type="radio" name="tabla['.$count.'][opcion]" value="mb" required><span></span></label></td>';
+                                                                        echo '<td width="35"><label><input type="radio" name="tabla['.$count.'][opcion]" value="mb" required><span></span></label></td>';
+                                                                        echo '<td width="35"><label><input type="radio" name="tabla['.$count.'][opcion]" value="mb" required><span></span></label></td>';
+                                                                        echo '<td width="35"><label><input type="radio" name="tabla['.$count.'][opcion]" value="mb" required><span></span></label></td>';
                                                                         echo '</tr>';
+                                                                        $count++;
                                                                     }
                                                                 ?>
                                                             </tbody>
                                                         </table>
-                                                    </form>
-
                                                 </div>
                                             </div>
 
-                                            <div class="form-field center-align">
-                                                <input class="btn" style="margin: 20px;" type="submit" name="finalizar" value="Finalizar">
-                                            </div>
+                                                <div class="form-field center-align">
+                                                    <input class="btn" style="margin: 20px;" type="submit" name="finalizar" value="Finalizar">
+                                                </div>
+                                            </form>
 
                                         </div>
                                     </div>

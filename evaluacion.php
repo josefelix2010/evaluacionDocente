@@ -2,6 +2,12 @@
 
 include('includes/conectar.php');
 
+if(isset($_POST['buscar'])){
+    $cedula = $_POST['cedula'];
+    $buscarCI = $conexion->query("SELECT asignatura FROM actas act INNER JOIN alumnos alu ON act.acta = alu.acta WHERE alu.alumno = '$cedula'");
+    $cont = 1;
+}
+
 ?>
 
 
@@ -19,7 +25,20 @@ include('includes/conectar.php');
         <link rel="stylesheet" href="libs/Quicksand">
 
         <script type="text/javascript">
-
+            function cambiar(){
+                var id = document.getElementById('asignatura');
+                var opciones = id.options[id.selectedIndex].text;
+                var cedula = document.getElementById('cedula').value;
+                window.location.href="evaluacion.php?cedula="+cedula+"&asignatura="+opciones+"";
+            }
+            
+            function evaluar(){
+                var id = document.getElementById('asignatura');
+                var opciones = id.options[id.selectedIndex].text;
+                var cedula = document.getElementById('cedula').value;
+                var docente = document.getElementById('docente').value;
+                window.location.href="votar.php?asignatura="+opciones+"&docente="+docente+"";
+            }
         </script>
 
     </head>
@@ -70,7 +89,7 @@ include('includes/conectar.php');
                                         <tbody>
                                             <tr>
                                                 <td class="celdasTitulo">Cédula</td>
-                                                <td class="celdasTitulo">Acta</td>
+                                                <td class="celdasTitulo">Asignatura</td>
                                                 <td class="celdasTitulo">Docente</td>
                                             </tr>
                                             <tr>
@@ -78,8 +97,18 @@ include('includes/conectar.php');
                                                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                                                     <td class="celdasInfo" style="max-width: 120px; padding: 10px 50px;">
                                                         <div class="form-field">
-
-                                                            <input type="text" name="cedula" id="cedula" value="" required>
+                                                            
+                                                            <?php
+                                                                if(isset($_POST['cedula'])){
+                                                                    $cedulaP = $_POST['cedula'];
+                                                                    echo '<input type="text" name="cedula" id="cedula" value="'.$cedulaP.'" required>';
+                                                                }elseif(isset($_GET['cedula'])){
+                                                                    $cedulaG = $_GET['cedula'];
+                                                                    echo '<input type="text" name="cedula" id="cedula" value="'.$cedulaG.'" required>';
+                                                                }else{
+                                                                    echo '<input type="text" name="cedula" id="cedula" value="" required>';
+                                                                }
+                                                            ?>
 
                                                             <input class="btn" type="submit" name="buscar" value="Buscar">
 
@@ -89,18 +118,49 @@ include('includes/conectar.php');
                                                 
                                                 <form method="POST" action="votar.php" id="evaluacion">
                                                     <td class="celdasInfo" style="max-width: 120px; padding: 10px 50px;">
+                                                        
                                                         <div class="form-field">
-                                                            <select class="browser-default" name="actas" id="actas" onchange="cambiar()">
-                                                                <option value="" disabled selected hidden>Actas</option>
+                                                            
+                                                            <select class="browser-default" name="asignatura" id="asignatura" onchange="cambiar()">
+                                                            
+                                                            <?php
+                                                                if(isset($_GET['asignatura'])){
+                                                                    $asignatura = $_GET['asignatura'];
+                                                                    
+                                                                    echo '<option value="" disabled selected hidden>'.$asignatura.'</option>';
+                                                                    
+                                                                }else{
+                                                                    
+                                                                    echo '<option value="" disabled selected hidden>Materia</option>';
+                                                                    
+                                                                }
+                                                            ?>
+                                                                
+                                                                <?php
+                                                                    $cont = 1;
+                                                                    while($valores = mysqli_fetch_array($buscarCI)){
+                                                                        echo '<option value="'.$cont.'">'.utf8_encode($valores['asignatura']).'</option>';
+                                                                        $cont++;
+                                                                    }
+                                                                ?>
+                                                                
                                                             </select>
 
-                                                            <input type="text" name="acta" id="acta" value="<?php echo $acta; ?>" hidden>
                                                         </div>
 
                                                     </td>
                                                     <td class="celdasInfo" style="max-width: 120px; padding: 10px 50px;">
-
-                                                        <input type="text" name="docente" id="docente" value="" readonly>
+                                                        
+                                                        <?php
+                                                            if(isset($_GET['asignatura'])){
+                                                                $asignatura = $_GET['asignatura'];
+                                                                $buscarAsig = $conexion->query("SELECT docente FROM actas WHERE asignatura='$asignatura'");
+                                                                while($valor = mysqli_fetch_array($buscarAsig)){
+                                                                    echo '<input type="text" name="docente" id="docente" value="'.$valor['docente'].'" readonly>';
+                                                                }
+                                                            }
+                                                        ?>
+                                                        
                                                     </td>
                                                 </form>
                                                 
@@ -109,7 +169,7 @@ include('includes/conectar.php');
                                     </table>
                                     <br>
                                     <div class="form-field center-align">
-                                        <input class="btn" type="submit" name="evaluar" value="Evaluar" form="evaluacion">
+                                        <input class="btn" type="submit" name="evaluar" value="Evaluar" onclick="evaluar()">
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +181,6 @@ include('includes/conectar.php');
                 </div>
 
             </div>
-        </div>
         </div>
 
     </body>

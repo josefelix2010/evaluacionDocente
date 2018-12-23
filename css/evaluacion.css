@@ -56,6 +56,9 @@ body{
 	color: #FFF !important;
 	background-color: #3582ff;
 	font-family: 'Quicksand' !important, sans-serif;
+    text-align: center;
+    border-radius: 0px;
+    padding: 5px;
 }
 
 .celdasInfo{
@@ -99,11 +102,12 @@ body{
 	margin-top: 2% !important;
 	margin-bottom: 2% !important;
 	border-radius: 5px;
+    padding: 5px 10px;
 }
 
-.form1 p{
+.form1 input[type=text], p{
 	font-family: 'Quicksand', sans-serif !important;
 	font-size: 12px !important;
 	color: #000;
-	padding: 10px
+    border-bottom: 1px;
 }

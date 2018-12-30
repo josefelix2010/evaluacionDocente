@@ -60,40 +60,73 @@ $consulta2 = $conexion->query("SELECT * FROM topicos ORDER BY RAND() LIMIT 12");
                                             <p class="center-align" style="font-size: 16px !important;">Evaluación Docente</p>
 
                                             <br>
-                                            
-                                            <div class="row">
-                                                
-                                                <div class="col s7 m7 l7">
-                                                    
-                                                    <table class="responsive-table">
-                                                        <thead>
-                                                            <th class="celdasTitulo">Docente</th>
-                                                            <th class="celdasTitulo">Asignatura</th>
-                                                        </thead>
-                                                        <tbody>
-                                                            
-                                                            <?php
-                                                            
-                                                                if(isset($_GET['docente']) && isset($_GET['asignatura'])){
-                                                                    $docente = $_GET['docente'];
-                                                                    $asignatura = $_GET['asignatura'];
-                                                            ?>
-                                                            <td><?php echo $docente; ?></td>
-                                                            <td><?php echo $asignatura; ?></td>
-                                                            
-                                                            <?php
-                                                                }
-                                                            ?>
-                                                        </tbody>
-                                                    </table>
-                                                    
-                                                </div>
-                                                
-                                            </div>
 
-                                            <div class="row">
-                                                <div class="col s12 m12 l12">
-                                                    <form method="POST" action="pruebaForm.php">
+                                            <form method="POST" action="votaciones.php">
+                                                <div class="row">
+
+                                                    <div class="col s6 m6 l6">
+
+                                                        <table class="responsive-table">
+                                                            <tr>
+                                                                <th class="celdasTitulo">Asignatura</th>
+                                                            </tr>
+                                                            <tr>
+
+                                                                <?php
+
+                                                                if(isset($_GET['asignatura'])){
+                                                                    $asignatura = $_GET['asignatura'];
+                                                                    echo '<td class="celdasInfo"><input type="text" name="asignatura" value="'.$asignatura.'" readonly></td>';
+                                                                }else{
+                                                                    echo '<td class="celdasInfo"><input type="text" name="asignatura" value=""></td>';
+                                                                }
+                                                                ?>
+                                                            </tr>
+                                                            <tr>
+                                                                <th class="celdasTitulo">Docente</th>
+                                                            </tr>
+                                                            <tr>
+
+                                                                <?php
+
+                                                                if(isset($_GET['docente'])){
+                                                                    $docente = $_GET['docente'];
+                                                                    echo '<td class="celdasInfo"><input type="text" name="docente" value="'.$docente.'" readonly></td>';
+                                                                }else{
+                                                                    echo '<td class="celdasInfo"><input type="text" name="docente" value=""></td>';
+                                                                }
+                                                                ?>
+                                                            </tr>
+                                                        </table>
+
+                                                    </div>
+
+                                                    <div class="col s6 m6 l6">
+
+                                                        <table class="responsive-table">
+                                                            <thead>
+                                                                <th class="celdasTitulo">Instrucciones</th>
+                                                            </thead>
+                                                            <tbody>
+
+                                                                <td class="celdasInst">
+                                                                    Para calificar al docente se sigue la siguiente escala:<br>
+                                                                    5 -> MUY BUENO<br>
+                                                                    4 -> BUENO<br>
+                                                                    3 -> ACEPTABLE<br>
+                                                                    2 -> DEFICIENTE<br>
+                                                                    1 -> MUY DEFICIENTE<br>
+                                                                </td>
+
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col s12 m12 l12">
 
                                                         <table class="striped responsive-table">
                                                             <thead>
@@ -108,28 +141,28 @@ $consulta2 = $conexion->query("SELECT * FROM topicos ORDER BY RAND() LIMIT 12");
                                                             </thead>
                                                             <tbody>
                                                                 <?php
-                                                                    $count = 1;
-                                                                    while($valores = mysqli_fetch_array($consulta2)){
-                                                                        
-                                                                        echo '<tr>';
-                                                                        echo '<td class="celdasInfo"><textarea rows="2" col="50" name="tabla['.$count.'][titulo]" readonly>'.utf8_encode($valores['titulo']).'</textarea></td>';
-                                                                        echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="mb" required><span></span></label></td>';
-                                                                        echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="b" required><span></span></label></td>';
-                                                                        echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="a" required><span></span></label></td>';
-                                                                        echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="d" required><span></span></label></td>';
-                                                                        echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="md" required><span></span></label></td>';
-                                                                        echo '</tr>';
-                                                                        $count++;
-                                                                    }
+                                                                $count = 1;
+                                                                while($valores = mysqli_fetch_array($consulta2)){
+
+                                                                    echo '<tr>';
+                                                                    echo '<td class="celdasInfo"><textarea rows="2" col="50" name="tabla['.$count.'][titulo]" readonly>'.utf8_encode($valores['titulo']).'</textarea></td>';
+                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="mb" required><span></span></label></td>';
+                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="b" required><span></span></label></td>';
+                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="a" required><span></span></label></td>';
+                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="d" required><span></span></label></td>';
+                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="md" required><span></span></label></td>';
+                                                                    echo '</tr>';
+                                                                    $count++;
+                                                                }
                                                                 ?>
                                                             </tbody>
                                                         </table>
-                                                    <div class="form-field center-align">
-                                                        <input class="btn" style="margin: 20px;" type="submit" name="finalizar" value="Finalizar">
+                                                        <div class="form-field center-align">
+                                                            <input class="btn" style="margin: 20px;" type="submit" name="finalizar" value="Finalizar">
+                                                        </div>
                                                     </div>
-                                                </form>
-                                            </div>
-                                        </div>
+                                                </div>
+                                            </form>
 
 
                                         </div>
@@ -143,6 +176,7 @@ $consulta2 = $conexion->query("SELECT * FROM topicos ORDER BY RAND() LIMIT 12");
                     </div>
                 </div>
             </div>
+        </div>
 
-            </body>
-        </html>
+    </body>
+</html>

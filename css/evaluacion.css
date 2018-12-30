@@ -17,6 +17,17 @@ body{
 	box-shadow: 0px 0px 50px 2px #000;
 }
 
+.form2{
+	background: rgb(0, 0, 0, .4);
+	margin-top: 2% !important;
+	margin-bottom: 2% !important;
+	border-radius: 5px;
+	-webkit-box-shadow: 0px 0px 50px 2px #000;
+	-moz-box-shadow: 0px 0px 50px 2px #000;
+	-ms-box-shadow: 0px 0px 50px 2px #000;
+	-o-box-shadow: 0px 0px 50px 2px #000;
+	box-shadow: 0px 0px 50px 2px #000;
+}
 
 #cabecera{
 	text-align: right !important;
@@ -25,15 +36,20 @@ body{
 .form .card{
 	background: rgb(0, 0, 0, .4) !important;
 	margin: 0px 0px;
-	overflow-y: scroll;
-	max-height: 570px;
+    max-height: 570px;
+    overflow-y: scroll;
 }
 
-.form .card-action{
+.form2 .card{
+    background: rgb(0, 0, 0, .4) !important;
+	margin: 0px 0px;
+}
+
+.form .card-action, .form2 .card-action{
 	background-color: #3582ff !important;
 }
 
-.form .card-action p{
+.form .card-action p, .form2 .card-action p{
 	font-family: 'Quicksand', sans-serif !important;
 	font-size: 14px !important;
 	color: #FFF;
@@ -52,6 +68,14 @@ body{
 	padding: 10px;
 }
 
+.form2 .card-content #exito{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 24px;
+    background-color: #FFFFFF;
+    padding: 24px;
+    border-radius: 5px;
+}
+
 .celdasTitulo{
 	color: #FFF !important;
 	background-color: #3582ff;
@@ -65,14 +89,15 @@ body{
 	color: #000;
 	background-color: #FFF;
 	font-family: 'Quicksand', sans-serif;
+    font-size: 14px;
+    text-align: center;
 }
 
 .celdasInst{
 	color: #000;
 	background-color: #FFF;
 	font-family: 'Quicksand', sans-serif;
-	font-size: 12px;
-	padding: 5px;
+    font-size: 11px;
 }
 
 .form input[type=text]{
@@ -105,9 +130,25 @@ body{
     padding: 5px 10px;
 }
 
-.form1 input[type=text], p{
+.form1 input[type=text]{
 	font-family: 'Quicksand', sans-serif !important;
 	font-size: 12px !important;
 	color: #000;
-    border-bottom: 1px;
+    border-bottom: 0px !important;
+    margin-bottom: 0px !important;
+    height: 20px !important;
+    text-align: center;
+}
+
+.form1 tablitas{
+    margin: 5px;
+}
+
+.form1 textarea{
+    resize: none;
+    font-family: 'Quicksand', sans-serif !important;
+	font-size: 12px !important;
+	color: #000;
+    border-style: none;
+    outline: none;
 }

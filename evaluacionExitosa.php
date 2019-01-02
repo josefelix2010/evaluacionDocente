@@ -8,6 +8,12 @@
         <link rel="stylesheet" href="css/evaluacion.css">
 
         <link rel="stylesheet" href="libs/materialize/css/materialize.min.css">
+        
+        <script type="text/javascript">
+            function volver(){
+                window.location.href="evaluacion.php";
+            }
+        </script>
 
     </head>
     <body>
@@ -48,8 +54,15 @@
                                         <div class="container form2">
 
                                             <p class="center-align" id="exito">Evaluación realizada con éxito.</p>
-
+                                            
                                         </div>
+                                            
+                                        <br>
+                                            
+                                        <div class="form-field center-align">
+                                            <input class="btn" style="background-color: #3582ff !important;" type="submit" name="volver" value="Volver" onclick="volver()">
+                                        </div>
+
                                     </div>
                                 </div>
 

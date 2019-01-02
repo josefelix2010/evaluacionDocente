@@ -3,9 +3,17 @@
 include('includes/conectar.php');
 
 if(isset($_POST['buscar'])){
+    
     $cedula = $_POST['cedula'];
-    $buscarCI = $conexion->query("SELECT asignatura FROM actas act INNER JOIN alumnos alu ON act.acta = alu.acta WHERE alu.alumno = '$cedula'");
+    
+    session_start();
+    ob_start();
+    
+    $_SESSION['cedula'] = $cedula;
+    
+    $buscarCI = $conexion->query("SELECT asignatura FROM actas act INNER JOIN alumnos alu ON act.acta = alu.acta WHERE alu.alumno = '$cedula' AND alu.evaluado = '0'");
     $cont = 1;
+    
 }
 
 ?>
@@ -37,7 +45,7 @@ if(isset($_POST['buscar'])){
                 var opciones = id.options[id.selectedIndex].text;
                 var cedula = document.getElementById('cedula').value;
                 var docente = document.getElementById('docente').value;
-                window.location.href="votar.php?asignatura="+opciones+"&docente="+docente+"";
+                window.location.href="votar.php?cedula="+cedula+"&asignatura="+opciones+"&docente="+docente+"";
             }
         </script>
 
@@ -99,7 +107,10 @@ if(isset($_POST['buscar'])){
                                                         <div class="form-field">
                                                             
                                                             <?php
-                                                                if(isset($_POST['cedula'])){
+                                                                if(isset($_SESSION['cedula'])){
+                                                                    $cedulaS = $_SESSION['cedula'];
+                                                                    echo '<input type="text" name="cedula" id="cedula" value="'.$cedulaS.'" required>';
+                                                                }elseif(isset($_POST['cedula'])){
                                                                     $cedulaP = $_POST['cedula'];
                                                                     echo '<input type="text" name="cedula" id="cedula" value="'.$cedulaP.'" required>';
                                                                 }elseif(isset($_GET['cedula'])){

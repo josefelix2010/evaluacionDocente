@@ -2,48 +2,56 @@
 
 include('includes/conectar.php');
 
+session_start();
+ob_start();
+
+$alumno = $_SESSION['cedula'];
 $tabla = $_POST['tabla'];
 $docente = $_POST['docente'];
+$asignatura = $_POST['asignatura'];
 $act = "";
 $ins = "";
 
-foreach($tabla as $fila){
-    /*echo $docente.' ';
+$buscarActa = $conexion->query("SELECT acta FROM actas WHERE asignatura='$asignatura' AND docente='$docente'");
+
+while($valor = mysqli_fetch_array($buscarActa)){
+
+    $acta = $valor['acta'];
+    
+    foreach($tabla as $fila){
+        /*echo $docente.' ';
         echo $fila['titulo'].' '. $fila['opcion'];
         echo '<br>';*/
 
-    $topico = $fila['titulo'];
-    $opcion = $fila['opcion'];
+        $topico = $fila['titulo'];
+        $opcion = $fila['opcion'];
+        $titulo = utf8_decode($topico);
 
-    $buscarActa = $conexion->query("SELECT acta FROM actas WHERE docente='$docente'");
+        //echo $docente.' '.$acta.' '.$asignatura.' '.$topico.' '.$opcion.'<br>';
 
-    while($valor = mysqli_fetch_array($buscarActa)){
-
-        $acta = $valor['acta'];
-
-        $buscarResp = $conexion->query("SELECT * FROM respuestas WHERE topico = '$topico' AND acta = '$acta' AND docente = '$docente'");
+        $buscarResp = $conexion->query("SELECT * FROM respuestas WHERE topico = '$titulo' AND acta = '$acta'");
 
         if($valores = mysqli_fetch_array($buscarResp)){
 
             if($opcion=='mb'){
 
-                $act = $conexion->query("UPDATE respuestas SET muy_bueno = muy_bueno + 1, AND total = total + 1 WHERE topico='$topico' AND acta='$acta' AND docente='$docente'");
+                $act = $conexion->query("UPDATE respuestas SET muy_bueno=muy_bueno+1, total=total+1 WHERE topico='$titulo' AND acta='$acta'");
 
             }elseif($opcion=='b'){
 
-                $act = $conexion->query("UPDATE respuestas SET bueno = bueno + 1, AND total = total + 1 WHERE topico='$topico' AND acta='$acta' AND docente='$docente'");
+                $act = $conexion->query("UPDATE respuestas SET bueno=bueno+1, total=total+1 WHERE topico='$titulo' AND acta='$acta'");
 
             }elseif($opcion=='a'){
 
-                $act = $conexion->query("UPDATE respuestas SET aceptable = aceptable + 1, AND total = total + 1 WHERE topico='$topico' AND acta='$acta' AND docente='$docente'");
+                $act = $conexion->query("UPDATE respuestas SET aceptable=aceptable+1, total=total+1 WHERE topico='$titulo' AND acta='$acta'");
 
             }elseif($opcion=='d'){
 
-                $act = $conexion->query("UPDATE respuestas SET deficiente = deficiente + 1, AND total = total + 1 WHERE topico='$topico' AND acta='$acta' AND docente='$docente'");
+                $act = $conexion->query("UPDATE respuestas SET deficiente=deficiente+1, total=total+1 WHERE topico='$titulo' AND acta='$acta'");
 
             }elseif($opcion=='md'){
 
-                $act = $conexion->query("UPDATE respuestas SET muy_deficiente = muy_deficiente + 1, AND total = total + 1 WHERE topico='$topico' AND acta='$acta' AND docente='$docente'");
+                $act = $conexion->query("UPDATE respuestas SET muy_deficiente=muy_deficiente+1, total=total+1 WHERE topico='$titulo' AND acta='$acta'");
 
             }
 
@@ -51,32 +59,37 @@ foreach($tabla as $fila){
 
             if($opcion=="mb"){
 
-                $ins = $conexion->query("INSERT INTO respuestas (topico, acta, docente, muy_bueno, bueno, aceptable, deficiente, muy_deficiente, total) VALUES ('$topico', '$acta', '$docente', 1, 0, 0, 0, 0, 1)");
+                $ins = $conexion->query("INSERT INTO respuestas (topico, acta, docente, muy_bueno, bueno, aceptable, deficiente, muy_deficiente, total) VALUES ('$titulo', '$acta', '$docente', 1, 0, 0, 0, 0, 1)");
 
             }elseif($opcion=='b'){
 
-                $ins = $conexion->query("INSERT INTO respuestas (topico, acta, docente, muy_bueno, bueno, aceptable, deficiente, muy_deficiente, total) VALUES ('$topico', '$acta', '$docente', 0, 1, 0, 0, 0, 1)");
+                $ins = $conexion->query("INSERT INTO respuestas (topico, acta, docente, muy_bueno, bueno, aceptable, deficiente, muy_deficiente, total) VALUES ('$titulo', '$acta', '$docente', 0, 1, 0, 0, 0, 1)");
 
             }elseif($opcion=='a'){
 
-                $ins = $conexion->query("INSERT INTO respuestas (topico, acta, docente, muy_bueno, bueno, aceptable, deficiente, muy_deficiente, total) VALUES ('$topico', '$acta', '$docente', 0, 0, 1, 0, 0, 1)");
+                $ins = $conexion->query("INSERT INTO respuestas (topico, acta, docente, muy_bueno, bueno, aceptable, deficiente, muy_deficiente, total) VALUES ('$titulo', '$acta', '$docente', 0, 0, 1, 0, 0, 1)");
 
             }elseif($opcion=='d'){
 
-                $ins = $conexion->query("INSERT INTO respuestas (topico, acta, docente, muy_bueno, bueno, aceptable, deficiente, muy_deficiente, total) VALUES ('$topico', '$acta', '$docente', 0, 0, 0, 1, 0, 1)");
+                $ins = $conexion->query("INSERT INTO respuestas (topico, acta, docente, muy_bueno, bueno, aceptable, deficiente, muy_deficiente, total) VALUES ('$titulo', '$acta', '$docente', 0, 0, 0, 1, 0, 1)");
 
             }elseif($opcion=='md'){
 
-                $ins = $conexion->query("INSERT INTO respuestas (topico, acta, docente, muy_bueno, bueno, aceptable, deficiente, muy_deficiente, total) VALUES ('$topico', '$acta', '$docente', 0, 0, 0, 0, 1, 1)");
+                $ins = $conexion->query("INSERT INTO respuestas (topico, acta, docente, muy_bueno, bueno, aceptable, deficiente, muy_deficiente, total) VALUES ('$titulo', '$acta', '$docente', 0, 0, 0, 0, 1, 1)");
 
             }
+
 
         }
 
     }
-    
-    header('locacion: evaluacionExitosa.php');
+
+    $conexion->query("UPDATE alumnos SET evaluado = '1' WHERE alumno = '$alumno' AND acta = '$acta'");
     
 }
+
+header('location: evaluacionExitosa.php');
+
+session_destroy();
 
 ?>

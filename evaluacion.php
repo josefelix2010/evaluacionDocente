@@ -2,14 +2,15 @@
 
 include('includes/conectar.php');
 
+session_start();
+ob_start();
+
 if(isset($_POST['buscar'])){
     
-    $cedula = $_POST['cedula'];
-    
-    session_start();
-    ob_start();
+    $cedula = $_POST['cedula'];    
     
     $_SESSION['cedula'] = $cedula;
+    $_SESSION['sesionActiva'] = "Activa";
     
     $buscarCI = $conexion->query("SELECT asignatura FROM actas act INNER JOIN alumnos alu ON act.acta = alu.acta WHERE alu.alumno = '$cedula' AND alu.evaluado = '0'");
     $cont = 1;

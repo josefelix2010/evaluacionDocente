@@ -5,7 +5,13 @@ ob_start();
 
 include('includes/conectar.php');
 
-$consulta2 = $conexion->query("SELECT * FROM topicos ORDER BY RAND() LIMIT 12");
+if($_SESSION['sesionActiva'] != "Activa"){
+    header('location: evaluacion.php');
+}else{
+
+    $consulta2 = $conexion->query("SELECT * FROM topicos ORDER BY RAND() LIMIT 12");
+
+}
 
 ?>
 

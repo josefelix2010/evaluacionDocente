@@ -2,7 +2,44 @@
 
 include('includes/conectar.php');
 
-$consulta = $conexion->query("SELECT * FROM topicos");
+session_start();
+ob_start();
+
+if(isset($_SESSION['preguntas'])){
+    foreach($_SESSION['preguntas'] as $preguntas){
+        echo $preguntas.'<br>';
+    }
+}
+
+session_unset();
+session_destroy();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*$consulta = $conexion->query("SELECT * FROM topicos");
 
 $numRegistros = mysqli_num_rows($consulta);
 
@@ -90,4 +127,6 @@ $cantidad = ceil($numRegistros/$regXPagina);
   </center><br>
 
 </body>
-</html>
+</html>*/
+
+?>

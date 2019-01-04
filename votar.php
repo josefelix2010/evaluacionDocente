@@ -7,10 +7,6 @@ include('includes/conectar.php');
 
 if($_SESSION['sesionActiva'] != "Activa"){
     header('location: evaluacion.php');
-}else{
-
-    $consulta2 = $conexion->query("SELECT * FROM topicos ORDER BY RAND() LIMIT 12");
-
 }
 
 ?>
@@ -149,10 +145,10 @@ if($_SESSION['sesionActiva'] != "Activa"){
                                                             <tbody>
                                                                 <?php
                                                                 $count = 1;
-                                                                while($valores = mysqli_fetch_array($consulta2)){
+                                                                foreach($_SESSION['preguntas'] as $preg){
 
                                                                     echo '<tr>';
-                                                                    echo '<td class="celdasInfo"><textarea rows="2" col="50" name="tabla['.$count.'][titulo]" readonly>'.utf8_encode($valores['titulo']).'</textarea></td>';
+                                                                    echo '<td class="celdasInfo"><textarea rows="2" col="50" name="tabla['.$count.'][titulo]" readonly>'.$preg.'</textarea></td>';
                                                                     echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="mb" required><span></span></label></td>';
                                                                     echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="b" required><span></span></label></td>';
                                                                     echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="a" required><span></span></label></td>';

@@ -5,15 +5,22 @@ include('includes/conectar.php');
 session_start();
 ob_start();
 
+if(isset($_SESSION['sesionActiva'])){
+    header('location: votar.php?cedula='.$_SESSION['cedula'].'&asignatura='.$_SESSION['asignatura'].'&docente='.$_SESSION['docente'].'');
+}
+
 if(isset($_POST['evaluar'])){
 
-    
+    if(isset($_POST['asignaturaIn'])){
         
-        $cedula = $_POST['cedula'];
-        $asignatura = $_POST['asignaturaIn'];
-        $docente = $_POST['docente'];
+        $_SESSION['cedula'] = $_POST['cedula'];
+        $_SESSION['asignatura'] = $_POST['asignaturaIn'];
+        $_SESSION['docente'] = $_POST['docente'];
+        
+        $cedula = $_SESSION['cedula'];
+        $asignatura = $_SESSION['asignatura'];
+        $docente = $_SESSION['docente'];
 
-        $_SESSION['cedula'] = $cedula;
         $_SESSION['sesionActiva'] = "Activa";
 
         $consulta2 = $conexion->query("SELECT * FROM topicos ORDER BY RAND() LIMIT 12");
@@ -32,7 +39,14 @@ if(isset($_POST['evaluar'])){
         $_SESSION['preguntas'] = $preguntas;
 
         header('location: votar.php?cedula='.$cedula.'&asignatura='.$asignatura.'&docente='.$docente.'');
-    
+        
+    }else{
+        
+        echo '<script type="text/javascript">';
+        echo    'alert("Debe seleccionar una materia para continuar.")';
+        echo '</script>';
+        
+    }
 
 }
 
@@ -178,7 +192,7 @@ if(isset($_POST['evaluar'])){
                                                                         $cont++;
                                                                     }
                                                                     
-                                                                    echo '<input type="text" name="asignaturaIn" id="asignaturaIn" value="'.$asignatura.'" hidden>';
+                                                                    echo '<input type="text" name="asignaturaIn" id="asignaturaIn" value="'.$asignatura.'" hidden required>';
 
                                                                 }else{
 
@@ -207,7 +221,7 @@ if(isset($_POST['evaluar'])){
                                                             }
 
                                                         }else{
-                                                            echo '<input type="text" name="docente" id="docente" value="" readonly>';
+                                                            echo '<input type="text" name="docente" id="docente" value="" readonly required>';
                                                         }
                                                         ?>
 
@@ -218,7 +232,15 @@ if(isset($_POST['evaluar'])){
                                         </table>
                                         <br>
                                         <div class="form-field center-align">
-                                            <input class="btn" type="submit" name="evaluar" value="Evaluar">
+                                            <?php
+                                            
+                                            if(isset($_GET['asignatura'])){
+                                                echo '<input class="btn" type="submit" name="evaluar" value="Evaluar">';
+                                            }else{
+                                                echo '<input class="btn" type="submit" name="evaluar" value="Seleccione una materia" disabled>';
+                                            }
+                                            
+                                            ?>
                                         </div>
                                     </form>
                                 </div>

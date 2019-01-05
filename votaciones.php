@@ -13,10 +13,9 @@ if($_SESSION['sesionActiva'] != "Activa"){
     $tabla = $_POST['tabla'];
     $docente = $_POST['docente'];
     $asignatura = $_POST['asignatura'];
-    $act = "";
-    $ins = "";
 
-    $buscarActa = $conexion->query("SELECT acta FROM actas WHERE asignatura='$asignatura' AND docente='$docente'");
+    //$buscarActa = $conexion->query("SELECT acta FROM actas WHERE asignatura='$asignatura' AND docente='$docente'");
+    $buscarActa = $conexion->query("SELECT * FROM actas act INNER JOIN alumnos alu ON act.acta = alu.acta WHERE act.asignatura = '$asignatura' AND act.docente = '$docente' AND alu.alumno = '$alumno'");
 
     while($valor = mysqli_fetch_array($buscarActa)){
 
@@ -24,8 +23,8 @@ if($_SESSION['sesionActiva'] != "Activa"){
 
         foreach($tabla as $fila){
             /*echo $docente.' ';
-        echo $fila['titulo'].' '. $fila['opcion'];
-        echo '<br>';*/
+            echo $fila['titulo'].' '. $fila['opcion'];
+            echo '<br>';*/
 
             $topico = $fila['titulo'];
             $opcion = $fila['opcion'];
@@ -93,9 +92,6 @@ if($_SESSION['sesionActiva'] != "Activa"){
     }
 
     header('location: evaluacionExitosa.php');
-
-    session_unset();
-    session_destroy();
 
 }
 

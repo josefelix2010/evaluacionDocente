@@ -1,26 +1,30 @@
 <?php
 
 session_start();
+ob_start();
 
 include('includes/conectar.php');
 
-$sql = $conexion->query("SELECT * FROM usuarios");
+if($_SESSION['sesionAbierta'] != 'Activa'){
+    
+    header('location: index.php');
+    
+}else{
 
-if(isset($_POST['agregar'])){
 
-    header('location:agregarUser.php');
+    $sql = $conexion->query("SELECT * FROM usuarios");
 
-}
+    if(isset($_POST['agregar'])){
+        header('location:agregarUser.php');
+    }
 
-if(isset($_POST['modificar'])){
+    if(isset($_POST['modificar'])){
+        header('location:editarUser.php');
+    }
 
-    header('location:editarUser.php');
-
-}
-
-if(isset($_POST['volver'])){
-
-    header('location:inicio.php');
+    if(isset($_POST['volver'])){
+        header('location:inicio.php');
+    }
 
 }
 
@@ -115,8 +119,8 @@ if(isset($_POST['volver'])){
                                                 <input class="btn" type="submit" name="volver" value="Volver">
                                             </div>
 
-                                            </form>
                                         </div>
+                                    </form>
 
                                 </div>
 
@@ -127,6 +131,7 @@ if(isset($_POST['volver'])){
                     </div>
                 </div>
             </div>
+        </div>
 
-            </body>
-        </html>
+    </body>
+</html>

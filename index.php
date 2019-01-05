@@ -5,6 +5,10 @@ include('includes/conectar.php');
 session_start();
 ob_start();
 
+if(isset($_SESSION['sesionAbierta'])){
+    header('Location: inicio.php');
+}
+
 if(isset($_POST['login'])){
 
     $user = $_POST['usuario'];
@@ -20,19 +24,10 @@ if(isset($_POST['login'])){
         header('Location: inicio.php');
 
     }else{
-
         echo '<script type="text/javascript">';
         echo 'alert("Usuario o contraseña incorrecta.");';
         echo '</script>';
-
     }
-
-
-}
-
-if(isset($_POST['olvido'])){
-
-    header('Location: recuperar.php');
 
 }
 
@@ -52,6 +47,12 @@ if(isset($_POST['olvido'])){
         <link rel="stylesheet" href="fonts/Quicksand">
 
         <link rel="stylesheet" href="fonts/Nunito">
+        
+        <script type="text/javascript">
+            function olvido(){
+                window.location.href='recuperar.php';
+            }
+        </script>
 
     </head>
     <body>
@@ -86,10 +87,15 @@ if(isset($_POST['olvido'])){
 
                             <div class="form-field center-align">
                                 <input class="btn red" type="submit" name="login" value="Ingresar">
-                                <input class="btn red" type="submit" name="olvido" value="Olvidé mi contraseña">
                             </div>
 
                         </form>
+                        
+                        <br>
+
+                        <div class="form-field center-align">
+                            <input class="btn red" type="submit" name="olvido" value="Olvidé mi contraseña" onclick="olvido()">
+                        </div>
 
                     </div>
 

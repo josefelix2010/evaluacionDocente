@@ -1,6 +1,11 @@
 <?php
 
-  session_start();
+session_start();
+ob_start();
+
+if($_SESSION['sesionAbierta'] != 'Activa'){
+    header('location: index.php');
+}
 
 ?>
 

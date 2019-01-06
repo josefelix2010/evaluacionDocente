@@ -5,9 +5,9 @@ ob_start();
 
 include('includes/conectar.php');
 
-if($_SESSION['sesionAbierta'] != 'Activa'){
+/*if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}else{
+}else{*/
 
     if(isset($_POST['agregar'])){
 
@@ -64,7 +64,7 @@ if($_SESSION['sesionAbierta'] != 'Activa'){
 
     }
 
-}
+//}
 
 ?>
 

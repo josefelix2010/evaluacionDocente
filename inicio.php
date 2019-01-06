@@ -3,9 +3,9 @@
 session_start();
 ob_start();
 
-if($_SESSION['sesionAbierta'] != 'Activa'){
+/*if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}
+}*/
 
 ?>
 

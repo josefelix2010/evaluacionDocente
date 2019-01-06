@@ -5,11 +5,9 @@ ob_start();
 
 include('includes/conectar.php');
 
-if($_SESSION['sesionAbierta'] != 'Activa'){
-    
+/*if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-    
-}else{
+}else{*/
 
 
     $sql = $conexion->query("SELECT * FROM usuarios");
@@ -26,7 +24,7 @@ if($_SESSION['sesionAbierta'] != 'Activa'){
         header('location:inicio.php');
     }
 
-}
+//}
 
 ?>
 

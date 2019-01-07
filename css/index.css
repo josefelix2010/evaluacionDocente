@@ -25,13 +25,22 @@ body{
 
 .login input[type=text]{
 	font-family: 'Quicksand', sans-serif;
-	font-size: 10px;
+	font-size: 12px !important;
+    letter-spacing: 1px;
+	color: #FFF;
+}
+
+.login input[type=email]{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 12px !important;
+    letter-spacing: 1px;
 	color: #FFF;
 }
 
 .login input[type=password]{
 	font-family: 'Quicksand', sans-serif;
-	font-size: 10px;
+	font-size: 12px !important;
+    letter-spacing: 2px;
 	color: #FFF;
 }
 
@@ -43,6 +52,6 @@ body{
 
 .login input::-moz-placeholder {
   	font-family: 'Quicksand', sans-serif;
-	font-size: 12px;
+	font-size: 10px;
 	color: #FFF;
 }

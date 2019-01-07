@@ -5,26 +5,26 @@ ob_start();
 
 include('includes/conectar.php');
 
-/*if($_SESSION['sesionAbierta'] != 'Activa'){
+if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}else{*/
+}else{
 
-$consultaPeriodo = $conexion->query("SELECT periodo FROM respuestas GROUP BY periodo");
-$cont = 1;
+    $consultaPeriodo = $conexion->query("SELECT periodo FROM respuestas GROUP BY periodo");
+    $cont = 1;
 
-if(isset($_GET['acta']) && isset($_GET['periodo'])){
+    if(isset($_GET['acta']) && isset($_GET['periodo'])){
 
-    $acta = $_GET['acta'];
+        $acta = $_GET['acta'];
 
-    $periodo = $_GET['periodo'];
+        $periodo = $_GET['periodo'];
 
-    $consultaDocente = $conexion->query("SELECT * FROM actas WHERE acta = '$acta' and periodo = '$periodo'");
+        $consultaDocente = $conexion->query("SELECT * FROM actas WHERE acta = '$acta' and periodo = '$periodo'");
 
-    $consulta = $conexion->query("SELECT * FROM respuestas WHERE acta = '$acta' and periodo = '$periodo'");
+        $consulta = $conexion->query("SELECT * FROM respuestas WHERE acta = '$acta' and periodo = '$periodo'");
+
+    }
 
 }
-
-//{
 
 ?>
 
@@ -65,7 +65,7 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
                     <img src="img/Logo.png" alt="Logo" height="48">
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="inicio.php">Inicio</a></li>
-                        <li><a href="formEdit.php">Formulario</a></li>
+                        <li><a href="topicos.php">Formulario</a></li>
                         <li><a href="resultados.php">Resultados</a></li>
                         <li><a href="usuarios.php">Usuarios</a></li>
                         <li><a href="index.php">Salir</a></li>
@@ -325,7 +325,7 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
                                 </div>
 
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>

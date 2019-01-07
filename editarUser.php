@@ -5,9 +5,9 @@ ob_start();
 
 include('includes/conectar.php');
 
-/*if($_SESSION['sesionAbierta'] != 'Activa'){
+if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}else{*/
+}else{
 
     $consulta = $conexion->query("SELECT * FROM usuarios");
 
@@ -41,7 +41,7 @@ include('includes/conectar.php');
 
     }
 
-//}
+}
 
 ?>
 
@@ -78,7 +78,7 @@ include('includes/conectar.php');
                     <img src="img/Logo.png" alt="Logo" height="48">
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="inicio.php">Inicio</a></li>
-                        <li><a href="formEdit.php">Formulario</a></li>
+                        <li><a href="topicos.php">Formulario</a></li>
                         <li><a href="resultados.php">Resultados</a></li>
                         <li><a href="usuarios.php">Usuarios</a></li>
                         <li><a href="index.php">Salir</a></li>

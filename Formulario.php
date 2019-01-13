@@ -5,9 +5,9 @@ include('includes/conectar.php');
 session_start();
 ob_start();
 
-if($_SESSION['sesionActiva'] != "Activa"){
+/*if($_SESSION['sesionActiva'] != "Activa"){
     header('location: evaluacion.php');
-}
+}*/
 
 ?>
 

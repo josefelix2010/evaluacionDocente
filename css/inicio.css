@@ -3,18 +3,22 @@ body{
 	background-size: cover;
 }
 
-.inicio .card{
-	margin: 50px 25px;
+.container .card{
+    background: rgb(0, 0, 0, .4) !important;
+	margin: 0px 0px;
 }
 
-.inicio .card span{
+.container .card-title{
+    font-family: 'Quicksand', sans-serif;
+    color: #FFF;
+}
+
+.container .card .instrucciones{
+    border-style: solid;
+	border-radius: 25px;
+	background: rgb(255, 255, 255, .7) !important;
 	font-family: 'Quicksand', sans-serif;
-	color: #000 !important;
-}
-
-.inicio .card a{
-	float: right;
-	font-family: 'Arimo', sans-serif !important;
-	font-weight: 400 !important;
-	color: #F93939 !important;
+	font-size: 14px !important;
+	padding: 30px 50px 30px 50px;
+    text-align: justify !important;
 }

@@ -12,7 +12,8 @@ body{
 	background-color: #3582ff !important;
 }
 
-.form p{
+.form .card-action p{
+    margin: 0px !important;
 	font-family: 'Quicksand', sans-serif;
 	font-size: 20px;
 	color: #FFF;

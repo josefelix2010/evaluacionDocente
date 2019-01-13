@@ -71,7 +71,7 @@ include('includes/conectar.php');
                     </ul>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li>
-                            <a class='btn' href=''><i class="material-icons" style="color: #f00">close</i><span style="color: #fff;">Salir</span></a>
+                            <a href=''><i class="material-icons" style="color: #f00">close</i><span style="color: #fff;">Salir</span></a>
                         </li>
                     </ul>
                 </div>

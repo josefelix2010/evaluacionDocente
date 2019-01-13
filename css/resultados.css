@@ -30,9 +30,10 @@ body{
 }
 
 .form .card-action p{
+    margin: 0px !important;
 	font-family: 'Quicksand', sans-serif;
 	font-size: 20px;
-	color: #FFF !important;
+	color: #FFF;
 }
 
 .form .card .card-content{

@@ -1,24 +1,11 @@
-<?php
-
-session_start();
-ob_start();
-
-/*if($_SESSION['sesionAbierta'] != 'Activa'){
-    header('location: index.php');
-}*/
-
-?>
-
-
-
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
+        <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inicio</title>
+        <title>Agregar Ítem</title>
 
-        <link rel="stylesheet" href="css/inicio.css">
+        <link rel="stylesheet" href="css/formEdit.css">
 
         <link rel="stylesheet" type="text/css" href="css/base.css" />
 
@@ -36,37 +23,68 @@ ob_start();
                 $('.sidenav').sidenav();
                 $('.collapsible').collapsible();
             });
-            
+
             function inicio(){
                 location.href="Inicio.php";
             }
-            
+
             function listaItems(){
                 location.href="Items.php"
             }
-            
+
             function agregarItem(){
                 location.href="AgregarItem.php"
             }
-            
+
             function eliminarItem(){
                 location.href="EliminarItem.php"
             }
-            
+
             function resultados(){
                 location.href="Items.php"
             }
-            
+
             function listaUsuarios(){
                 location.href="Usuarios.php"
             }
-            
+
             function agregarUsuario(){
                 location.href="AgregarUsuario.php"
             }
-            
+
             function editarUsuario(){
                 location.href="EditarUsuario.php"
+            }
+
+            function modificar(){
+                window.location.href='formEdit.php';
+            }
+
+            function volver(){
+                window.location.href='inicio.php';
+            }
+
+            function cambiar(){
+                var id = document.getElementById('tipo');
+                var valor = id.options[id.selectedIndex].text();
+                if(id == 1){
+                    location.href="AgregarItem.php?id=1";
+                }else if(id == 2){
+                    location.href="AgregarItem.php?id=2";
+                }
+            }
+
+            function modal(){
+                var item = document.getElementById('item').value;
+                var tipo = document.getElementById('tipo').value;
+                
+                if(item == "" || tipo == 0){
+                    alert('El campo "Ítem" no puede estar vacío y debe haber seleccionado alguno de los formularios.'+item+' '+tipo);
+                }else{
+                    $('.modal-content #itemModal').val(item);
+                    //$('.modal-content #tipoModal').val(tipo;)
+                    $('.modal').modal();
+                }
             }
         </script>
 
@@ -153,37 +171,105 @@ ob_start();
             </div>
 
         </div>
-        
-        <div class="container">
-            <div class="row">
-                <div class="col s12 m12 l12">
+
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="container form">
+
                     <div class="card">
-                        <div class="card-content">
-                            <span class="card-title">Bienvenido al Sistema de Evaluación Docente de la Universidad José Antonio Páez (SEDUJAP) <?php //echo $_SESSION['usuarioLogin'] = $user; ?></span>
-                            <br>
-                            <p class="instrucciones">
-                                
-                                El sistema le permite a los usuarios de tipo <u>Coordinador</u> visualizar resultados de evaluaciones al docente realizadas tanto por alumnos como por directores de escuela. También permite agregar ítems al formulario de evaluación para los alumnos.
-                                
-                                <br><br>
-                                
-                                Para los usuarios de tipo <u>Administrador</u> el sistema permite agregar nuevos usuarios y editar datos de usuarios existentes, también agregar ítems tanto a cada uno de los formularios, tanto el de la evaluación que realizan alumnos como la evaluación que realizan los coordinadores, así como eliminar ítems de estos formularios. De igual manera permite ver los resultados de las evaliuaciones.
-                                
-                                <br><br>
-                                
-                                <span style="font-family: 'Quicksand', sans-serif; font-size: 16px;">Instrucciones:</span>
-                                
-                                <br><br>
-                                
-                                Para ingresar al menú presione el botón "Menú", ubicado en la esquina superior izquierda.
-                                
-                                <br>
-                                
-                                Seleccione la opción que desea en la lista desplegable que se muestra en el menú, donde cada opción muestra cada una de las funciones disponibles según el tipo de usuario.
-                                
-                            </p>
+
+                        <div class="card-action center-align">
+                            <p>Agregar Ítem</p>
                         </div>
+
+                        <div class="card-content">
+
+                            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+
+                                <div class="row">
+
+                                    <div class="col s1 m1 l1"></div>
+
+                                    <div class="col s4 m4 l4">
+                                        <label>Elija un formulario:</label>
+                                        <div class="form-field">
+
+                                            <select class="browser-default left" name="tipo" id="tipo" onchange="cambiar()">
+
+                                                <?php
+
+                                                if(isset($_GET['id'])){
+
+                                                    $id = $_GET['id'];
+
+                                                    if($id == "1"){
+
+                                                        echo '<option value="1" selected>Ítems para alumnos</option>';
+                                                        echo '<option value="2">Ítems para coordinadores</option>';
+
+                                                    }else if($id == "2"){
+
+                                                        echo '<option value="1">Ítems para alumnos</option>';
+                                                        echo '<option value="2" selected>Ítems para coordinadores</option>';
+
+                                                    }
+
+                                                }else{
+
+                                                    echo '<option value="0" disabled selected hidden>Seleccione</option>';
+                                                    echo '<option value="1">Ítems para alumnos</option>';
+                                                    echo '<option value="2">Ítems para coordinadores</option>';
+
+                                                }
+
+                                                ?>
+
+                                            </select>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col s6 m6 l6">
+                                        <label>Ítem a agregar:</label>
+                                        <input type="text" id="item" name="item" placeholder="Ítem" required>
+                                    </div>
+
+                                    <div class="col s1 m1 l1"></div>
+
+
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col s12 m12 l12">
+
+                                        <div class="form-field center-align">
+
+                                            <a class="waves-effect waves-light btn modal-trigger" href="#agregar" onclick="modal()">Agregar</a>
+                                            <a class="waves-effect waves-light btn">Volver</a>
+
+                                            <div id="agregar" class="modal">
+                                                <div class="modal-content">
+                                                    <h4><i class="material-icons" style="color: #000;">warning</i> ¡Atención! <i class="material-icons" style="color: #000;">warning</i></h4>
+                                                    <p>Está seguro que desea agregar </p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </form>
+
+                        </div>
+
                     </div>
+
                 </div>
             </div>
         </div>

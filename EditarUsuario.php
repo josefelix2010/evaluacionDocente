@@ -290,7 +290,7 @@ include('includes/conectar.php');
                     </div>
                 </div>
             </div>
-            </did>
+        </div>
 
     </body>
 </html>

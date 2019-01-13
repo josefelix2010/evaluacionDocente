@@ -9,10 +9,20 @@
 	background-color: #3582ff !important;
 }
 
-.form p{
+.form .card-action p{
+    margin: 0px !important;
 	font-family: 'Quicksand', sans-serif;
 	font-size: 20px;
 	color: #FFF;
+}
+
+.form .card-content p{
+    font-family: 'Quicksand', sans-serif;
+	font-size: 16px;
+	color: #FFF;
+    text-align: right;
+    height: 40px;
+    width: 280px;
 }
 
 .card-content table{
@@ -25,9 +35,18 @@
 	color: #FFF;
 	font-family: 'Quicksand', sans-serif;
 	font-size: 14px;
+    text-align: center;
 }
 
 .card-content table td{
 	font-family: 'Quicksand', sans-serif;
 	font-size: 12px;
+    padding: 10px;
+}
+
+.form select{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 12px !important;
+	height: 40px;
+    width: 280px;
 }

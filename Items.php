@@ -3,22 +3,26 @@
 session_start();
 ob_start();
 
+include('includes/conectar.php');
+
 /*if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}*/
+}else{*/
+
+$sql=''
+
+    //}
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Inicio</title>
+        <title>Ítems</title>
 
-        <link rel="stylesheet" href="css/inicio.css">
+        <link rel="stylesheet" href="css/usuarios.css">
 
         <link rel="stylesheet" type="text/css" href="css/base.css" />
 
@@ -36,37 +40,54 @@ ob_start();
                 $('.sidenav').sidenav();
                 $('.collapsible').collapsible();
             });
-            
+
             function inicio(){
                 location.href="Inicio.php";
             }
-            
+
             function listaItems(){
                 location.href="Items.php"
             }
-            
+
             function agregarItem(){
                 location.href="AgregarItem.php"
             }
-            
+
             function eliminarItem(){
                 location.href="EliminarItem.php"
             }
-            
+
             function resultados(){
                 location.href="Items.php"
             }
-            
+
             function listaUsuarios(){
                 location.href="Usuarios.php"
             }
-            
+
             function agregarUsuario(){
                 location.href="AgregarUsuario.php"
             }
-            
+
             function editarUsuario(){
                 location.href="EditarUsuario.php"
+            }
+
+            function modificar(){
+                window.location.href='formEdit.php';
+            }
+
+            function volver(){
+                window.location.href='inicio.php';
+            }
+
+            function cambiar(){
+                var id = document.getElementById('tipo').value;
+                if(id == 1){
+                    location.href="Items.php?id=1";
+                }else if(id == 2){
+                    location.href="Items.php?id=2";
+                }
             }
         </script>
 
@@ -153,36 +174,115 @@ ob_start();
             </div>
 
         </div>
-        
-        <div class="container">
-            <div class="row">
-                <div class="col s12 m12 l12">
+
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="container form">
+
                     <div class="card">
-                        <div class="card-content">
-                            <span class="card-title">Bienvenido al Sistema de Evaluación Docente de la Universidad José Antonio Páez (SEDUJAP) <?php //echo $_SESSION['usuarioLogin'] = $user; ?></span>
-                            <br>
-                            <p class="instrucciones">
-                                
-                                El sistema le permite a los usuarios de tipo <u>Coordinador</u> visualizar resultados de evaluaciones al docente realizadas tanto por alumnos como por directores de escuela. También permite agregar ítems al formulario de evaluación para los alumnos.
-                                
-                                <br><br>
-                                
-                                Para los usuarios de tipo <u>Administrador</u> el sistema permite agregar nuevos usuarios y editar datos de usuarios existentes, también agregar ítems tanto a cada uno de los formularios, tanto el de la evaluación que realizan alumnos como la evaluación que realizan los coordinadores, así como eliminar ítems de estos formularios. De igual manera permite ver los resultados de las evaliuaciones.
-                                
-                                <br><br>
-                                
-                                <span style="font-family: 'Quicksand', sans-serif; font-size: 16px;">Instrucciones:</span>
-                                
-                                <br><br>
-                                
-                                Para ingresar al menú presione el botón "Menú", ubicado en la esquina superior izquierda.
-                                
-                                <br>
-                                
-                                Seleccione la opción que desea en la lista desplegable que se muestra en el menú, donde cada opción muestra cada una de las funciones disponibles según el tipo de usuario.
-                                
-                            </p>
+
+                        <div class="card-action center-align">
+                            <p>Lista de Ítems</p>
                         </div>
+
+                        <div class="card-content">
+
+                            <div class="row">
+
+                                <div class="col s6 m6 l6">
+                                    <p class="right">Seleccione alguna de las opciones:</p>
+                                </div>
+                                
+                                <div class="col s6 m6 l6">
+                                    <div class="form-field">
+
+                                        <select class="browser-default left" name="tipo" id="tipo" onchange="cambiar()">
+
+                                            <?php
+
+                                            if(isset($_GET['id'])){
+
+                                                $id = $_GET['id'];
+
+                                                if($id == "1"){
+
+                                                    $sql = $conexion->query("SELECT * FROM topicos");
+
+                                                    echo '<option value="1" selected>Ítems para alumnos</option>';
+                                                    echo '<option value="2">Ítems para coordinadores</option>';
+
+                                                }else if($id == "2"){
+
+                                                    $sql = $conexion->query("SELECT * FROM topicoscoor");
+
+                                                    echo '<option value="1">Ítems para alumnos</option>';
+                                                    echo '<option value="2" selected>Ítems para coordinadores</option>';
+
+                                                }
+
+                                            }else{
+
+                                                echo '<option value="" disabled selected hidden>Seleccione</option>';
+                                                echo '<option value="1">Ítems para alumnos</option>';
+                                                echo '<option value="2">Ítems para coordinadores</option>';
+
+                                            }
+
+                                            ?>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <?php
+
+                            if(isset($_GET['id'])){
+
+                                echo '<div class="row">';
+
+                                echo '<div class="col s12 m12 l12">';
+
+                                echo '<div class="container form1">';
+
+                                echo '<table class="striped centered responsive-table">';
+                                echo '<tbody>';
+                                echo '<tr>';
+                                echo '<th>#</th>';
+                                echo '<th>Ítem</th>';
+                                echo '</tr>';
+
+                                $cont = 1;
+
+                                while($valores = mysqli_fetch_array($sql)){
+
+                                    echo '<tr>';
+                                    echo '<td>'.$cont.'</td>';
+                                    echo '<td>'.utf8_encode($valores['titulo']).'</td>';
+                                    echo '<tr>';
+
+                                    $cont++;
+
+                                }
+
+                                echo '</tbody>';
+                                echo '</table>';
+
+                                echo '</div>';
+
+                                echo '</div>';
+
+                                echo '</div>';
+
+                            }
+
+                            ?>
+
+                        </div>
+
                     </div>
                 </div>
             </div>

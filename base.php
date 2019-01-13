@@ -21,6 +21,46 @@
                 $('.sidenav').sidenav();
                 $('.collapsible').collapsible();
             });
+            
+            function inicio(){
+                location.href="Inicio.php";
+            }
+
+            function listaItems(){
+                location.href="Items.php"
+            }
+
+            function agregarItem(){
+                location.href="AgregarItem.php"
+            }
+
+            function eliminarItem(){
+                location.href="EliminarItem.php"
+            }
+
+            function resultados(){
+                location.href="Items.php"
+            }
+
+            function listaUsuarios(){
+                location.href="Usuarios.php"
+            }
+
+            function agregarUsuario(){
+                location.href="AgregarUsuario.php"
+            }
+
+            function editarUsuario(){
+                location.href="EditarUsuario.php"
+            }
+
+            function modificar(){
+                window.location.href='formEdit.php';
+            }
+
+            function volver(){
+                window.location.href='inicio.php';
+            }
         </script>
 
     </head>

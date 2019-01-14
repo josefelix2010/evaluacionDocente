@@ -50,3 +50,9 @@
 	height: 40px;
     width: 280px;
 }
+
+.form .card-content label{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 14px;
+	color: #FFF;
+}

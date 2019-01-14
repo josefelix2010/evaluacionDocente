@@ -9,72 +9,70 @@ include('includes/conectar.php');
     header('location: index.php');
 }else{*/
 
-$consulta = $conexion->query("SELECT * FROM topicos");
+if(isset($_GET['id'])){
+    $id = $_GET['id'];
 
-if(isset($_POST['agregar'])){
+    if($id == 1){
+        $consulta = $conexion->query("SELECT * FROM topicos");
+    }elseif($id == 2){
+        $consulta = $conexion->query("SELECT * FROM topicoscoor");
+    }
+}
 
-    $titulo = utf8_decode($_POST['topico']);
+if(isset($_POST['eliminar'])){
 
-    $select = $conexion->query("SELECT * FROM topicos WHERE titulo = '$titulo'");
+    if(isset($_POST['topico']) && isset($_POST['tipo']))
 
-    if($existe = mysqli_fetch_array($select)){
+        $titulo = utf8_decode($_POST['topico']);
 
-        echo '<script type="text/javascript">';
-        echo 'alert("Este tópico ya existe.");';
-        echo '</script>';
+    $id = $_POST['tipo'];
 
-    }else{
+    if($id == 1){
 
-        $insert = "INSERT INTO topicos (titulo) VALUES ('$titulo')";
+        $delete = $conexion->query("DELETE FROM topicos WHERE titulo = '$titulo'");
 
-        if($conexion->query($insert) === TRUE){
+        $filas = mysqli_affected_rows($conexion);
 
-            $mensaje = 'Tópico agragado con éxito.';
+        if($filas > 0){
+            echo '<script>';
+            echo 'alert("Ítem eliminado de manera exitosa.")';
+            echo '</script>';
+        }
 
-            header('location: formEdit.php');
+    }elseif($id == 2){
 
+        $delete = $conexion->query("DELETE FROM topicoscoor WHERE titulo = '$titulo'");
+
+        $filas = mysqli_affected_rows($conexion);
+
+        if($filas > 0){
+            echo '<script>';
+            echo 'alert("Ítem eliminado de manera exitosa.")';
+            echo '</script>';
         }
 
     }
 
 
-
-}
-
-if(isset($_POST['eliminar'])){
-
-    $titulo = utf8_decode($_POST['topico']);
-
-    $delete = "DELETE FROM topicos WHERE titulo = '$titulo'";
-
-    if($conexion->query($delete)){
-
-        $mensaje = 'Tópico eliminado con éxito.';
-
-        header('location: formEdit.php');
-
-    }
-
 }
 
 if(isset($_POST['volver'])){
 
-    header('location:inicio.php');
+    header('location: Inicio.php');
 
 }
+
 
 //}
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Modificar formulario</title>
+        <title>Eliminar Ítem</title>
 
         <link rel="stylesheet" href="css/formEdit.css">
 
@@ -94,12 +92,77 @@ if(isset($_POST['volver'])){
                 $('.sidenav').sidenav();
                 $('.collapsible').collapsible();
             });
-            
+
+            function inicio(){
+                location.href="Inicio.php";
+            }
+
+            function listaItems(){
+                location.href="Items.php"
+            }
+
+            function agregarItem(){
+                location.href="AgregarItem.php"
+            }
+
+            function eliminarItem(){
+                location.href="EliminarItem.php"
+            }
+
+            function resultados(){
+                location.href="Items.php"
+            }
+
+            function listaUsuarios(){
+                location.href="Usuarios.php"
+            }
+
+            function agregarUsuario(){
+                location.href="AgregarUsuario.php"
+            }
+
+            function editarUsuario(){
+                location.href="EditarUsuario.php"
+            }
+
+            function volver(){
+                window.location.href='inicio.php';
+            }
+
             function modificar(){
                 var id = document.getElementById('titulos');
                 var opcion = id.options[id.selectedIndex].text;
                 document.getElementById('topico').value = opcion;
             }
+
+            function cambiar(){
+                var id = document.getElementById('tipo').value;
+                if(id == 1){
+                    window.location.href="EliminarItem.php?id=1";
+                }else if(id == 2){
+                    window.location.href="EliminarItem.php?id=2";
+                }
+            }
+
+            function modal(){
+                var item = document.getElementById('topico').value;
+                var id = document.getElementById('tipo');
+                var tipo = id.options[id.selectedIndex].text;
+
+                var topico = item.charAt(0).toUpperCase() + item.slice(1);
+
+                if(item == "" || id == 0){
+                    alert('El campo "Ítem" no puede estar vacío y debe haber seleccionado alguno de los formularios.');
+                }else{
+
+                    document.getElementById('itemModal').textContent = topico;
+                    document.getElementById('tipoModal').textContent = tipo;
+
+                    $('.modal').modal()
+
+                }
+            }
+
         </script>
 
     </head>
@@ -111,14 +174,13 @@ if(isset($_POST['volver'])){
                     <ul class="left">
                         <li>
                             <a href="" class="sidenav-trigger show-on-large" data-target="menu-nav" style="margin-right: 0px; padding-right: 0px;">
-                                <i class="material-icons" style="color: #000;">menu</i>
+                                <i class="material-icons" style="color: #000;">menu</i>Menú
                             </a>
-                        </li>
-                        <li><a href="" class="sidenav-trigger show-on-large" data-target="menu-nav" style="margin: 0px; padding-left: 0px; color:#000;">SEDUJAP</a></li>
+                        <li style="color:#000;">SEDUJAP</li>
                     </ul>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li>
-                            <a href=''><i class="material-icons" style="color: #f00">close</i><span style="color: #fff;">Salir</span></a>
+                            <a href='includes/logout.php'><i class="material-icons" style="color: #f00">close</i><span style="color: #fff;">Salir</span></a>
                         </li>
                     </ul>
                 </div>
@@ -141,7 +203,7 @@ if(isset($_POST['volver'])){
             <div>
                 <ul>
                     <li>
-                        <div class="collapsible-header">
+                        <div class="collapsible-header" onclick="inicio()">
                             <i class="material-icons">home</i>Inicio
                         </div>
                     </li>
@@ -152,9 +214,9 @@ if(isset($_POST['volver'])){
                                 <div class="collapsible-header"><i class="material-icons">description</i>Formulario</div>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a>Lista de Ítems</a></li>
-                                        <li><a>Agregar Ítem</a></li>
-                                        <li><a>Eliminar Ítem</a></li>
+                                        <li onclick="listaItems()"><a>Lista de Ítems</a></li>
+                                        <li onclick="agregarItem()"><a>Agregar Ítem</a></li>
+                                        <li onclick="eliminarItem()"><a>Eliminar Ítem</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -162,11 +224,9 @@ if(isset($_POST['volver'])){
                     </li>
 
                     <li>
-                        <ul class="collapsible">
-                            <li>
-                                <div class="collapsible-header"><i class="material-icons">done_all</i>Resultados</div>
-                            </li>
-                        </ul>
+                        <div class="collapsible-header" onclick="resultados()">
+                            <i class="material-icons">done_all</i>Resultados
+                        </div>    
                     </li>
 
                     <li>
@@ -175,9 +235,9 @@ if(isset($_POST['volver'])){
                                 <div class="collapsible-header"><i class="material-icons">perm_identity</i>Usuarios</div>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a>Lista de Usuarios</a></li>
-                                        <li><a>Agregar Usuario</a></li>
-                                        <li><a>Editar Usuario</a></li>
+                                        <li onclick="listaUsuarios()"><a>Lista de Usuarios</a></li>
+                                        <li onclick="agregarUsuario()"><a>Agregar Usuario</a></li>
+                                        <li onclick="editarUsuario()"><a>Editar Usuario</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -196,7 +256,7 @@ if(isset($_POST['volver'])){
                     <div class="card">
 
                         <div class="card-action center-align">
-                            <p>Editar formulario</p>
+                            <p>Eliminar Ítem</p>
                         </div>
 
                         <div class="card-content">
@@ -208,43 +268,86 @@ if(isset($_POST['volver'])){
                                 <div class="col s8 m8 l8">
                                     <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-                                        <?php
+                                        <div class="row">
+                                            <div class="col s4 m4 l4">
+                                                <label>Elija un formulario:</label>
+                                                <div class="form-field">
 
-                                        if(isset($mensaje)){
-                                            echo $mensaje;
-                                        }
+                                                    <select class="browser-default left" name="tipo" id="tipo" onchange="cambiar()">
 
-                                        ?>
+                                                        <?php
 
-                                        <div class="form-field">
-                                            <label for="titulo">Elija un tópico</label>
-                                            <div class="input-field">
-                                                <select class="browser-default" name="titulos" id="titulos" onchange="modificar()">
-                                                    <option value="" disabled selected hidden>Elija un tópico</option>
-                                                    <?php
+                                                        if(isset($_GET['id'])){
 
-                                                    while($valores = mysqli_fetch_array($consulta)){
-                                                        echo '<option value="'.$valores['id'].'">'.utf8_encode($valores['titulo']).'</option>';
-                                                    }
+                                                            $id = $_GET['id'];
 
-                                                    ?>
-                                                </select>
+                                                            if($id == "1"){
+
+                                                                echo '<option value="1" selected>Ítems para alumnos</option>';
+                                                                echo '<option value="2">Ítems para coordinadores</option>';
+
+                                                            }else if($id == "2"){
+
+                                                                echo '<option value="1">Ítems para alumnos</option>';
+                                                                echo '<option value="2" selected>Ítems para coordinadores</option>';
+
+                                                            }
+
+                                                        }else{
+
+                                                            echo '<option value="0" disabled selected hidden>Seleccione</option>';
+                                                            echo '<option value="1">Ítems para alumnos</option>';
+                                                            echo '<option value="2">Ítems para coordinadores</option>';
+
+                                                        }
+
+                                                        ?>
+
+                                                    </select>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col s8 m8 l8">
+                                                <div class="form-field">
+                                                    <label for="titulo">Elija un ítem</label>
+                                                    <select class="browser-default" name="titulos" id="titulos" onchange="modificar()">
+                                                        <option value="" disabled selected hidden>Elija un ítem</option>
+                                                        <?php
+
+                                                        while($valores = mysqli_fetch_array($consulta)){
+                                                            echo '<option value="'.$valores['id'].'">'.utf8_encode($valores['titulo']).'</option>';
+                                                        }
+
+                                                        ?>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <br>
-
-                                        <div class="form-field">
-                                            <label for="topico">Tópico</label>
-                                            <input type="text" name="topico" id="topico" placeholder="Tópico" required>
+                                        <div class="row">
+                                            <div class="form-field">
+                                                <label for="topico">Ítem</label>
+                                                <input type="text" name="topico" id="topico" placeholder="Tópico" required readonly>
+                                            </div>
                                         </div>
 
-                                        <br>
+                                        <div class="row">
+                                            <div class="form-field center-align">
+                                                <a class="waves-effect waves-light btn modal-trigger" href="#eliminar" onclick="modal()">Eliminar</a>
+                                                <a class="waves-effect waves-light btn" href="Inicio.php">Volver</a>
 
-                                        <div class="form-field center-align">
-                                            <input class="btn" type="submit" name="agregar" value="Agregar">
-                                            <input class="btn" type="submit" name="eliminar" value="Eliminar">
-                                            <input class="btn" type="submit" name="volver" value="Volver">
+                                                <div id="eliminar" class="modal">
+                                                    <div class="modal-content">
+                                                        <h4><i class="material-icons" style="color: #000;">warning</i> ¡Atención! <i class="material-icons" style="color: #000;">warning</i></h4>
+                                                        <br>
+                                                        <p>¿Seguro que desea eliminar el ítem "<span id="itemModal"></span>" al formulario de "<span id="tipoModal"></span>"?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <input type="submit" class="modal-close waves-effect waves-light btn-flat" value="Aceptar" name="eliminar">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </form>

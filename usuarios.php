@@ -10,19 +10,19 @@ include('includes/conectar.php');
 }else{*/
 
 
-    $sql = $conexion->query("SELECT * FROM usuarios");
+$sql = $conexion->query("SELECT * FROM usuarios");
 
-    if(isset($_POST['agregar'])){
-        header('location:agregarUser.php');
-    }
+if(isset($_POST['agregar'])){
+    header('location:agregarUser.php');
+}
 
-    if(isset($_POST['modificar'])){
-        header('location:editarUser.php');
-    }
+if(isset($_POST['modificar'])){
+    header('location:editarUser.php');
+}
 
-    if(isset($_POST['volver'])){
-        header('location:inicio.php');
-    }
+if(isset($_POST['volver'])){
+    header('location:inicio.php');
+}
 
 //}
 
@@ -53,6 +53,57 @@ include('includes/conectar.php');
                 $('.sidenav').sidenav();
                 $('.collapsible').collapsible();
             });
+
+            function inicio(){
+                location.href="Inicio.php";
+            }
+
+            function listaItems(){
+                location.href="Items.php"
+            }
+
+            function agregarItem(){
+                location.href="AgregarItem.php"
+            }
+
+            function eliminarItem(){
+                location.href="EliminarItem.php"
+            }
+
+            function resultados(){
+                location.href="Items.php"
+            }
+
+            function listaUsuarios(){
+                location.href="Usuarios.php"
+            }
+
+            function agregarUsuario(){
+                location.href="AgregarUsuario.php"
+            }
+
+            function editarUsuario(){
+                location.href="EditarUsuario.php"
+            }
+
+            function modificar(){
+                window.location.href='formEdit.php';
+            }
+
+            function volver(){
+                window.location.href='inicio.php';
+            }
+
+            function cambiar(){
+                var id = document.getElementById('tipo').value;
+                if(id == 1){
+                    window.location.href="Usuarios.php?id=1";
+                }else if(id == 2){
+                    window.location.href="Usuarios.php?id=2";
+                }else if(id == 3){
+                    window.location.href="Usuarios.php?id=3";
+                }
+            }
         </script>
 
     </head>
@@ -64,14 +115,13 @@ include('includes/conectar.php');
                     <ul class="left">
                         <li>
                             <a href="" class="sidenav-trigger show-on-large" data-target="menu-nav" style="margin-right: 0px; padding-right: 0px;">
-                                <i class="material-icons" style="color: #000;">menu</i>
+                                <i class="material-icons" style="color: #000;">menu</i>Menú
                             </a>
-                        </li>
-                        <li><a href="" class="sidenav-trigger show-on-large" data-target="menu-nav" style="margin: 0px; padding-left: 0px; color:#000;">SEDUJAP</a></li>
+                        <li style="color:#000;">SEDUJAP</li>
                     </ul>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li>
-                            <a href=''><i class="material-icons" style="color: #f00">close</i><span style="color: #fff;">Salir</span></a>
+                            <a href='includes/logout.php'><i class="material-icons" style="color: #f00">close</i><span style="color: #fff;">Salir</span></a>
                         </li>
                     </ul>
                 </div>
@@ -90,56 +140,54 @@ include('includes/conectar.php');
                     </div>
                 </li>
             </ul>
-            
+
             <div>
                 <ul>
                     <li>
-                        <div class="collapsible-header">
+                        <div class="collapsible-header" onclick="inicio()">
                             <i class="material-icons">home</i>Inicio
                         </div>
                     </li>
-                    
+
                     <li>
                         <ul class="collapsible">
                             <li>
                                 <div class="collapsible-header"><i class="material-icons">description</i>Formulario</div>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a>Lista de Ítems</a></li>
-                                        <li><a>Agregar Ítem</a></li>
-                                        <li><a>Eliminar Ítem</a></li>
+                                        <li onclick="listaItems()"><a>Lista de Ítems</a></li>
+                                        <li onclick="agregarItem()"><a>Agregar Ítem</a></li>
+                                        <li onclick="eliminarItem()"><a>Eliminar Ítem</a></li>
                                     </ul>
                                 </div>
                             </li>
                         </ul>
                     </li>
-                    
+
                     <li>
-                        <ul class="collapsible">
-                            <li>
-                                <div class="collapsible-header"><i class="material-icons">done_all</i>Resultados</div>
-                            </li>
-                        </ul>
+                        <div class="collapsible-header" onclick="resultados()">
+                            <i class="material-icons">done_all</i>Resultados
+                        </div>    
                     </li>
-                    
+
                     <li>
                         <ul class="collapsible">
                             <li>
                                 <div class="collapsible-header"><i class="material-icons">perm_identity</i>Usuarios</div>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a>Lista de Usuarios</a></li>
-                                        <li><a>Agregar Usuario</a></li>
-                                        <li><a>Editar Usuario</a></li>
+                                        <li onclick="listaUsuarios()"><a>Lista de Usuarios</a></li>
+                                        <li onclick="agregarUsuario()"><a>Agregar Usuario</a></li>
+                                        <li onclick="editarUsuario()"><a>Editar Usuario</a></li>
                                     </ul>
                                 </div>
                             </li>
                         </ul>
                     </li>
-                    
+
                 </ul>
             </div>
-            
+
         </div>
 
         <div class="row">
@@ -153,6 +201,69 @@ include('includes/conectar.php');
                         </div>
 
                         <div class="card-content">
+
+                            <div class="row">
+
+                                <div class="col s3 m3 l3"></div>
+
+                                <div class="col s6 m6 l6">
+
+                                    <label>Elija el tipo de usuario a consultar:</label>
+
+                                    <div class="form-field">
+
+                                        <select class="browser-default left" name="tipo" id="tipo" onchange="cambiar()">
+
+                                            <?php
+
+                                            if(isset($_GET['id'])){
+
+                                                $id = $_GET['id'];
+
+                                                if($id == "1"){
+
+                                                    $sql = $conexion->query("SELECT * FROM usuarios");
+
+                                                    echo '<option value="1" selected>Todos</option>';
+                                                    echo '<option value="2">Administradores</option>';
+                                                    echo '<option value="3">Coordinadores</option>';
+
+                                                }elseif($id == "2"){
+
+                                                    $sql = $conexion->query("SELECT * FROM usuarios WHERE administrador = 1");
+
+                                                    echo '<option value="1">Todos</option>';
+                                                    echo '<option value="2" selected>Administradores</option>';
+                                                    echo '<option value="3">Coordinadores</option>';
+
+                                                }elseif($id == "3"){
+
+                                                    $sql = $conexion->query("SELECT * FROM usuarios WHERE administrador = 0");
+
+                                                    echo '<option value="1">Todos</option>';
+                                                    echo '<option value="2">Administradores</option>';
+                                                    echo '<option value="3" selected>Coordinadores</option>';
+
+                                                }
+
+                                            }else{
+
+                                                echo '<option value="" disabled selected hidden>Seleccione</option>';
+                                                echo '<option value="1">Todos</option>';
+                                                echo '<option value="2">Administradores</option>';
+                                                echo '<option value="3">Coordinadores</option>';
+
+                                            }
+
+                                            ?>
+                                        </select>
+                                    </div>
+
+                                </div>
+
+                                <div class="col s3 m3 l3"></div>
+
+                            </div>
 
                             <div class="row">
 
@@ -193,9 +304,7 @@ include('includes/conectar.php');
                                         <div class="form-field">
 
                                             <div class="form-field center-align">
-                                                <input class="btn" type="submit" name="agregar" value="Agregar">
-                                                <input class="btn" type="submit" name="modificar" value="Modificar">
-                                                <input class="btn" type="submit" name="volver" value="Volver">
+                                                <a class="waves-effect waves-light btn" href="Inicio.php">Volver</a>
                                             </div>
 
                                         </div>

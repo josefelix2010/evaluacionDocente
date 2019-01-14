@@ -1,3 +1,47 @@
+<?php
+
+session_start();
+ob_start();
+
+include('includes/conectar.php');
+
+/*if($_SESSION['sesionAbierta'] != 'Activa'){
+    header('location: index.php');
+}else{*/
+
+if(isset($_POST['tipo']) && isset($_POST['item'])){
+
+$tipo = $_POST['tipo'];
+$item = $_POST['item'];
+
+if($tipo == 1){
+    
+    $insert = $conexion->query("INSERT INTO topicos (`titulo`) VALUES ('$item')");
+     
+}elseif($tipo == 2){
+    
+    $insert = $conexion->query("INSERT INTO topicoscoor (`titulo`) VALUES ('$item')");
+    
+}
+
+$filas = mysqli_affected_rows($conexion);
+
+if($filas > 0){
+    
+    echo '<script>';
+    echo 'alert("Ítem agregado de manera exitosa.")';
+    echo '</script>';
+    
+}else{
+    echo "NO";
+}
+    
+}
+
+//}
+
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -63,27 +107,23 @@
             function volver(){
                 window.location.href='inicio.php';
             }
-
-            function cambiar(){
-                var id = document.getElementById('tipo');
-                var valor = id.options[id.selectedIndex].text();
-                if(id == 1){
-                    location.href="AgregarItem.php?id=1";
-                }else if(id == 2){
-                    location.href="AgregarItem.php?id=2";
-                }
-            }
-
+            
             function modal(){
                 var item = document.getElementById('item').value;
-                var tipo = document.getElementById('tipo').value;
+                var id = document.getElementById('tipo');
+                var tipo = id.options[id.selectedIndex].text;
                 
-                if(item == "" || tipo == 0){
-                    alert('El campo "Ítem" no puede estar vacío y debe haber seleccionado alguno de los formularios.'+item+' '+tipo);
+                var topico = item.charAt(0).toUpperCase() + item.slice(1);
+                
+                if(item == "" || id == 0){
+                    alert('El campo "Ítem" no puede estar vacío y debe haber seleccionado alguno de los formularios.');
                 }else{
-                    $('.modal-content #itemModal').val(item);
-                    //$('.modal-content #tipoModal').val(tipo;)
-                    $('.modal').modal();
+                    
+                    document.getElementById('itemModal').textContent = topico;
+                    document.getElementById('tipoModal').textContent = tipo;
+                    
+                    $('.modal').modal()
+                    
                 }
             }
         </script>
@@ -184,7 +224,7 @@
 
                         <div class="card-content">
 
-                            <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            <form method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
 
                                 <div class="row">
 
@@ -194,7 +234,7 @@
                                         <label>Elija un formulario:</label>
                                         <div class="form-field">
 
-                                            <select class="browser-default left" name="tipo" id="tipo" onchange="cambiar()">
+                                            <select class="browser-default left" name="tipo" id="tipo">
 
                                                 <?php
 
@@ -206,12 +246,12 @@
 
                                                         echo '<option value="1" selected>Ítems para alumnos</option>';
                                                         echo '<option value="2">Ítems para coordinadores</option>';
-
+                                                        
                                                     }else if($id == "2"){
 
                                                         echo '<option value="1">Ítems para alumnos</option>';
                                                         echo '<option value="2" selected>Ítems para coordinadores</option>';
-
+                                                        
                                                     }
 
                                                 }else{
@@ -246,15 +286,16 @@
                                         <div class="form-field center-align">
 
                                             <a class="waves-effect waves-light btn modal-trigger" href="#agregar" onclick="modal()">Agregar</a>
-                                            <a class="waves-effect waves-light btn">Volver</a>
+                                            <a class="waves-effect waves-light btn" href="Inicio.php">Volver</a>
 
                                             <div id="agregar" class="modal">
                                                 <div class="modal-content">
                                                     <h4><i class="material-icons" style="color: #000;">warning</i> ¡Atención! <i class="material-icons" style="color: #000;">warning</i></h4>
-                                                    <p>Está seguro que desea agregar </p>
+                                                    <br>
+                                                    <p>¿Seguro que desea agregar el ítem "<span id="itemModal"></span>" al formulario de "<span id="tipoModal"></span>"?</p>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+                                                    <input type="submit" class="modal-close waves-effect waves-light btn-flat" value="Aceptar" name="aceptar">
                                                 </div>
                                             </div>
 

@@ -72,14 +72,13 @@
                     <ul class="left">
                         <li>
                             <a href="" class="sidenav-trigger show-on-large" data-target="menu-nav" style="margin-right: 0px; padding-right: 0px;">
-                                <i class="material-icons" style="color: #000;">menu</i>
+                                <i class="material-icons" style="color: #000;">menu</i>Menú
                             </a>
-                        </li>
-                        <li><a href="" class="sidenav-trigger show-on-large" data-target="menu-nav" style="margin: 0px; padding-left: 0px; color:#000;">SEDUJAP</a></li>
+                        <li style="color:#000;">SEDUJAP</li>
                     </ul>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li>
-                            <a href=''><i class="material-icons" style="color: #f00">close</i><span style="color: #fff;">Salir</span></a>
+                            <a href='includes/logout.php'><i class="material-icons" style="color: #f00">close</i><span style="color: #fff;">Salir</span></a>
                         </li>
                     </ul>
                 </div>
@@ -98,56 +97,54 @@
                     </div>
                 </li>
             </ul>
-            
+
             <div>
                 <ul>
                     <li>
-                        <div class="collapsible-header">
+                        <div class="collapsible-header" onclick="inicio()">
                             <i class="material-icons">home</i>Inicio
                         </div>
                     </li>
-                    
+
                     <li>
                         <ul class="collapsible">
                             <li>
                                 <div class="collapsible-header"><i class="material-icons">description</i>Formulario</div>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a>Lista de Ítems</a></li>
-                                        <li><a>Agregar Ítem</a></li>
-                                        <li><a>Eliminar Ítem</a></li>
+                                        <li onclick="listaItems()"><a>Lista de Ítems</a></li>
+                                        <li onclick="agregarItem()"><a>Agregar Ítem</a></li>
+                                        <li onclick="eliminarItem()"><a>Eliminar Ítem</a></li>
                                     </ul>
                                 </div>
                             </li>
                         </ul>
                     </li>
-                    
+
                     <li>
-                        <ul class="collapsible">
-                            <li>
-                                <div class="collapsible-header"><i class="material-icons">done_all</i>Resultados</div>
-                            </li>
-                        </ul>
+                        <div class="collapsible-header" onclick="resultados()">
+                            <i class="material-icons">done_all</i>Resultados
+                        </div>    
                     </li>
-                    
+
                     <li>
                         <ul class="collapsible">
                             <li>
                                 <div class="collapsible-header"><i class="material-icons">perm_identity</i>Usuarios</div>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a>Lista de Usuarios</a></li>
-                                        <li><a>Agregar Usuario</a></li>
-                                        <li><a>Editar Usuario</a></li>
+                                        <li onclick="listaUsuarios()"><a>Lista de Usuarios</a></li>
+                                        <li onclick="agregarUsuario()"><a>Agregar Usuario</a></li>
+                                        <li onclick="editarUsuario()"><a>Editar Usuario</a></li>
                                     </ul>
                                 </div>
                             </li>
                         </ul>
                     </li>
-                    
+
                 </ul>
             </div>
-            
+
         </div>
 
     </body>

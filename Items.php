@@ -9,9 +9,7 @@ include('includes/conectar.php');
     header('location: index.php');
 }else{*/
 
-$sql=''
-
-    //}
+//}
 
 ?>
 

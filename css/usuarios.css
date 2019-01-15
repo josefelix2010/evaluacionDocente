@@ -56,3 +56,16 @@
 	font-size: 14px;
 	color: #FFF;
 }
+
+.form .modal{
+    background-image: linear-gradient(#3582ff, #E8F0FF);
+}
+
+.form .modal h4{
+    font-family: 'Quicksand', sans-serif;
+}
+
+.form .modal p{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 14px;
+}

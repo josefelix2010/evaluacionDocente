@@ -9,51 +9,6 @@ include('includes/conectar.php');
     header('location: index.php');
 }else{*/
 
-if(isset($_POST['aceptar'])){
-
-    if(isset($_POST['admin'])){
-        $usuario = $_POST['usuario'];
-        $nombre = $_POST['nombre'];
-        $apellido = $_POST['apellido'];
-        $correo = $_POST['correo'];
-        $pass1 = $_POST['password1'];
-        $admin = $_POST['admin'];
-
-        $sql = $conexion->query("SELECT * FROM usuarios WHERE usuario = '$usuario'");
-
-        if($valores = mysqli_fetch_array($sql)){
-
-            echo '<script type="text/javascript">';
-            echo 'alert("Este usuario ya existe.");';
-            echo '</script>';
-
-        }else{
-
-            if(empty($admin)){
-
-                $insert = "INSERT INTO usuarios (usuario, nombre, apellido, correo, password, administrador) VALUES ('$usuario', '$nombre', '$apellido', '$correo', '$pass1', '0')";
-
-                if($conexion->query($insert)){
-                    echo '<script type="text/javascript">';
-                    echo 'alert("Usuario agregado con éxito.");';
-                    echo '</script>';
-                }
-
-            }else{
-                $insert = "INSERT INTO usuarios (usuario, nombre, apellido, correo, password, administrador) VALUES ('$usuario', '$nombre', '$apellido', '$correo', '$pass1', '1')";
-
-                if($conexion->query($insert)){
-                    echo '<script type="text/javascript">';
-                    echo 'alert("Usuario agregado con éxito.");';
-                    echo '</script>';
-                }
-            }
-
-        }
-    }
-
-}
-
 //}
 
 ?>
@@ -135,8 +90,10 @@ if(isset($_POST['aceptar'])){
                 var apellido = document.getElementById('apellido').value;
                 var correo = document.getElementById('correo').value;
                 var admin = document.getElementById('admin').checked;
+                var pass1 = document.getElementById('password1').value;
+                var pass2 = document.getElementById('password2').value;
                 
-                if(usuario!="" && nombre!="" && apellido!="" && correo!=""){
+                if(usuario!="" && nombre!="" && apellido!="" && correo!="" && pass1!="" && pass2!=""){
                     
                     var nombres = nombre+" "+apellido;
 
@@ -168,6 +125,52 @@ if(isset($_POST['aceptar'])){
                 
                 return out;
             }
+            
+            function vaciar(){
+                document.getElementById('nombre').value = "";
+                document.getElementById('apellido').value = "";
+                document.getElementById('usuario').value = "";
+                document.getElementById('correo').value = "";
+                document.getElementById('password1').value = "";
+                document.getElementById('password2').value = "";
+            }
+            
+            
+            $(function(){
+                $('#aceptar').on('click', function(e){
+                    e.preventDefault();
+                    
+                    var nombre = $('#nombre').val();
+                    var apellido = $('#apellido').val();
+                    var usuario = $('#usuario').val();
+                    var correo = $('#correo').val();
+                    var password = $('#password1').val();
+                    var admin = $('#admin').is(':checked');
+                    
+                    if(admin == true){
+                        tipo = "1";
+                    }else{
+                        tipo = "0";
+                    }
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: "includes/verificarUsuario.php",
+                        data: ("nombre="+nombre+"&apellido="+apellido+"&usuario="+usuario+"&correo="+correo+"&password="+password+"&tipo="+tipo),
+                        success: function(respuesta){
+                            if(respuesta==1){
+                                alert("Usuario agregado con éxito.");
+                                window.location.reload();
+                            }else if(respuesta==0){
+                                alert("El usuario ya existe, por favor modifique el usuario.");
+                                $('#usuario').attr("readonly", false);
+                            }else if(respuesta==2){
+                                alert("No validado");
+                            }
+                        }
+                    });
+                });
+            });
         </script>
 
     </head>
@@ -267,7 +270,7 @@ if(isset($_POST['aceptar'])){
 
                             <div class="row">
 
-                                <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" id="agregarUsuario">
+                                <form method="POST" action="" id="agregarUsuario">
 
                                     <div class="row">
 
@@ -284,7 +287,7 @@ if(isset($_POST['aceptar'])){
 
                                             <div class="form-field">
                                                 <label for="apellido">Apellido</label>
-                                                <input type="text" name="apellido" id="apellido" placeholder="Apellido" required onkeyup="this.value=letras(this.value)">
+                                                <input type="text" name="apellido" id="apellido" placeholder="Apellido" required onkeyup="this.value=letras(this.value)" value="HOLIS">
                                             </div>
 
                                         </div>
@@ -348,6 +351,7 @@ if(isset($_POST['aceptar'])){
 
                                     <div class="form-field center-align">
                                         <a class="waves-effect waves-light btn modal-trigger" href="#agregar" onclick="modal()">Agregar</a>
+                                        <a class="waves-effect waves-light btn" href="" onclick="vaciar()">Borrar Campos</a>
                                         <a class="waves-effect waves-light btn" href="Inicio.php">Volver</a>
 
                                         <div id="agregar" class="modal">
@@ -366,7 +370,7 @@ if(isset($_POST['aceptar'])){
                                                 </p>
                                             </div>
                                             <div class="modal-footer">
-                                                <input type="submit" class="modal-close waves-effect waves-light btn-flat" value="Aceptar" name="aceptar">
+                                                <input type="submit" class="modal-close waves-effect waves-light btn-flat" value="Aceptar" name="aceptar" id="aceptar">
                                             </div>
                                         </div>
                                     </div>

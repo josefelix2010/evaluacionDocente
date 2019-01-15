@@ -9,37 +9,7 @@ include('includes/conectar.php');
     header('location: index.php');
 }else{*/
 
-    $consulta = $conexion->query("SELECT * FROM usuarios");
-
-    if(isset($_POST['modificar'])){
-
-        $usuario = utf8_decode($_POST['user']);
-        $nombre = utf8_decode($_POST['nombre']);
-        $apellido = utf8_decode($_POST['apellido']);
-        $correo = utf8_decode($_POST['correo']);
-        $password = utf8_decode($_POST['password']);
-
-        $update = "UPDATE usuarios SET nombre='$nombre', apellido='$apellido', correo='$correo', password='$password' WHERE usuario = '$usuario'";
-
-        if($conexion->query($update)){
-
-            echo '<script type="text/javascript">';
-            echo 'alert("Usuario modificado correctamente.");';
-            echo '</script>';
-
-        }else{
-            echo "error";
-        }
-
-
-
-    }
-
-    if(isset($_POST['volver'])){
-
-        header('location:usuarios.php');
-
-    }
+$consulta = $conexion->query("SELECT * FROM usuarios");
 
 //}
 
@@ -54,7 +24,7 @@ include('includes/conectar.php');
         <title>Modificar usuario</title>
 
         <link rel="stylesheet" href="css/editarUser.css">
-        
+
         <link rel="stylesheet" type="text/css" href="css/base.css" />
 
         <link rel="stylesheet" type="text/css" href="libs/materialize/css/materialize.min.css" />
@@ -65,18 +35,123 @@ include('includes/conectar.php');
 
         <script src="libs/materialize/js/materialize.min.js"></script>
 
+        <script src="js/dist/jquery.validate.js"></script>
+
         <script type="text/javascript">
             $(document).ready(function(){
                 $('.dropdown-trigger').dropdown();
                 $('.sidenav').sidenav();
                 $('.collapsible').collapsible();
             });
-            
-            function cambiar(){
-                var id = document.getElementById('usuario');
-                var opcion = id.options[id.selectedIndex].text;
-                window.location.href="editarUser.php?opcion="+opcion;
+
+            function inicio(){
+                location.href="Inicio.php";
             }
+
+            function listaItems(){
+                location.href="Items.php"
+            }
+
+            function agregarItem(){
+                location.href="AgregarItem.php"
+            }
+
+            function eliminarItem(){
+                location.href="EliminarItem.php"
+            }
+
+            function resultados(){
+                location.href="Items.php"
+            }
+
+            function listaUsuarios(){
+                location.href="Usuarios.php"
+            }
+
+            function agregarUsuario(){
+                location.href="AgregarUsuario.php"
+            }
+
+            function editarUsuario(){
+                location.href="EditarUsuario.php"
+            }
+
+            function modificar(){
+                window.location.href='formEdit.php';
+            }
+
+            function volver(){
+                window.location.href='inicio.php';
+            }
+
+            function cambiar(){
+                var id = document.getElementById('usuario').value;
+                window.location.href="EditarUsuario.php?id="+id;
+            }
+
+            function modal(){
+                var usuario = document.getElementById('user').value;
+                var nombre = document.getElementById('nombre').value;
+                var apellido = document.getElementById('apellido').value;
+                var correo = document.getElementById('correo').value;
+                var admin = document.getElementById('admin').checked;
+                var pass = document.getElementById('password').value;
+
+                if(usuario!="" && nombre!="" && apellido!="" && correo!="" && pass!=""){
+
+                    var nombres = nombre+" "+apellido;
+
+                    document.getElementById('usuarioModal').textContent = usuario;
+                    document.getElementById('nombresModal').textContent = nombres;
+                    document.getElementById('correoModal').textContent = correo;
+
+                    if(admin == true){
+                        document.getElementById('tipoModal').textContent = "Administrador";
+                    }else{
+                        document.getElementById('tipoModal').textContent = "Coordinador";
+                    }
+
+                    $('.modal').modal()
+                }else{
+                    alert('Uno o mas campos están vacíos.');
+                }
+            }
+
+            $(function() {
+                $('#aceptar').on('click', function(e){
+                    e.preventDefault();
+
+                    var nombre = $('#nombre').val();
+                    var apellido = $('#apellido').val();
+                    var usuario = $('#user').val();
+                    var correo = $('#correo').val();
+                    var password = $('#password').val();
+                    var admin = $('#admin').is(':checked');
+
+                    if(admin == true){
+                        tipo = "1";
+                    }else{
+                        tipo = "0";
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "includes/modificarUsuario.php",
+                        data: ("nombre="+nombre+"&apellido="+apellido+"&usuario="+usuario+"&correo="+correo+"&password="+password+"&tipo="+tipo),
+                        success: function(respuesta){
+                            if(respuesta==1){
+                                alert("Usuario modificado con éxito.");
+                                window.location.href="EditarUsuario.php";
+                            }else if(respuesta==0){
+                                alert("El usuario no se ha podido modificar.");
+                                $('#usuario').attr("readonly", false);
+                            }else if(respuesta==2){
+                                alert("No validado");
+                            }
+                        }
+                    })
+                })
+            })
         </script>
 
     </head>
@@ -88,14 +163,13 @@ include('includes/conectar.php');
                     <ul class="left">
                         <li>
                             <a href="" class="sidenav-trigger show-on-large" data-target="menu-nav" style="margin-right: 0px; padding-right: 0px;">
-                                <i class="material-icons" style="color: #000;">menu</i>
+                                <i class="material-icons" style="color: #000;">menu</i>Menú
                             </a>
-                        </li>
-                        <li><a href="" class="sidenav-trigger show-on-large" data-target="menu-nav" style="margin: 0px; padding-left: 0px; color:#000;">SEDUJAP</a></li>
+                        <li style="color:#000;">SEDUJAP</li>
                     </ul>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li>
-                            <a href=''><i class="material-icons" style="color: #f00">close</i><span style="color: #fff;">Salir</span></a>
+                            <a href='includes/logout.php'><i class="material-icons" style="color: #f00">close</i><span style="color: #fff;">Salir</span></a>
                         </li>
                     </ul>
                 </div>
@@ -114,56 +188,54 @@ include('includes/conectar.php');
                     </div>
                 </li>
             </ul>
-            
+
             <div>
                 <ul>
                     <li>
-                        <div class="collapsible-header">
+                        <div class="collapsible-header" onclick="inicio()">
                             <i class="material-icons">home</i>Inicio
                         </div>
                     </li>
-                    
+
                     <li>
                         <ul class="collapsible">
                             <li>
                                 <div class="collapsible-header"><i class="material-icons">description</i>Formulario</div>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a>Lista de Ítems</a></li>
-                                        <li><a>Agregar Ítem</a></li>
-                                        <li><a>Eliminar Ítem</a></li>
+                                        <li onclick="listaItems()"><a>Lista de Ítems</a></li>
+                                        <li onclick="agregarItem()"><a>Agregar Ítem</a></li>
+                                        <li onclick="eliminarItem()"><a>Eliminar Ítem</a></li>
                                     </ul>
                                 </div>
                             </li>
                         </ul>
                     </li>
-                    
+
                     <li>
-                        <ul class="collapsible">
-                            <li>
-                                <div class="collapsible-header"><i class="material-icons">done_all</i>Resultados</div>
-                            </li>
-                        </ul>
+                        <div class="collapsible-header" onclick="resultados()">
+                            <i class="material-icons">done_all</i>Resultados
+                        </div>
                     </li>
-                    
+
                     <li>
                         <ul class="collapsible">
                             <li>
                                 <div class="collapsible-header"><i class="material-icons">perm_identity</i>Usuarios</div>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a>Lista de Usuarios</a></li>
-                                        <li><a>Agregar Usuario</a></li>
-                                        <li><a>Editar Usuario</a></li>
+                                        <li onclick="listaUsuarios()"><a>Lista de Usuarios</a></li>
+                                        <li onclick="agregarUsuario()"><a>Agregar Usuario</a></li>
+                                        <li onclick="editarUsuario()"><a>Editar Usuario</a></li>
                                     </ul>
                                 </div>
                             </li>
                         </ul>
                     </li>
-                    
+
                 </ul>
             </div>
-            
+
         </div>
 
         <div class="row">
@@ -179,11 +251,11 @@ include('includes/conectar.php');
 
                             <div class="row">
 
-                                <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                                <form method="POST" action="" id="editarUsurio">
 
                                     <div class="row">
 
-                                        <div class="col s4 m4 l4">
+                                        <div class="col s3 m3 l3">
 
                                             <div class="form-field">
                                                 <label for="usuario">Elija un usuario</label>
@@ -194,7 +266,7 @@ include('includes/conectar.php');
                                                         <?php
 
                                                         while($resultados = mysqli_fetch_array($consulta)){
-                                                            echo '<option value="'.utf8_encode($resultados['usuario']).'">'.utf8_encode($resultados['usuario']).'</option>';;
+                                                            echo '<option value="'.utf8_encode($resultados['id']).'">'.utf8_encode($resultados['usuario']).'</option>';;
                                                         }
 
                                                         ?>
@@ -207,30 +279,53 @@ include('includes/conectar.php');
 
                                         <?php
 
-                                        if(isset($_GET['opcion'])){
+                                        if(isset($_GET['id'])){
 
-                                            $usuario = $_GET['opcion'];
+                                            $id = $_GET['id'];
 
-                                            $sql = $conexion->query("SELECT * FROM usuarios WHERE usuario = '$usuario'");
+                                            $sql = $conexion->query("SELECT * FROM usuarios WHERE id = '$id'");
 
                                             while($valores = mysqli_fetch_array($sql)){
 
                                         ?>
 
-                                        <div class="col s4 m4 l4">
+                                        <div class="col s3 m3 l3">
 
                                             <div class="form-field">
                                                 <label for="user">Usuario</label>
-                                                <input type="text" name="user" id="user" value="<?php echo utf8_encode($valores['usuario']); ?>">
+                                                <input type="text" name="user" id="user" value="<?php echo utf8_encode($valores['usuario']); ?>" readonly>
                                             </div>
 
                                         </div>
 
-                                        <div class="col s4 m4 l4">
+                                        <div class="col s3 m3 l3">
 
                                             <div class="form-field">
                                                 <label for="password">Contraseña</label>
                                                 <input type="password" name="password" id="password" value="<?php echo utf8_encode($valores['password']); ?>" required>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col s3 m3 l3">
+
+                                            <div class="form-field">
+                                                <label for="admin">Tipo de usuario</label>
+                                                <p  style="margin-top: 20px !important;">
+                                                    <label>
+
+                                                        <?php
+
+                                                if($valores['administrador'] == 1){
+                                                    echo '<input type="checkbox" checked="checked" class="filled-in" name="admin" id ="admin">';
+                                                }else{
+                                                    echo '<input type="checkbox" class="filled-in" name="admin" id ="admin">';
+                                                }
+
+                                                        ?>
+                                                        <span>Usuario administrador</span>
+                                                    </label>
+                                                </p>
                                             </div>
 
                                         </div>
@@ -278,8 +373,28 @@ include('includes/conectar.php');
                                     </div>
 
                                     <div class="form-field center-align">
-                                        <input class="btn" type="submit" name="modificar" value="Modificar">
-                                        <input class="btn" type="submit" name="volver" value="Volver">
+                                        <a class="waves-effect waves-light btn modal-trigger" href="#agregar" onclick="modal()">Modificar</a>
+                                        <a class="waves-effect waves-light btn" href="Inicio.php">Volver</a>
+
+                                        <div id="agregar" class="modal">
+                                            <div class="modal-content">
+                                                <h4><i class="material-icons" style="color: #000;">warning</i> ¡Atención! <i class="material-icons" style="color: #000;">warning</i></h4>
+                                                <br>
+
+                                                <p>¿Seguro que desea modificar los datos del siguiente usuario?</p>
+
+                                                <br>
+
+                                                <p>Usuario: <span id="usuarioModal"></span> <br>
+                                                    Nombres: <span id="nombresModal"></span> <br>
+                                                    Correo: <span id="correoModal"></span> <br>
+                                                    Tipo de usuario <span id="tipoModal"></span>
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="submit" class="modal-close waves-effect waves-light btn-flat" value="Aceptar" name="aceptar" id="aceptar">
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
 

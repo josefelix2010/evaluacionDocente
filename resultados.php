@@ -9,7 +9,7 @@ include('includes/conectar.php');
     header('location: index.php');
 }else{*/
 
-$consultaPeriodo = $conexion->query("SELECT periodo FROM respuestas GROUP BY periodo");
+$consultaPeriodo = $conexion->query("SELECT periodo FROM respuestas GROUP BY periodo ORDER BY periodo ASC");
 $cont = 1;
 
 if(isset($_GET['acta']) && isset($_GET['periodo'])){
@@ -53,7 +53,47 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
                 $('.sidenav').sidenav();
                 $('.collapsible').collapsible();
             });
-            
+
+            function inicio(){
+                location.href="Inicio.php";
+            }
+
+            function listaItems(){
+                location.href="Items.php"
+            }
+
+            function agregarItem(){
+                location.href="AgregarItem.php"
+            }
+
+            function eliminarItem(){
+                location.href="EliminarItem.php"
+            }
+
+            function resultados(){
+                location.href="Items.php"
+            }
+
+            function listaUsuarios(){
+                location.href="Usuarios.php"
+            }
+
+            function agregarUsuario(){
+                location.href="AgregarUsuario.php"
+            }
+
+            function editarUsuario(){
+                location.href="EditarUsuario.php"
+            }
+
+            function modificar(){
+                window.location.href='formEdit.php';
+            }
+
+            function volver(){
+                window.location.href='inicio.php';
+            }
+
             function buscarActa(){
                 var id = document.getElementById('periodos');
                 var periodo = id.options[id.selectedIndex].text;
@@ -61,9 +101,104 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
                 window.location.href="resultados.php?periodo="+periodo+"&acta="+acta+"";
             }
 
-            function volver(){
-                window.location.href="inicio.php";
-            }
+            $(document).ready(function(){
+
+                $('#tipo').change(function(){
+                    $('#tipo option:selected').each(function() {
+                        var id_tipo = $(this).val();
+                        $('#tipoTxt').val(id_tipo);
+
+                        if(id_tipo == 1){
+                            $('#filtrar').attr("disabled", true);
+                        }else{
+                            $('#filtrar').attr("disabled", false);
+                        }
+
+                        $.ajax({
+                            type: "POST",
+                            url: "includes/consultaTipo.php",
+                            data: ("id_tipo="+id_tipo),
+                            success: function(resultado){
+                                if(id_tipo==1){
+                                    alert(resultado);
+                                }else{
+                                    $('#periodos').html(resultado);
+                                }
+                            }
+                        })
+                    });
+                });
+
+                $('#periodos').change(function(){
+                    $('#periodos option:selected').each(function() {
+                        var id_periodo = $(this).val();
+                        var tipo = $('#tipoTxt').val();
+                        $('#periodoTxt').val(id_periodo);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "includes/consultaPeriodo.php",
+                            data: ("id_periodo="+id_periodo+"&tipo="+tipo),
+                            success: function(resultado){
+                                if(tipo==1){
+                                    alert(resultado);
+                                }else{
+                                    $('#docente').html(resultado);
+                                }
+                            }
+                        })
+                    });
+                });
+
+                $('#docente').change(function(){
+                    $('#docente option:selected').each(function() {
+                        var id_docente = $(this).val();
+                        var periodo = $('#periodoTxt').val();
+                        var tipo = $('#tipoTxt').val();
+                        $('#docenteTxt').val(id_docente);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "includes/consultaDocente.php",
+                            data: ("id_docente="+id_docente+"&periodo="+periodo+"&tipo="+tipo),
+                            success: function(resultado){
+                                if(tipo==1){
+                                    alert(resultado);
+                                }else{
+                                    $('#actas').html(resultado);
+                                }
+                            }
+                        })
+                    });
+                });
+
+                $('#actas').change(function(){
+                    $('#actas option:selected').each(function(){
+                        var id_actas = $(this).val();
+                        $('#actasTxt').val(id_actas);
+                    })
+                })
+
+                $('#filtrar').on('click', function(e){
+                    e.preventDefault();
+
+                    var tipo = $('#tipoTxt').val();
+                    var periodo = $('#periodoTxt').val();
+                    var docente = $('#docenteTxt').val();
+                    var acta = $('#actasTxt').val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "includes/filtro.php",
+                        data: ("tipo="+tipo+"&periodo="+periodo+"&docente="+docente+"&acta="+acta),
+                        success: function(respuesta){
+                            alert(respuesta);
+                        }
+                    })
+
+                })
+            })
+
         </script>
 
     </head>
@@ -75,14 +210,13 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
                     <ul class="left">
                         <li>
                             <a href="" class="sidenav-trigger show-on-large" data-target="menu-nav" style="margin-right: 0px; padding-right: 0px;">
-                                <i class="material-icons" style="color: #000;">menu</i>
+                                <i class="material-icons" style="color: #000;">menu</i>Menú
                             </a>
-                        </li>
-                        <li><a href="" class="sidenav-trigger show-on-large" data-target="menu-nav" style="margin: 0px; padding-left: 0px; color:#000;">SEDUJAP</a></li>
+                        <li style="color:#000;">SEDUJAP</li>
                     </ul>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li>
-                            <a href=''><i class="material-icons" style="color: #f00">close</i><span style="color: #fff;">Salir</span></a>
+                            <a href='includes/logout.php'><i class="material-icons" style="color: #f00">close</i><span style="color: #fff;">Salir</span></a>
                         </li>
                     </ul>
                 </div>
@@ -105,7 +239,7 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
             <div>
                 <ul>
                     <li>
-                        <div class="collapsible-header">
+                        <div class="collapsible-header" onclick="inicio()">
                             <i class="material-icons">home</i>Inicio
                         </div>
                     </li>
@@ -116,9 +250,9 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
                                 <div class="collapsible-header"><i class="material-icons">description</i>Formulario</div>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a>Lista de Ítems</a></li>
-                                        <li><a>Agregar Ítem</a></li>
-                                        <li><a>Eliminar Ítem</a></li>
+                                        <li onclick="listaItems()"><a>Lista de Ítems</a></li>
+                                        <li onclick="agregarItem()"><a>Agregar Ítem</a></li>
+                                        <li onclick="eliminarItem()"><a>Eliminar Ítem</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -126,11 +260,9 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
                     </li>
 
                     <li>
-                        <ul class="collapsible">
-                            <li>
-                                <div class="collapsible-header"><i class="material-icons">done_all</i>Resultados</div>
-                            </li>
-                        </ul>
+                        <div class="collapsible-header" onclick="resultados()">
+                            <i class="material-icons">done_all</i>Resultados
+                        </div>
                     </li>
 
                     <li>
@@ -139,9 +271,9 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
                                 <div class="collapsible-header"><i class="material-icons">perm_identity</i>Usuarios</div>
                                 <div class="collapsible-body">
                                     <ul>
-                                        <li><a>Lista de Usuarios</a></li>
-                                        <li><a>Agregar Usuario</a></li>
-                                        <li><a>Editar Usuario</a></li>
+                                        <li onclick="listaUsuarios()"><a>Lista de Usuarios</a></li>
+                                        <li onclick="agregarUsuario()"><a>Agregar Usuario</a></li>
+                                        <li onclick="editarUsuario()"><a>Editar Usuario</a></li>
                                     </ul>
                                 </div>
                             </li>
@@ -150,130 +282,92 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
 
                 </ul>
             </div>
-
         </div>
 
         <div class="row">
             <div class="col s12 m12 l12">
-                <div class="container form">
+                <div class="form">
                     <div class="card">
 
                         <div class="card-action center-align">
-                            <p>Ver resultados</p>
+                            <p>Resultados</p>
                         </div>
 
                         <div class="card-content">
 
                             <div class="row">
 
-                                <div class="col s2 m2 l2"></div>
+                                <form method="POST" id="form-filtros" name="form-filtros">
+                                    <div class="form-field">
 
-                                <div class="col s8 m8 l8">
-                                    <form>
-
-                                        <div class="form-field">
+                                        <div class="col s10 m10 l10">
 
                                             <div class="row">
 
-                                                <div class="col s6 m6 l6">
-                                                    <label for="docente">Docente</label>
-                                                    <select class="browser-default" name="periodos" id="periodos" onchange="modificar()">
+                                                <div class="col s3 m3 l3">
+                                                    <label>Elija el tipo evaluación:</label>
+                                                    <select class="browser-default" name="tipo" id="tipo" >
 
+                                                        <option value="0" selected hidden>Seleccione</option>
 
+                                                        <option value="1">Evaluación de coordinadores</option>
 
-                                                        <?php
-
-                                                        if(isset($_GET['periodo'])){
-
-                                                            $periodo = $_GET['periodo'];
-
-                                                            echo '<option value="" disabled selected hidden>'.$periodo.'</option>';
-
-                                                            while($valores = mysqli_fetch_array($consultaPeriodo)){
-                                                                $cont = 1;
-                                                                echo '<option value="'.$cont.'">'.$valores['periodo'].'</option>';
-                                                                $cont++;
-                                                            }
-
-                                                        }else{
-
-                                                            while($valores = mysqli_fetch_array($consultaPeriodo)){
-                                                                $cont = 1;
-                                                                echo '<option value="'.$cont.'">'.$valores['periodo'].'</option>';
-                                                                $cont++;
-                                                            }
-
-                                                        }
-
-
-                                                        ?>
+                                                        <option value="2">Evaluación de alumnos</option>
 
                                                     </select>
+                                                    <input type="text" name="tipoTxt" id="tipoTxt">
                                                 </div>
 
-                                                <div class="col s6 m6 l6">
-                                                    <label for="acta">Nº de Acta</label>
+                                                <div class="col s3 m3 l3">
+                                                    <label>Elija un período lectivo:</label>
+                                                    <select class="browser-default" name="periodos" id="periodos" >
 
-                                                    <?php
+                                                        <option value="0" selected hidden>Seleccione</option>
 
-                                                    if(isset($_GET['acta'])){
-
-                                                        $acta = $_GET['acta'];
-
-                                                        echo '<input type="text" name="acta" id="acta" value="'.$acta.'" onblur="buscarActa()">';
-
-                                                    }else{
-
-                                                        echo '<input type="text" name="acta" id="acta" placeholder="Nº de Acta" onblur="buscarActa()">';
-
-                                                    }
-
-                                                    ?>
-
+                                                    </select>
+                                                    <input type="text" name="periodoTxt" id="periodoTxt">
                                                 </div>
 
-                                            </div>
+                                                <div class="col s3 m3 l3">
+                                                    <label>Elija un docente:</label>
+                                                    <select class="browser-default" name="docente" id="docente" >
 
-                                            <div class="row">
+                                                        <option value="0" selected hidden>Seleccione</option>
 
-                                                <?php
+                                                    </select>
+                                                    <input type="text" name="docenteTxt" id="docenteTxt">
+                                                </div>
 
-                                                if(isset($_GET['acta'])){
+                                                <div class="col s3 m3 l3">
+                                                    <label>Elija una de las actas del docente:</label>
+                                                    <select class="browser-default" name="actas" id="actas" id="actasTxt">
 
-                                                    while($resultados = mysqli_fetch_array($consultaDocente)){
+                                                        <option value="0" selected hidden>Seleccione</option>
 
-                                                        echo '<div class="col s6 m6 l6">';
-                                                        echo '    <label for="docente">Docente</label>';
-                                                        echo '    <input type="text" name="docente" id="docente" placeholder="'.$resultados['docente'].'" disabled>';
-                                                        echo '</div>';
-
-                                                        echo '<div class="col s6 m6 l6">';
-                                                        echo '    <label for="docente">Asignatura</label>';
-                                                        echo '    <input type="text" name="asignatura" id="asignatura" placeholder="'.$resultados['asignatura'].'" disabled>';
-                                                        echo '</div>';
-
-                                                    }
-
-                                                }
-
-                                                ?>
+                                                    </select>
+                                                    <input type="text" name="actasTxt" id="actasTxt" value="0">
+                                                </div>
 
                                             </div>
 
                                         </div>
 
-                                    </form>
-                                </div>
+                                        <div class="col s2 m2 l2">
+                                            <div class="form-field center-align">
+                                                <input class="btn" type="submit" name="filtrar" value="Filtar" id="filtrar">
+                                            </div>
+                                        </div>
 
-                                <div class="col s2 m2 l2"></div>
+                                    </div>
+                                </form>
 
                             </div>
 
-                            <div class="row">
+                            <div id="tabla">
 
                                 <?php
 
-                                if(isset($_GET['acta']) && isset($_GET['periodo'])){
+                                /*if(isset($_GET['acta']) && isset($_GET['periodo'])){
 
                                     echo '<div class="col s12 m12 l12">';
                                     echo '<div class="container form1">';
@@ -392,7 +486,7 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
 
 
                                 echo '</div>';
-                                echo '</div>';
+                                echo '</div>';*/
 
                                 ?>
 

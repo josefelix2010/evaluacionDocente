@@ -16,13 +16,13 @@ body{
 	-ms-box-shadow: 0px 0px 50px 2px #000;
 	-o-box-shadow: 0px 0px 50px 2px #000;
 	box-shadow: 0px 0px 50px 2px #000;
-	overflow-y: scroll;
-	max-height: 540px;
 }
 
 .form .card{
+	background: rgb(0, 0, 0, .4) !important;
 	margin: 0px 0px !important;
-	background: rgb(0, 0, 0, .4);
+	max-height: 480px !important;
+    overflow-y: scroll !important;
 }
 
 .form .card-action{
@@ -38,6 +38,25 @@ body{
 
 .form .card .card-content{
 	padding: 10px 24px !important;
+}
+
+.card-content table{
+	background-color: #FFF;
+}
+
+.card-content table th{
+	background-color: #F93939 !important;
+	border-radius: 0px;
+	color: #FFF;
+	font-family: 'Quicksand', sans-serif;
+	font-size: 14px;
+    text-align: center;
+}
+
+.card-content table td{
+	font-family: 'Quicksand', sans-serif;
+	font-size: 12px;
+    padding: 10px;
 }
 
 .form label{

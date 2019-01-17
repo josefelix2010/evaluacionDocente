@@ -60,10 +60,6 @@ ob_start();
                                     <div class="col s12 m12 l12">
                                         <div class="container form1">
 
-                                            <p class="center-align" style="font-size: 16px !important;">Evaluación Docente</p>
-
-                                            <br>
-
                                             <form method="POST" action="votaciones.php">
                                                 <div class="row">
 

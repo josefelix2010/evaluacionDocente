@@ -187,12 +187,14 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
                     var docente = $('#docenteTxt').val();
                     var acta = $('#actasTxt').val();
 
+                    $('#imprimir').attr("disabled", false);
+
                     $.ajax({
                         type: "POST",
                         url: "includes/filtro.php",
                         data: ("tipo="+tipo+"&periodo="+periodo+"&docente="+docente+"&acta="+acta),
                         success: function(respuesta){
-                            alert(respuesta);
+                            $('#tabla').html(respuesta);
                         }
                     })
 
@@ -297,205 +299,98 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
 
                             <div class="row">
 
-                                <form method="POST" id="form-filtros" name="form-filtros">
-                                    <div class="form-field">
+                                <div class="col s1 m1 l1"></div>
 
-                                        <div class="col s10 m10 l10">
+                                <div class="col s10 m10 l10">
+                                    <div class="row">
 
-                                            <div class="row">
+                                        <form method="POST" id="form-filtros" name="form-filtros">
+                                            <div class="form-field">
 
-                                                <div class="col s3 m3 l3">
-                                                    <label>Elija el tipo evaluación:</label>
-                                                    <select class="browser-default" name="tipo" id="tipo" >
+                                                <div class="col s10 m10 l10">
 
-                                                        <option value="0" selected hidden>Seleccione</option>
+                                                    <div class="row">
 
-                                                        <option value="1">Evaluación de coordinadores</option>
+                                                        <div class="col s3 m3 l3">
+                                                            <label>Seleccione el tipo evaluación:</label>
+                                                            <select class="browser-default" name="tipo" id="tipo" >
 
-                                                        <option value="2">Evaluación de alumnos</option>
+                                                                <option value="0" selected hidden>Seleccione</option>
 
-                                                    </select>
-                                                    <input type="text" name="tipoTxt" id="tipoTxt">
+                                                                <option value="1">Evaluación de coordinadores</option>
+
+                                                                <option value="2">Evaluación de alumnos</option>
+
+                                                            </select>
+                                                            <input type="text" name="tipoTxt" id="tipoTxt" hidden>
+                                                        </div>
+
+                                                        <div class="col s3 m3 l3">
+                                                            <label>Seleccione un período lectivo:</label>
+                                                            <select class="browser-default" name="periodos" id="periodos" >
+
+                                                                <option value="0" selected hidden>Seleccione</option>
+
+                                                            </select>
+                                                            <input type="text" name="periodoTxt" id="periodoTxt" hidden>
+                                                        </div>
+
+                                                        <div class="col s3 m3 l3">
+                                                            <label>Seleccione un docente:</label>
+                                                            <select class="browser-default" name="docente" id="docente" >
+
+                                                                <option value="0" selected hidden>Seleccione</option>
+
+                                                            </select>
+                                                            <input type="text" name="docenteTxt" id="docenteTxt" hidden>
+                                                        </div>
+
+                                                        <div class="col s3 m3 l3">
+                                                            <label>Seleccione una de las actas:</label>
+                                                            <select class="browser-default" name="actas" id="actas" id="actasTxt">
+
+                                                                <option value="0" selected hidden>Seleccione</option>
+
+                                                            </select>
+                                                            <input type="text" name="actasTxt" id="actasTxt" value="0" hidden>
+                                                        </div>
+
+                                                    </div>
+
                                                 </div>
 
-                                                <div class="col s3 m3 l3">
-                                                    <label>Elija un período lectivo:</label>
-                                                    <select class="browser-default" name="periodos" id="periodos" >
-
-                                                        <option value="0" selected hidden>Seleccione</option>
-
-                                                    </select>
-                                                    <input type="text" name="periodoTxt" id="periodoTxt">
-                                                </div>
-
-                                                <div class="col s3 m3 l3">
-                                                    <label>Elija un docente:</label>
-                                                    <select class="browser-default" name="docente" id="docente" >
-
-                                                        <option value="0" selected hidden>Seleccione</option>
-
-                                                    </select>
-                                                    <input type="text" name="docenteTxt" id="docenteTxt">
-                                                </div>
-
-                                                <div class="col s3 m3 l3">
-                                                    <label>Elija una de las actas del docente:</label>
-                                                    <select class="browser-default" name="actas" id="actas" id="actasTxt">
-
-                                                        <option value="0" selected hidden>Seleccione</option>
-
-                                                    </select>
-                                                    <input type="text" name="actasTxt" id="actasTxt" value="0">
+                                                <div class="col s2 m2 l2">
+                                                    <div class="form-field center-align">
+                                                        <input class="btn" type="submit" name="filtrar" value="Filtrar" id="filtrar">
+                                                    </div>
                                                 </div>
 
                                             </div>
-
-                                        </div>
-
-                                        <div class="col s2 m2 l2">
-                                            <div class="form-field center-align">
-                                                <input class="btn" type="submit" name="filtrar" value="Filtar" id="filtrar">
-                                            </div>
-                                        </div>
-
+                                        </form>
                                     </div>
-                                </form>
-
-                            </div>
-
-                            <div id="tabla">
-
-                                <?php
-
-                                /*if(isset($_GET['acta']) && isset($_GET['periodo'])){
-
-                                    echo '<div class="col s12 m12 l12">';
-                                    echo '<div class="container form1">';
 
 
-                                    while($result = mysqli_fetch_array($consulta)){
+                                    <div class="row">
+                                        <div class="col s12 m12 l12" id="tabla">
 
-                                        $titulo = utf8_encode($result['topico']);
-                                        $mb = $result['muy_bueno'];
-                                        $b = $result['bueno'];
-                                        $a = $result['aceptable'];
-                                        $d = $result['deficiente'];
-                                        $md = $result['muy_deficiente'];
-                                        $total = $result['total'];
+                                        </div>
+                                    </div>
 
+                                    <div class="row">
+                                        <div class="col s12 m12 l12">
 
-                                        echo '<div class="row">';
-                                        echo    '<div class="col s9 m9 l9"><p>'.$titulo.'</p></div>';
-                                        echo    '<div class="col s3 m3 l3"><p style="text-align: center;">Votos</p></div>';
-                                        echo '</div>';
+                                            <div class="form-field center-align">
 
-                                        echo '<ul>';
+                                                <input class="btn" type="submit" name="imprimir" id="imprimir" value="Imprimir" disabled>
 
-                                        echo '<li>';
-                                        echo    '<div class="col s3 m3 l3"><p>Muy Bueno</p></div>';
-                                        if($mb==0){
-                                            echo '<div class="col s6 m6 l6">';
-                                            echo    '<div class="barra" style="width: 0%">0%</div>';
-                                            echo '</div>';
-                                        }else{
-                                            echo '<div class="col s6 m6 l6">';
-                                            echo    '<div class="barra" style="width: '.($mb*100)/$total.'%;">'.round(($mb*100)/$total).'%</div>';
-                                            echo '</div>';
-                                        }
-                                        echo    '<div class="col s3 m3 l3"><p class="derecho">'.$mb.'</p></div>';
-                                        echo '</li>';
+                                                <input class="btn" type="submit" name="volver" id="volver" value="Volver" onclick="volver()">
 
-
-
-                                        echo '<li>';
-                                        echo    '<div class="col s3 m3 l3"><p>Bueno</p></div>';
-                                        if($b==0){
-                                            echo '<div class="col s6 m6 l6">';
-                                            echo    '<div class="barra" style="width: 0%">0%</div>';
-                                            echo '</div>';
-                                        }else{
-                                            echo '<div class="col s6 m6 l6">';
-                                            echo    '<div class="barra" style="width: '.($b*100)/$total.'%;">'.round(($b*100)/$total).'%</div>';
-                                            echo '</div>';
-                                        }
-                                        echo    '<div class="col s3 m3 l3"><p class="derecho">'.$b.'</p></div>';
-                                        echo '</li>';
-
-
-
-                                        echo '<li>';
-                                        echo    '<div class="col s3 m3 l3"><p>Aceptable</p></div>';
-                                        if($a==0){
-                                            echo '<div class="col s6 m6 l6">';
-                                            echo    '<div class="barra" style="width: 0%">0%</div>';
-                                            echo '</div>';
-                                        }else{
-                                            echo '<div class="col s6 m6 l6">';
-                                            echo    '<div class="barra" style="width: '.($a*100)/$total.'%;">'.round(($a*100)/$total).'%</div>';
-                                            echo '</div>';
-                                        }
-                                        echo    '<div class="col s3 m3 l3"><p class="derecho">'.$a.'</p></div>';
-                                        echo '</li>';
-
-
-
-                                        echo '<li>';
-                                        echo    '<div class="col s3 m3 l3"><p>Deficiente</p></div>';
-                                        if($d==0){
-                                            echo '<div class="col s6 m6 l6">';
-                                            echo    '<div class="barra" style="width: 0%">0%</div>';
-                                            echo '</div>';
-                                        }else{
-                                            echo '<div class="col s6 m6 l6">';
-                                            echo    '<div class="barra" style="width: '.($d*100)/$total.'%;">'.round(($d*100)/$total).'%</div>';
-                                            echo '</div>';
-                                        }
-                                        echo    '<div class="col s3 m3 l3"><p class="derecho">'.$d.'</p></div>';
-                                        echo '</li>';
-
-
-
-                                        echo '<li>';
-                                        echo    '<div class="col s3 m3 l3"><p>Muy Defciente</p></div>';
-                                        if($md==0){
-                                            echo '<div class="col s6 m6 l6">';
-                                            echo    '<div class="barra" style="width: 0%">0%</div>';
-                                            echo '</div>';
-                                        }else{
-                                            echo '<div class="col s6 m6 l6">';
-                                            echo    '<div class="barra" style="width: '.($md*100)/$total.'%;">'.round(($md*100)/$total).'%</div>';
-                                            echo '</div>';
-                                        }
-                                        echo    '<div class="col s3 m3 l3"><p class="derecho">'.$md.'</p></div>';
-                                        echo '</li>';
-
-
-
-                                        echo '</ul>';
-
-                                        echo '<div class="row">';
-                                        echo    '<div class="col s3 m3 l3"></div>';
-                                        echo    '<div class="col s6 m6 l6"><p style="text-align: right;">Votos totales:</p></div>';
-                                        echo    '<div class="col s3 m3 l3"><p class="derecho">'.$total.'</p></div>';
-                                        echo '</div>';
-
-                                        echo '<br>';
-
-                                    }
-                                }
-
-
-                                echo '</div>';
-                                echo '</div>';*/
-
-                                ?>
-
-
-                                <div class="form-field center-align">
-
-                                    <input class="btn" type="submit" name="volver" value="Volver" onclick="volver()">
-
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div class="col s1 m1 l1"></div>
 
                             </div>
 

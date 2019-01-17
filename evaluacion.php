@@ -12,11 +12,11 @@ if(isset($_SESSION['sesionActiva'])){
 if(isset($_POST['evaluar'])){
 
     if(isset($_POST['asignaturaIn'])){
-        
+
         $_SESSION['cedula'] = $_POST['cedula'];
         $_SESSION['asignatura'] = $_POST['asignaturaIn'];
         $_SESSION['docente'] = $_POST['docente'];
-        
+
         $cedula = $_SESSION['cedula'];
         $asignatura = $_SESSION['asignatura'];
         $docente = $_SESSION['docente'];
@@ -38,14 +38,14 @@ if(isset($_POST['evaluar'])){
 
         $_SESSION['preguntas'] = $preguntas;
 
-        header('location: votar.php?cedula='.$cedula.'&asignatura='.$asignatura.'&docente='.$docente.'');
-        
+        header('location: Formulario.php?cedula='.$cedula.'&asignatura='.$asignatura.'&docente='.$docente.'');
+
     }else{
-        
+
         echo '<script type="text/javascript">';
         echo    'alert("Debe seleccionar una materia para continuar.")';
         echo '</script>';
-        
+
     }
 
 }
@@ -191,7 +191,7 @@ if(isset($_POST['evaluar'])){
                                                                         echo '<option value="'.$cont.'">'.utf8_encode($valores['asignatura']).'</option>';
                                                                         $cont++;
                                                                     }
-                                                                    
+
                                                                     echo '<input type="text" name="asignaturaIn" id="asignaturaIn" value="'.$asignatura.'" hidden required>';
 
                                                                 }else{
@@ -233,13 +233,13 @@ if(isset($_POST['evaluar'])){
                                         <br>
                                         <div class="form-field center-align">
                                             <?php
-                                            
+
                                             if(isset($_GET['asignatura'])){
                                                 echo '<input class="btn" type="submit" name="evaluar" value="Evaluar">';
                                             }else{
                                                 echo '<input class="btn" type="submit" name="evaluar" value="Seleccione una materia" disabled>';
                                             }
-                                            
+
                                             ?>
                                         </div>
                                     </form>

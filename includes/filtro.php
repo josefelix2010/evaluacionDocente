@@ -13,35 +13,47 @@ if($tipo==1){
 
 	if($acta == 0){
 		$query = $conexion->query("SELECT * FROM respuestas WHERE periodo='$periodo' AND docente='$docente' GROUP BY topico");
+		$consulta = $conexion->query("SELECT * FROM alumnos AS al INNER JOIN respuestas as resp ON al.acta = resp.acta WHERE resp.docente = '$docente'");
+		$totalEv = $conexion->query("SELECT SUM(evaluado) AS total FROM alumnos WHERE evaluado='1' AND acta IN (SELECT acta FROM respuestas WHERE docente = '$docente')");
 	}else{
 		$query = $conexion->query("SELECT * FROM respuestas WHERE periodo='$periodo' AND docente='$docente' AND acta = '$acta'");
+		$consulta = $conexion->query("SELECT * FROM alumnos AS al INNER JOIN respuestas as resp ON al.acta = resp.acta WHERE resp.docente = '$docente' AND resp.acta = '$acta'");
+		$totalEv = $conexion->query("SELECT SUM(evaluado) AS total FROM alumnos WHERE evaluado='1' AND acta='$acta'");
 	}
 
-		//echo '<div class="row">';
-		echo '<div class="col s12 m12 l12>';
+	echo '<div class="col s12 m12 l12">';
 
-		echo '<div class="row">';
+	echo '<div class="row">';
 
-		echo '<div class="col s3 m3 l3">';
-        echo '<label>Docente</label>';
-        echo '<input type="text" value="'.$docente.'" readonly>';
-        echo '</div>';
+	echo '<table class="striped centered responsive-table" style="width: 60%;">';
+	echo '<tbody>';
 
-        echo '<div class="col s3 m3 l3">';
-        echo '<label>Acta</label>';
-        if($acta == 0){
-        	echo '<input type="text" value="Evaluación general" readonly>';
-        }else{
-        	echo '<input type="text" value="'.$acta.'" readonly>';
-        }
-        echo '</div>';
+	echo '<tr>';
+	echo '<th>Docente</th>';
+	echo '<th>Acta</th>';
+	echo '<th>Período</th>';
+	echo '</tr>';
 
-        echo '<div class="col s3 m3 l3">';
-        echo '<label>Período</label>';
-        echo '<input type="text" value="'.$periodo.'" readonly>';
-        echo '</div>';
+	echo '<tr>';
+	echo '<td>'.$docente.'</td>';
+	if($acta == 0){
+		echo '<td>Evaluación general</td>';
+	}else{
+		echo '<td>'.$acta.'</td>';
+	}
+	echo '<td>'.$periodo.'</td>';
+	echo '</tr>';
 
-		echo '</div>';
+	echo '</tbody>';
+	echo '</table>';
+
+	echo '</div>';
+
+	echo '</div>';
+
+	echo '<br>';
+
+
 
 		echo '<table class="striped centered responsive-table">';
 		echo '<tbody>';
@@ -82,6 +94,38 @@ if($tipo==1){
 
 		echo '</tbody>';
 		echo '</table>';
+
+		echo '<br>';
+
+		echo '<div class="row">';
+
+		echo '<div class="col s4 m4 l4">';
+
+		echo '<table class="striped centered responsive-table">';
+		echo '<tbody>';
+
+		echo '<tr>';
+		echo '<th colspan="2">Docente</th>';
+		echo '</tr>';
+
+		echo '<tr>';
+		echo '<td>Inscritos</td>';
+		echo '<td>Encuestados</td>';
+		echo '</tr>';
+
+		echo '<tr>';
+		echo '<td>'.mysqli_num_rows($consulta).'</td>';
+		while($valores = mysqli_fetch_array($totalEv)){
+			echo '<td>'.$valores['total'].'</td>';
+		}
+		echo '</tr>';
+
+		echo '</tbody>';
+		echo '</table>';
+
+		echo '</div>';
+
+		echo '</div>';
 
 		echo '</div>';
 		//echo '</div>';

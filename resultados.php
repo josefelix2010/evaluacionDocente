@@ -52,6 +52,7 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
                 $('.dropdown-trigger').dropdown();
                 $('.sidenav').sidenav();
                 $('.collapsible').collapsible();
+                $('.tabs').tabs();
             });
 
             function inicio(){

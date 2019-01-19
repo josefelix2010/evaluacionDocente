@@ -60,7 +60,7 @@ ob_start();
                                     <div class="col s12 m12 l12">
                                         <div class="container form1">
 
-                                            <form method="POST" action="votaciones.php">
+                                            <form method="POST" action="EnvioFormulario.php">
                                                 <div class="row">
 
                                                     <div class="col s6 m6 l6">

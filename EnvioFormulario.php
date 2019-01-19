@@ -91,7 +91,7 @@ ob_start();
 
     }
 
-    header('location: evaluacionExitosa.php');
+    header('location: EvaluacionExitosa.php');
 
 //}
 

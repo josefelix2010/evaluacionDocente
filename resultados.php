@@ -12,18 +12,6 @@ include('includes/conectar.php');
 $consultaPeriodo = $conexion->query("SELECT periodo FROM respuestas GROUP BY periodo ORDER BY periodo ASC");
 $cont = 1;
 
-if(isset($_GET['acta']) && isset($_GET['periodo'])){
-
-    $acta = $_GET['acta'];
-
-    $periodo = $_GET['periodo'];
-
-    $consultaDocente = $conexion->query("SELECT * FROM actas WHERE acta = '$acta' and periodo = '$periodo'");
-
-    $consulta = $conexion->query("SELECT * FROM respuestas WHERE acta = '$acta' and periodo = '$periodo'");
-
-}
-
 //}
 
 ?>
@@ -101,6 +89,7 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
                 var acta = document.getElementById('acta').value;
                 window.location.href="resultados.php?periodo="+periodo+"&acta="+acta+"";
             }
+
 
             $(document).ready(function(){
 
@@ -199,6 +188,17 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
                         }
                     })
 
+                })
+
+                $('#imprimir').on('click', function(e){
+                    e.preventDefault();
+
+                    var tipo = $('#tipoTxt').val();
+                    var periodo = $('#periodoTxt').val();
+                    var docente = $('#docenteTxt').val();
+                    var acta = $('#actasTxt').val();
+
+                    window.open('Imprimir.php?tipo='+tipo+'&periodo='+periodo+'&docente='+docente+'&acta='+acta);
                 })
             })
 
@@ -382,7 +382,7 @@ if(isset($_GET['acta']) && isset($_GET['periodo'])){
 
                                             <div class="form-field center-align">
 
-                                                <input class="btn" type="submit" name="imprimir" id="imprimir" value="Imprimir" disabled>
+                                                <input class="btn" type="submit" name="imprimir" id="imprimir" value="Imprimir" disabled onclick="imprimir()">
 
                                                 <input class="btn" type="submit" name="volver" id="volver" value="Volver" onclick="volver()">
 

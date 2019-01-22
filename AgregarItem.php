@@ -5,9 +5,9 @@ ob_start();
 
 include('includes/conectar.php');
 
-/*if($_SESSION['sesionAbierta'] != 'Activa'){
+if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}else{*/
+}else{
 
 if(isset($_POST['tipo']) && isset($_POST['item'])){
 
@@ -15,30 +15,30 @@ $tipo = $_POST['tipo'];
 $item = $_POST['item'];
 
 if($tipo == 1){
-    
+
     $insert = $conexion->query("INSERT INTO topicos (`titulo`) VALUES ('$item')");
-     
+
 }elseif($tipo == 2){
-    
+
     $insert = $conexion->query("INSERT INTO topicoscoor (`titulo`) VALUES ('$item')");
-    
+
 }
 
 $filas = mysqli_affected_rows($conexion);
 
 if($filas > 0){
-    
+
     echo '<script>';
     echo 'alert("Ítem agregado de manera exitosa.")';
     echo '</script>';
-    
+
 }else{
     echo "NO";
 }
-    
+
 }
 
-//}
+}
 
 ?>
 
@@ -107,23 +107,23 @@ if($filas > 0){
             function volver(){
                 window.location.href='inicio.php';
             }
-            
+
             function modal(){
                 var item = document.getElementById('item').value;
                 var id = document.getElementById('tipo');
                 var tipo = id.options[id.selectedIndex].text;
-                
+
                 var topico = item.charAt(0).toUpperCase() + item.slice(1);
-                
+
                 if(item == "" || id == 0){
                     alert('El campo "Ítem" no puede estar vacío y debe haber seleccionado alguno de los formularios.');
                 }else{
-                    
+
                     document.getElementById('itemModal').textContent = topico;
                     document.getElementById('tipoModal').textContent = tipo;
-                    
+
                     $('.modal').modal()
-                    
+
                 }
             }
         </script>
@@ -189,7 +189,7 @@ if($filas > 0){
                     <li>
                         <div class="collapsible-header" onclick="resultados()">
                             <i class="material-icons">done_all</i>Resultados
-                        </div>    
+                        </div>
                     </li>
 
                     <li>
@@ -246,12 +246,12 @@ if($filas > 0){
 
                                                         echo '<option value="1" selected>Ítems para alumnos</option>';
                                                         echo '<option value="2">Ítems para coordinadores</option>';
-                                                        
+
                                                     }else if($id == "2"){
 
                                                         echo '<option value="1">Ítems para alumnos</option>';
                                                         echo '<option value="2" selected>Ítems para coordinadores</option>';
-                                                        
+
                                                     }
 
                                                 }else{

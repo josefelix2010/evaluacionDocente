@@ -5,11 +5,11 @@ ob_start();
 
 include('includes/conectar.php');
 
-/*if($_SESSION['sesionAbierta'] != 'Activa'){
+if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}else{*/
+}else{
 
-//}
+}
 
 ?>
 
@@ -150,7 +150,7 @@ include('includes/conectar.php');
                     <li>
                         <div class="collapsible-header" onclick="resultados()">
                             <i class="material-icons">done_all</i>Resultados
-                        </div>    
+                        </div>
                     </li>
 
                     <li>
@@ -190,7 +190,7 @@ include('includes/conectar.php');
                                 <div class="col s6 m6 l6">
                                     <p class="right">Seleccione alguna de las opciones:</p>
                                 </div>
-                                
+
                                 <div class="col s6 m6 l6">
                                     <div class="form-field">
 

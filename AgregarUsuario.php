@@ -5,11 +5,11 @@ ob_start();
 
 include('includes/conectar.php');
 
-/*if($_SESSION['sesionAbierta'] != 'Activa'){
+if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}else{*/
+}else{
 
-//}
+}
 
 ?>
 
@@ -83,7 +83,7 @@ include('includes/conectar.php');
             function volver(){
                 window.location.href='inicio.php';
             }
-            
+
             function modal(){
                 var usuario = document.getElementById('usuario').value;
                 var nombre = document.getElementById('nombre').value;
@@ -92,9 +92,9 @@ include('includes/conectar.php');
                 var admin = document.getElementById('admin').checked;
                 var pass1 = document.getElementById('password1').value;
                 var pass2 = document.getElementById('password2').value;
-                
+
                 if(usuario!="" && nombre!="" && apellido!="" && correo!="" && pass1!="" && pass2!=""){
-                    
+
                     var nombres = nombre+" "+apellido;
 
                     document.getElementById('usuarioModal').textContent = usuario;
@@ -112,20 +112,20 @@ include('includes/conectar.php');
                     alert('Uno o mas campos están vacíos.');
                 }
             }
-            
+
             function letras(string) {
                 var out = '';
                 var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOSPQRSTUVWXYZ';
-                
+
                 for(var i=0; i<string.length; i++){
                     if(filtro.indexOf(string.charAt(i)) != -1){
                         out += string.charAt(i);
                     }
                 }
-                
+
                 return out;
             }
-            
+
             function vaciar(){
                 document.getElementById('nombre').value = "";
                 document.getElementById('apellido').value = "";
@@ -134,25 +134,25 @@ include('includes/conectar.php');
                 document.getElementById('password1').value = "";
                 document.getElementById('password2').value = "";
             }
-            
-            
+
+
             $(function(){
                 $('#aceptar').on('click', function(e){
                     e.preventDefault();
-                    
+
                     var nombre = $('#nombre').val();
                     var apellido = $('#apellido').val();
                     var usuario = $('#usuario').val();
                     var correo = $('#correo').val();
                     var password = $('#password1').val();
                     var admin = $('#admin').is(':checked');
-                    
+
                     if(admin == true){
                         tipo = "1";
                     }else{
                         tipo = "0";
                     }
-                    
+
                     $.ajax({
                         type: "POST",
                         url: "includes/verificarUsuario.php",
@@ -234,7 +234,7 @@ include('includes/conectar.php');
                     <li>
                         <div class="collapsible-header" onclick="resultados()">
                             <i class="material-icons">done_all</i>Resultados
-                        </div>    
+                        </div>
                     </li>
 
                     <li>
@@ -358,11 +358,11 @@ include('includes/conectar.php');
                                             <div class="modal-content">
                                                 <h4><i class="material-icons" style="color: #000;">warning</i> ¡Atención! <i class="material-icons" style="color: #000;">warning</i></h4>
                                                 <br>
-                                                
+
                                                 <p>¿Seguro que desea agregar al siguiente usuario en el sistema?</p>
-                                                
+
                                                 <br>
-                                                
+
                                                 <p>Usuario: <span id="usuarioModal"></span> <br>
                                                     Nombres: <span id="nombresModal"></span> <br>
                                                     Correo: <span id="correoModal"></span> <br>

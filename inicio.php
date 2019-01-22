@@ -3,9 +3,9 @@
 session_start();
 ob_start();
 
-/*if($_SESSION['sesionAbierta'] != 'Activa'){
+if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}*/
+}
 
 ?>
 
@@ -36,35 +36,35 @@ ob_start();
                 $('.sidenav').sidenav();
                 $('.collapsible').collapsible();
             });
-            
+
             function inicio(){
                 location.href="Inicio.php";
             }
-            
+
             function listaItems(){
                 location.href="Items.php"
             }
-            
+
             function agregarItem(){
                 location.href="AgregarItem.php"
             }
-            
+
             function eliminarItem(){
                 location.href="EliminarItem.php"
             }
-            
+
             function resultados(){
                 location.href="Items.php"
             }
-            
+
             function listaUsuarios(){
                 location.href="Usuarios.php"
             }
-            
+
             function agregarUsuario(){
                 location.href="AgregarUsuario.php"
             }
-            
+
             function editarUsuario(){
                 location.href="EditarUsuario.php"
             }
@@ -131,7 +131,7 @@ ob_start();
                     <li>
                         <div class="collapsible-header" onclick="resultados()">
                             <i class="material-icons">done_all</i>Resultados
-                        </div>    
+                        </div>
                     </li>
 
                     <li>
@@ -153,7 +153,7 @@ ob_start();
             </div>
 
         </div>
-        
+
         <div class="container">
             <div class="row">
                 <div class="col s12 m12 l12">
@@ -162,25 +162,25 @@ ob_start();
                             <span class="card-title">Bienvenido al Sistema de Evaluación Docente de la Universidad José Antonio Páez (SEDUJAP) <?php //echo $_SESSION['usuarioLogin'] = $user; ?></span>
                             <br>
                             <p class="instrucciones">
-                                
+
                                 El sistema le permite a los usuarios de tipo <u>Coordinador</u> visualizar resultados de evaluaciones al docente realizadas tanto por alumnos como por directores de escuela. También permite agregar ítems al formulario de evaluación para los alumnos.
-                                
+
                                 <br><br>
-                                
+
                                 Para los usuarios de tipo <u>Administrador</u> el sistema permite agregar nuevos usuarios y editar datos de usuarios existentes, también agregar ítems tanto a cada uno de los formularios, tanto el de la evaluación que realizan alumnos como la evaluación que realizan los coordinadores, así como eliminar ítems de estos formularios. De igual manera permite ver los resultados de las evaliuaciones.
-                                
+
                                 <br><br>
-                                
+
                                 <span style="font-family: 'Quicksand', sans-serif; font-size: 16px;">Instrucciones:</span>
-                                
+
                                 <br><br>
-                                
+
                                 Para ingresar al menú presione el botón "Menú", ubicado en la esquina superior izquierda.
-                                
+
                                 <br>
-                                
+
                                 Seleccione la opción que desea en la lista desplegable que se muestra en el menú, donde cada opción muestra cada una de las funciones disponibles según el tipo de usuario.
-                                
+
                             </p>
                         </div>
                     </div>

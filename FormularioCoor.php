@@ -60,7 +60,7 @@ if($_SESSION['sesionActiva'] != "Activa"){
                                     <div class="col s12 m12 l12">
                                         <div class="container form1">
 
-                                            <form method="POST" action="EnvioFormulario.php">
+                                            <form method="POST" action="EnvioFormularioCoor.php">
                                                 <div class="row">
 
                                                     <div class="col s6 m6 l6">
@@ -127,15 +127,23 @@ if($_SESSION['sesionActiva'] != "Activa"){
 
                                                                     echo '<tr>';
                                                                     echo '<td class="celdasInfo"><textarea rows="2" col="50" name="tabla['.$count.'][titulo]" readonly class="tituloTxt">'.$preg.'</textarea></td>';
-                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="mb" required><span></span></label></td>';
-                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="b" required><span></span></label></td>';
-                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="a" required><span></span></label></td>';
-                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="d" required><span></span></label></td>';
-                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="md" required><span></span></label></td>';
+                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="5" required><span></span></label></td>';
+                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="4" required><span></span></label></td>';
+                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="3" required><span></span></label></td>';
+                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="2" required><span></span></label></td>';
+                                                                    echo '<td width="35" class="celdasInfo"><label><input type="radio" name="tabla['.$count.'][opcion]" value="1" required><span></span></label></td>';
                                                                     echo '</tr>';
                                                                     $count++;
                                                                 }
                                                                 ?>
+                                                                <tr>
+                                                                    <td class="celdasInfo">
+                                                                        <textarea rows="1" col="50" name="" readonly class="tituloTxt">Puede agregar algun comentario a continuación</textarea>
+                                                                    </td>
+                                                                    <td colspan="5">
+                                                                        <textarea rows="4" col="50" name="coment" id="coment"></textarea>
+                                                                    </td>
+                                                                </tr>
                                                             </tbody>
                                                         </table>
                                                         <div class="form-field center-align">

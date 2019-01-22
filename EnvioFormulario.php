@@ -5,9 +5,9 @@ include('includes/conectar.php');
 session_start();
 ob_start();
 
-/*if($_SESSION['sesionActiva'] != "Activa"){
+if($_SESSION['sesionActiva'] != "Activa"){
     header('location: Evaluacion.php');
-}else{*/
+}else{
 
     $alumno = $_SESSION['cedula'];
     $tabla = $_POST['tabla'];
@@ -91,8 +91,11 @@ ob_start();
 
     }
 
+    session_unset();
+    session_destroy();
+
     header('location: EvaluacionExitosa.php');
 
-//}
+}
 
 ?>

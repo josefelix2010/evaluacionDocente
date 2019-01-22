@@ -3,15 +3,6 @@
 session_start();
 ob_start();
 
-if(isset($_POST['volver'])){
-    
-    session_unset();
-    session_destroy();
-    
-    header('location: evaluacion.php');
-    
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -24,12 +15,6 @@ if(isset($_POST['volver'])){
         <link rel="stylesheet" href="css/evaluacion.css">
 
         <link rel="stylesheet" href="libs/materialize/css/materialize.min.css">
-
-        <!--<script type="text/javascript">
-            function volver(){
-                window.location.href="evaluacion.php";
-            }
-        </script>-->
 
     </head>
     <body>
@@ -67,9 +52,9 @@ if(isset($_POST['volver'])){
 
                                 <div class="row">
                                     <div class="col s12 m12 l12">
-                                        
+
                                         <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-                                            
+
                                             <div class="container form2">
 
                                                 <p class="center-align" id="exito">Evaluación realizada con éxito.</p>
@@ -79,11 +64,11 @@ if(isset($_POST['volver'])){
                                             <br>
 
                                             <div class="form-field center-align">
-                                                <input class="btn" style="background-color: #3582ff !important;" type="submit" name="volver" value="Volver">
+                                                <a class="btn" style="color: #FFF; background-color: #3582ff !important;" href="Evaluacion.php">Volver</a>
                                             </div>
-                                            
+
                                         </form>
-                                        
+
                                     </div>
                                 </div>
 

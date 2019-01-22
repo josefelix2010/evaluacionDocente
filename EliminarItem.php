@@ -5,9 +5,9 @@ ob_start();
 
 include('includes/conectar.php');
 
-/*if($_SESSION['sesionAbierta'] != 'Activa'){
+if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}else{*/
+}else{
 
 if(isset($_GET['id'])){
     $id = $_GET['id'];
@@ -63,7 +63,7 @@ if(isset($_POST['volver'])){
 }
 
 
-//}
+}
 
 ?>
 
@@ -226,7 +226,7 @@ if(isset($_POST['volver'])){
                     <li>
                         <div class="collapsible-header" onclick="resultados()">
                             <i class="material-icons">done_all</i>Resultados
-                        </div>    
+                        </div>
                     </li>
 
                     <li>

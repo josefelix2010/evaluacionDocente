@@ -151,11 +151,18 @@ body{
     margin: 5px;
 }
 
-.form1 textarea{
+.form1 .tituloTxt{
     resize: none;
     font-family: 'Quicksand', sans-serif !important;
 	font-size: 12px !important;
 	color: #000;
     border-style: none;
     outline: none;
+}
+
+#coment{
+	resize: none;
+    font-family: 'Quicksand', sans-serif !important;
+	font-size: 12px !important;
+	color: #000;
 }

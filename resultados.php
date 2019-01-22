@@ -5,9 +5,9 @@ ob_start();
 
 include('includes/conectar.php');
 
-/*if($_SESSION['sesionAbierta'] != 'Activa'){
+if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}else{*/
+}else{
 
 $consultaPeriodo = $conexion->query("SELECT periodo FROM respuestas GROUP BY periodo ORDER BY periodo ASC");
 $cont = 1;
@@ -98,22 +98,12 @@ $cont = 1;
                         var id_tipo = $(this).val();
                         $('#tipoTxt').val(id_tipo);
 
-                        if(id_tipo == 1){
-                            $('#filtrar').attr("disabled", true);
-                        }else{
-                            $('#filtrar').attr("disabled", false);
-                        }
-
                         $.ajax({
                             type: "POST",
                             url: "includes/consultaTipo.php",
                             data: ("id_tipo="+id_tipo),
                             success: function(resultado){
-                                if(id_tipo==1){
-                                    alert(resultado);
-                                }else{
-                                    $('#periodos').html(resultado);
-                                }
+                                $('#periodos').html(resultado);
                             }
                         })
                     });
@@ -130,11 +120,7 @@ $cont = 1;
                             url: "includes/consultaPeriodo.php",
                             data: ("id_periodo="+id_periodo+"&tipo="+tipo),
                             success: function(resultado){
-                                if(tipo==1){
-                                    alert(resultado);
-                                }else{
-                                    $('#docente').html(resultado);
-                                }
+                                $('#docente').html(resultado);
                             }
                         })
                     });
@@ -152,11 +138,8 @@ $cont = 1;
                             url: "includes/consultaDocente.php",
                             data: ("id_docente="+id_docente+"&periodo="+periodo+"&tipo="+tipo),
                             success: function(resultado){
-                                if(tipo==1){
-                                    alert(resultado);
-                                }else{
-                                    $('#actas').html(resultado);
-                                }
+                                $('#filtrar').attr('disabled', false);
+                                $('#actas').html(resultado);
                             }
                         })
                     });
@@ -362,7 +345,7 @@ $cont = 1;
 
                                                 <div class="col s2 m2 l2">
                                                     <div class="form-field center-align">
-                                                        <input class="btn" type="submit" name="filtrar" value="Filtrar" id="filtrar">
+                                                        <input class="btn" type="submit" name="filtrar" value="Filtrar" id="filtrar" disabled>
                                                     </div>
                                                 </div>
 

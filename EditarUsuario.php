@@ -5,13 +5,13 @@ ob_start();
 
 include('includes/conectar.php');
 
-/*if($_SESSION['sesionAbierta'] != 'Activa'){
+if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}else{*/
+}else{
 
 $consulta = $conexion->query("SELECT * FROM usuarios");
 
-//}
+/}
 
 ?>
 

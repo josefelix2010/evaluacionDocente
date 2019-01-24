@@ -21,7 +21,7 @@
                 $('.sidenav').sidenav();
                 $('.collapsible').collapsible();
             });
-            
+
             function inicio(){
                 location.href="Inicio.php";
             }
@@ -39,7 +39,7 @@
             }
 
             function resultados(){
-                location.href="Items.php"
+                location.href="Resultados.php"
             }
 
             function listaUsuarios(){
@@ -124,7 +124,7 @@
                     <li>
                         <div class="collapsible-header" onclick="resultados()">
                             <i class="material-icons">done_all</i>Resultados
-                        </div>    
+                        </div>
                     </li>
 
                     <li>

@@ -9,28 +9,6 @@ if(isset($_SESSION['sesionAbierta'])){
     header('Location: inicio.php');
 }
 
-if(isset($_POST['login'])){
-
-    $user = $_POST['usuario'];
-    $pass = $_POST['password'];
-
-    $login = $conexion->query("SELECT * FROM usuarios WHERE usuario = '$user' AND password = '$pass'");
-
-    if($resultado = mysqli_fetch_array($login)){
-
-        $_SESSION['usuarioLogin'] = $user;
-        $_SESSION['sesionAbierta'] = 'Activa';
-
-        header('Location: inicio.php');
-
-    }else{
-        echo '<script type="text/javascript">';
-        echo 'alert("Usuario o contraseña incorrecta.");';
-        echo '</script>';
-    }
-
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -46,12 +24,36 @@ if(isset($_POST['login'])){
 
         <link rel="stylesheet" href="fonts/Quicksand">
 
-        <link rel="stylesheet" href="fonts/Nunito">
-        
+        <script src="libs/jquery-3.3.1.min.js"></script>
+
+        <script src="libs/materialize/js/materialize.min.js"></script>
+
         <script type="text/javascript">
             function olvido(){
                 window.location.href='recuperar.php';
             }
+
+            $(document).ready(function(){
+                $('#loginBtn').on('click', function(e){
+                    e.preventDefault();
+
+                    var usuario = $('#usuario').val();
+                    var password = $('#password').val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "includes/validarIndex.php",
+                        data: ("usuario="+usuario+"&password="+password),
+                        success: function(respuesta){
+                            if(respuesta==1){
+                                location.href="Inicio.php";
+                            }else{
+                                alert('Usuario o contraseña incorrecta.');
+                            }
+                        }
+                    })
+                })
+            });
         </script>
 
     </head>
@@ -69,7 +71,7 @@ if(isset($_POST['login'])){
 
                     <div class="card-content">
 
-                        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                        <form method="POST" id="login">
 
                             <div class="form-field">
                                 <label for="usuario">Usuario</label>
@@ -86,11 +88,11 @@ if(isset($_POST['login'])){
                             <br>
 
                             <div class="form-field center-align">
-                                <input class="btn red" type="submit" name="login" value="Ingresar">
+                                <input class="btn red" type="submit" name="login" id="loginBtn" value="Ingresar">
                             </div>
 
                         </form>
-                        
+
                         <br>
 
                         <div class="form-field center-align">

@@ -7,8 +7,10 @@ include('includes/conectar.php');
 
 if($_SESSION['sesionAbierta'] != 'Activa'){
     header('location: index.php');
-}else{
+}
 
+if($_SESSION['tipo'] != 'administrador'){
+    header('location: inicio.php');
 }
 
 ?>
@@ -61,7 +63,7 @@ if($_SESSION['sesionAbierta'] != 'Activa'){
             }
 
             function resultados(){
-                location.href="Items.php"
+                location.href="Resultados.php"
             }
 
             function listaUsuarios(){
@@ -176,7 +178,7 @@ if($_SESSION['sesionAbierta'] != 'Activa'){
     </head>
     <body>
 
-        <div class="row">
+                <div class="row">
             <nav>
                 <div class="nav-wrapper navbar">
                     <ul class="left">
@@ -201,9 +203,9 @@ if($_SESSION['sesionAbierta'] != 'Activa'){
                     <div class="user-view center-align" style="background-image: linear-gradient(#E8F0FF, #9bbef7);">
                         <p class="infoUser" style="color: #000 !important;"><span class="email">Sistema de Evaluación Docente</span></p>
                         <a style="text-align: center;"><img src="img/Logo-UJAP2.jpg" class="circle" style="display: block; margin: auto; height: 75px; width: 75px;"></a>
-                        <p class="infoUser"><span>Usuario</span></p>
-                        <p class="infoUser"><span class="name" style="margin-top: 0px !important;">Nombre y apellido</span></p>
-                        <p class="infoUser"><span class="email">Correo</span></p>
+                        <p class="infoUser"><span><?php echo $_SESSION['usuarioLogin']; ?></span></p>
+                        <p class="infoUser"><span class="name" style="margin-top: 0px !important;"><?php echo $_SESSION['nombres']; ?></span></p>
+                        <p class="infoUser"><span class="email"><?php echo $_SESSION['email']; ?></span></p>
                     </div>
                 </li>
             </ul>
@@ -237,24 +239,30 @@ if($_SESSION['sesionAbierta'] != 'Activa'){
                         </div>
                     </li>
 
-                    <li>
-                        <ul class="collapsible">
-                            <li>
-                                <div class="collapsible-header"><i class="material-icons">perm_identity</i>Usuarios</div>
-                                <div class="collapsible-body">
-                                    <ul>
-                                        <li onclick="listaUsuarios()"><a>Lista de Usuarios</a></li>
-                                        <li onclick="agregarUsuario()"><a>Agregar Usuario</a></li>
-                                        <li onclick="editarUsuario()"><a>Editar Usuario</a></li>
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
+                    <?php
+
+                    if($_SESSION['tipo'] == 'administrador'){
+
+                        echo '<li>';
+                            echo '<ul class="collapsible">';
+                                echo '<li>';
+                                    echo '<div class="collapsible-header"><i class="material-icons">perm_identity</i>Usuarios</div>';
+                                    echo '<div class="collapsible-body">';
+                                        echo '<ul>';
+                                            echo '<li onclick="listaUsuarios()"><a>Lista de Usuarios</a></li>';
+                                            echo '<li onclick="agregarUsuario()"><a>Agregar Usuario</a></li>';
+                                            echo '<li onclick="editarUsuario()"><a>Editar Usuario</a></li>';
+                                        echo '</ul>';
+                                    echo '</div>';
+                                echo '</li>';
+                            echo '</ul>';
+                        echo '</li>';
+
+                    }
+                    ?>
 
                 </ul>
             </div>
-
         </div>
 
         <div class="row">
